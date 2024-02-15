@@ -39,7 +39,13 @@ export function Chat(){
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
     const userData                                                          = getUserDataFromLocalStorage()
     const navigate                                                          = useNavigate()
-
+    const handleChatWebsocket = ()=>{
+        if (!CHAT_WEBSOCKET.current){
+            ChatWSInitialize(clickedUser.id)
+        } else {
+            CHAT_WEBSOCKET.current.send(ChatWSGroupCreationMsg(clickedUser.id))
+        }
+    }
     const enterChatHandler = async ()=>{
         const relatedNotification = notifications[clickedUser.id]
         const response = await nonToastedApiCall(async ()=>{
@@ -52,6 +58,7 @@ export function Chat(){
                 if (relatedNotification && response.data.notification_deleted){
                     removeAndUpdateNotifications(relatedNotification, setNotifications)
                 }
+                handleChatWebsocket()
             } else if (response.status == 400){
                 if (response.data.error == "same_user"){
                     toast.error("Error inesperado entrando al chat, cerrando sesión por seguridad")
@@ -72,11 +79,6 @@ export function Chat(){
     }
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
-            if (!CHAT_WEBSOCKET.current){
-                ChatWSInitialize(clickedUser.id)
-            } else {
-                CHAT_WEBSOCKET.current.send(ChatWSGroupCreationMsg(clickedUser.id))
-            }
             (async function() {
                 messagesHistorialPage.current = 1
                 noMoreMessages.current = false

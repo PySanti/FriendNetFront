@@ -11,7 +11,6 @@ import "../styles/Home.css"
 // import { destroy } from 'zustand';
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 import {useExecutingInSmallDevice} from "../store"
-import {useClickedUser} from "../store"
 import {resetChats} from "../utils/resetChats"
 
 /**
@@ -20,7 +19,6 @@ import {resetChats} from "../utils/resetChats"
 export function Home() {
     const navigate                      = useNavigate()
     let executingInSmallDevice        = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
-    let clickedUser                   = useClickedUser((state)=>(state.clickedUser))
     useEffect(()=>{
         document.title = generateDocumentTitle("Home")
         return ()=>{

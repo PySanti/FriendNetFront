@@ -5,8 +5,8 @@ import {BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../utils/constants"
  * @param {Object} websocket
  */
 export function disconnectWebsocket(websocket){
-    console.log('Desconectando websocket')
     if (websocket.current){
+        console.log('Desconectando websocket')
         if (localStorage.getItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR)){
             // caso borde en el que el usuario se haya desconectado antes de los 600ms despues de haber escrito
             websocket.current.send(NotificationsWSTypingInformMsg(Number(localStorage.getItem("user_typing")), false))
