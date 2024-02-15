@@ -117,3 +117,7 @@ input:focus{
 .scrollbar-container{
   scrollbar-width: thin;
 }
+
+.not-displayed{
+  display: none;
+}

@@ -20,6 +20,7 @@ import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotification
 import {useLastClickedUser, useTypingDB} from "../store"
 import "../styles/Chat.css"
 import {logoutUser} from "../utils/logoutUser"
+import {useExecutingInSmallDevice} from "../store"
 
 /**
  * 
@@ -32,6 +33,7 @@ export function Chat(){
     let [newMsg, setNewMsg]                                                 = useState(null)
     let [typingDB, setTypingDB]                                             = useTypingDB((state)=>([state.typingDB, state.setTypingDB]))
     let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let executingInSmallDevice                                              = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
@@ -104,7 +106,7 @@ export function Chat(){
         }
     }, [messagesHistorial])
     return (
-        <div className="chat-container">
+        <div className={executingInSmallDevice? (clickedUser? "chat-container" : "chat-container not-displayed") : "chat-container"}>
             {clickedUser  && <ClickedUserHeader/>}
             <MessagesContainer newMsg={newMsg}  messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}

@@ -1,5 +1,12 @@
 import {toast} from "sonner"
 import {useUserKeyword} from "../store"
+import {useUsersList} from "../store"
+import {useUsersIdList} from "../store"
+import {useUsersListPage} from "../store"
+import {useNoMoreUsers} from "../store"
+import {useFirstUsersListCall} from "../store"
+import {useExecutingInSmallDevice} from "../store"
+import {useClickedUser} from "../store"
 import { UserButton } from "./UserButton"
 import "../styles/UsersList.css"
 import { v4 } from "uuid"
@@ -8,12 +15,9 @@ import {useState, useEffect, useRef} from "react"
 import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
-import {useUsersList} from "../store"
+
 import {useNavigate} from "react-router-dom"
-import {useUsersIdList} from "../store"
-import {useUsersListPage} from "../store"
-import {useNoMoreUsers} from "../store"
-import {useFirstUsersListCall} from "../store"
+
 import Lottie from "lottie-react"
 import loading from "../../lottie/loading.json"
 import {BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
@@ -30,7 +34,9 @@ export function UsersList(){
     let [loaderActivated, setLoaderActivated]                       = useState(false)
     let [usersIdList, setUsersIdList]                               = useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
+    let executingInSmallDevice                                      = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let userKeyword                                                 = useUserKeyword((state)=>(state.userKeyword))
+    let clickedUser                                                 = useClickedUser((state)=>(state.clickedUser))
     let [scrollDetectorBlock, setScrollDetectorBlock]               = useState(false)
     let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
     const navigate = useNavigate()
@@ -121,7 +127,7 @@ export function UsersList(){
 
     return (
         <>
-            <div className="users-list">
+            <div className={executingInSmallDevice? (!clickedUser? "users-list" : "users-list not-displayed") : "users-list"}>
                 <UserFilter/>
                 {usersList.length > 0 ? 
                     <div className="users-list-container scrollbar-container"  onScroll={scrollDetector}>

@@ -40,22 +40,8 @@ export function Home() {
                     <NotificationsContainer/>
                 </div>
                 <div className={executingInSmallDevice? "users-interface-container small-interface" : "users-interface-container"}>
-                    {
-                        !executingInSmallDevice ?
-                        <>
-                            <UsersList/>
-                            <Chat/>
-                        </>
-                        :
-                        <>
-                            {
-                                clickedUser ?
-                                <Chat/>
-                                :
-                                <UsersList/>
-                            }
-                        </>
-                    }
+                    <UsersList/>
+                    <Chat/>
                 </div>
             </div>
         )
