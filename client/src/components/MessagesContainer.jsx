@@ -12,6 +12,7 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store"
 import {useMessagesHistorial} from "../store"
 import {BASE_MESSAGES_LIST_PAGE_SIZE, BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
+import {logoutUser} from "../utils/logoutUser"
 import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -55,7 +56,12 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
             if (response.status == 200){
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
             } else {
-                toast.error('¡ Error inesperado enviando el mensaje !')
+                if (response.data.error == "same_user"){
+                    toast.error("Error inesperado enviando mensaje, cerrando sesión por seguridad")
+                    logoutUser(navigate)
+                } else {
+                    toast.error('¡ Error inesperado enviando el mensaje !')
+                }
             }
         }
     }

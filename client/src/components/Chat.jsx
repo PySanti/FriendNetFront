@@ -19,6 +19,7 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {useLastClickedUser, useTypingDB} from "../store"
 import "../styles/Chat.css"
+import {logoutUser} from "../utils/logoutUser"
 
 /**
  * 
@@ -50,13 +51,18 @@ export function Chat(){
                     removeAndUpdateNotifications(relatedNotification, setNotifications)
                 }
             } else if (response.status == 400){
-                const errors = {
-                    "user_not_found"                    : "¡ Tuvimos problemas para encontrar a ese usuario !",
-                    "error_while_checking_is_online"    : '¡ Error comprobando si el usuario esta en linea !',
-                    "error_while_getting_messages"      : '¡ Error buscando mensajes !',
-                    "error_while_deleting_notification" : '¡ Error borrando notificación !'
+                if (response.data.error == "same_user"){
+                    toast.error("Error inesperado entrando al chat, cerrando sesión por seguridad")
+                    logoutUser(navigate)
+                } else {
+                    const errors = {
+                        "user_not_found"                    : "¡ Tuvimos problemas para encontrar a ese usuario !",
+                        "error_while_checking_is_online"    : '¡ Error comprobando si el usuario esta en linea !',
+                        "error_while_getting_messages"      : '¡ Error buscando mensajes !',
+                        "error_while_deleting_notification" : '¡ Error borrando notificación !'
+                    }
+                    toast.error(errors[response.data.error]? errors[response.data.error] : "¡ Error inesperado entrando al chat !")
                 }
-                toast.error(errors[response.data.error]? errors[response.data.error] : "¡ Error inesperado entrando al chat !")
             } else{
                 toast.error("¡ Error inesperado entrando al chat !")
             }
