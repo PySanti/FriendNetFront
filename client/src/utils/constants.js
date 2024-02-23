@@ -1,6 +1,6 @@
 export const BASE_FALLEN_SERVER_LOG = "¡ Red caída !"
 export const BASE_USER_NOT_EXISTS_ERROR = "user_not_exists"
-export const BACKEND_URL = "http://127.0.0.1:8000/";
+export const BACKEND_URL = "http://64.23.156.104/";
 export const BASE_FALLEN_SERVER_ERROR_MSG = "Network Error"
 export const JWT_LOCALSTORAGE_NAME = "jwt"
 export const BASE_NON_TOASTED_API_CALLS_TIMER = 2000
