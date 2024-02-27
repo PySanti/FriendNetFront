@@ -74,7 +74,7 @@ export const useDarkMode = create((set)=>({
 export const useUserKeyword = create((set)=>({
     userKeyword : undefined,
     setUserKeyword : (new_val)=>(set(()=>({userKeyword : new_val}))),
-    reset : ()=>(set(()=>({userKeyword: null})))
+    reset : ()=>(set(()=>({userKeyword: undefined})))
 }))
 
 export const useUserFilterInput = create((set)=>({
