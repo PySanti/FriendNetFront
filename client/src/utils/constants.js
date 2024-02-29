@@ -1,7 +1,7 @@
 export const BASE_FALLEN_SERVER_LOG = "¡ Red caída !"
 export const BASE_USER_NOT_EXISTS_ERROR = "user_not_exists"
-// export const BACKEND_URL = "https://friendnet.online/";
-export const BACKEND_URL = "http://127.0.0.1:8000/";
+export const BACKEND_URL = "https://friendnet.online/";
+// export const BACKEND_URL = "http://127.0.0.1:8000/";
 export const BASE_FALLEN_SERVER_ERROR_MSG = "Network Error"
 export const JWT_LOCALSTORAGE_NAME = "jwt"
 export const BASE_NON_TOASTED_API_CALLS_TIMER = 2000
@@ -70,8 +70,8 @@ export const BASE_PASSWORD_CONSTRAINTS = {
     },
 };
 
-export const CHAT_WEBSOCKET_ENDPOINT = "ws://localhost:8000/ws/chat/"
-export const NOTIFICATIONS_WEBSOCKET_ENDPOINT = "ws://localhost:8000/ws/notifications/"
+export const CHAT_WEBSOCKET_ENDPOINT = "ws://friendnet.online:8001/ws/chat/"
+export const NOTIFICATIONS_WEBSOCKET_ENDPOINT = "ws://friendnet.online:8001/ws/notifications/"
 export const CHAT_WEBSOCKET = {
     'current' : null
 }
