@@ -23,7 +23,14 @@
     color : #000;
 }
 
-.button:hover, .button_hovered{
+
+.button-container{
+    display: flex;
+    justify-content: center;
+}
+
+
+.button_hovered{
     background-color: rgb(145, 214, 126);
     cursor: pointer;
     border-bottom-right-radius: 10px;
@@ -32,9 +39,16 @@
     border-top-right-radius: 0px;
     outline: var(--outline-width) solid var(--base-color);
 }
-.button-container{
-    display: flex;
-    justify-content: center;
+@media screen and (hover : hover){
+    .button:hover{
+        background-color: rgb(145, 214, 126);
+        cursor: pointer;
+        border-bottom-right-radius: 10px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 0px;
+        border-top-right-radius: 0px;
+        outline: var(--outline-width) solid var(--base-color);
+    }
 }
 
 @media screen and (max-width : 575px){
