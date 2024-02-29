@@ -70,8 +70,8 @@ export const BASE_PASSWORD_CONSTRAINTS = {
     },
 };
 
-export const CHAT_WEBSOCKET_ENDPOINT = "ws://friendnet.online:8001/ws/chat/"
-export const NOTIFICATIONS_WEBSOCKET_ENDPOINT = "ws://friendnet.online:8001/ws/notifications/"
+export const CHAT_WEBSOCKET_ENDPOINT = "wss://friendnet.online:8001/ws/chat/"
+export const NOTIFICATIONS_WEBSOCKET_ENDPOINT = "wss://friendnet.online:8001/ws/notifications/"
 export const CHAT_WEBSOCKET = {
     'current' : null
 }
