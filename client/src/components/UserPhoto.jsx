@@ -38,7 +38,6 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
             onClick: handleImgClick,
             className: type === "small" ? (userPhotoLoaded || !photoFile? "user-photo user-photo__activated" : "user-photo") : `big-user-photo`,
             src: currentPhotoName? currentPhotoName: photoFile? photoFile: null,
-            alt: ":(",
             ref : type=="small"? userPhotoRef : null
         };
     };
@@ -67,21 +66,28 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     return (
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
             <div className="user-photo-container" >
-                <img {...imgProps("small")}/>
-                {(!userPhotoLoaded && photoFile) &&
-                    <div className="loading-animation-container">
-                        <Lottie 
-                            loop={true}
-                            autoPlay={true}
-                            animationData={loading} 
-                            lottieRef={loadingAnimationRef}
-                        />
-                    </div>
+                { photoFile ? 
+                    <>
+                        <img {...imgProps("small")}/>
+                        {(!userPhotoLoaded && photoFile) &&
+                            <div className="loading-animation-container">
+                                <Lottie 
+                                    loop={true}
+                                    autoPlay={true}
+                                    animationData={loading} 
+                                    lottieRef={loadingAnimationRef}
+                                />
+                            </div>
+                        }
+                        <div className={modalContainerCls} ref={modalContainerRef}>
+                            <img {...imgProps("big")}/>
+                        </div>
+                    </>
+                    :
+                    <span id="no-photo-icon" className="material-symbols-outlined user-photo">
+                        no_photography
+                    </span>
                 }
-
-                <div className={modalContainerCls} ref={modalContainerRef}>
-                    <img {...imgProps("big")}/>
-                </div>
             </div>
             {withInput && (
                 <>

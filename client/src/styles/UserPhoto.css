@@ -122,6 +122,9 @@
     width: 10%;
     height: 100%;
 }
+#no-photo-icon{
+    display: flex !important;
+}
 
 
 @media screen and (max-width : 1000px){
