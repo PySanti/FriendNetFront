@@ -7,8 +7,8 @@ export function checkImageFormat(image){
     if (!["jpg","jpeg", "png", "heic"].includes(imageFormat)){
         return "¡ Formato de archivo no soportado !"
     } else {
-        if (image.size/1000 > 1000){
-            return "¡ El peso de la imagen debe ser inferior a 500kb !"
+        if (image.size/1000 > 2000){
+            return "¡ El peso de la imagen debe ser inferior a 2MB !"
         } else {
             return true
         }
