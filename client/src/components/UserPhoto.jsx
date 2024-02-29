@@ -56,8 +56,10 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
         }
     };
     useEffect(()=>{
-        setUserPhotoLoaded(false)
-        if (photoFile){
+        if (!currentPhotoName && photoFile){
+            // recordar que si el photoFile no es null y currentPhotoName es null, indica que la imagen se esta renderizando a partir de un link
+            // En cambio, si el currentPhotoName no es null, indica que la imagen se esta cargando desde la PC local, en tal caso no tiene sentido activar el loader por que la imagen ya esta cargada
+            setUserPhotoLoaded(false)
             userPhotoRef.current.addEventListener("load", ()=>{
                 setUserPhotoLoaded(true)
             })
