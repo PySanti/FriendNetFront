@@ -39,7 +39,7 @@
     border-top-right-radius: 0px;
     outline: var(--outline-width) solid var(--base-color);
 }
-@media screen and (hover : hover){
+@media screen and (min-width : 1000px){
     .button:hover{
         background-color: rgb(145, 214, 126);
         cursor: pointer;
