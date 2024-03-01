@@ -21,7 +21,7 @@ import * as states from "./store"
 import {initStates} from "./utils/initStates"
 import alert from "./sounds/alert.mp3"
 import {DarkModeButton} from "./components/DarkModeButton"
-
+import {useRef} from "react"
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
@@ -39,10 +39,10 @@ function App() {
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   let setDefaultDarkModeActivated       = states.useDefaultDarkModeActivated((state)=>(state.setDefaultDarkModeActivated))
+  let alertRef                          = useRef(null)
   const audioEffect = ()=>{
-    const alertAudio = new Audio(alert)
-    alertAudio.volume = 0.2
-    alertAudio.play()
+    alertRef.current.volume = 0.1
+    alertRef.current.play()
   }
   useEffect(()=>{
     if (window.innerWidth <= SMALL_DEVICE_WIDTH){
@@ -65,6 +65,12 @@ function App() {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setDefaultDarkModeActivated(true)
     } 
+    if (alertRef.current){
+      alertRef.current.addEventListener("ended", ()=>{
+        alertRef.current.pause();
+        alertRef.current.currentTime = 0; // Reiniciar la reproducción al principio
+      })
+    }
   }, [])
 
 
@@ -112,6 +118,7 @@ function App() {
 
   return (
     <>
+    <audio ref={alertRef} src={alert}></audio>
     <Toaster 
       position="bottom-right"
       closeButton
