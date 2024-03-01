@@ -51,6 +51,9 @@ function App() {
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
+    window.addEventListener('unload', ()=>{
+      logoutUser()
+    });
 
     initStates(notifications, setNotifications)
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
