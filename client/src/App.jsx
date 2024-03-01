@@ -10,7 +10,7 @@ import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 import {useEffect} from "react"
-import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH} from "./utils/constants"
+import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH, CHAT_WEBSOCKET} from "./utils/constants"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
@@ -51,9 +51,15 @@ function App() {
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
-    window.addEventListener('unload', ()=>{
-      logoutUser()
+    window.addEventListener('beforeunload', ()=>{
+      const ws = [CHAT_WEBSOCKET, NOTIFICATIONS_WEBSOCKET]
+      ws.array.forEach(element => {
+        element.close()
+      });
+      CHAT_WEBSOCKET.current = null
+      NOTIFICATIONS_WEBSOCKET.current = null
     });
+
 
     initStates(notifications, setNotifications)
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
