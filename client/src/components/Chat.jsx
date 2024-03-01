@@ -106,7 +106,7 @@ export function Chat(){
                 }
             };
         }
-    }, [messagesHistorial])
+    }, [messagesHistorial, clickedUser])
     return (
         <div className={executingInSmallDevice? (clickedUser? "chat-container" : "chat-container not-displayed") : "chat-container"}>
             {clickedUser  && <ClickedUserHeader/>}

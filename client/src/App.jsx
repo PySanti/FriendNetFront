@@ -51,16 +51,6 @@ function App() {
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
-    window.addEventListener('beforeunload', ()=>{
-      const ws = [CHAT_WEBSOCKET, NOTIFICATIONS_WEBSOCKET]
-      ws.array.forEach(element => {
-        element.close()
-      });
-      CHAT_WEBSOCKET.current = null
-      NOTIFICATIONS_WEBSOCKET.current = null
-    });
-
-
     initStates(notifications, setNotifications)
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setDefaultDarkModeActivated(true)
