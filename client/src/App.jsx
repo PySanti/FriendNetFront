@@ -52,8 +52,8 @@ function App() {
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
     window.addEventListener("offline", ()=>{
-      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-      disconnectWebsocket(CHAT_WEBSOCKET)
+      // disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+      // disconnectWebsocket(CHAT_WEBSOCKET)
       resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
       toast.error("¡ Conexión perdida !")
       setNoConnection(true)
