@@ -58,7 +58,9 @@ function App() {
     })
     window.addEventListener("online", ()=>{
       if (NOTIFICATIONS_WEBSOCKET.current.readyState == WebSocket.OPEN){
-        CHAT_WEBSOCKET.current.send(ChatWSGroupDeleteMsg())
+        if (CHAT_WEBSOCKET.current){
+          CHAT_WEBSOCKET.current.send(ChatWSGroupDeleteMsg())
+        }
       } else {
         NOTIFICATIONS_WEBSOCKET.current = null
         initStates(notifications, setNotifications)
