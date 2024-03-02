@@ -46,7 +46,7 @@ export function Login() {
                             toast.success("Sesión iniciada con éxito")
                             navigate('/home/')
                         } else if (response.data.error == "user_is_online"){
-                            toast.error("¡ El usuario ya esta en linea !") 
+                            toast.error("¡ El usuario ya esta en linea o se esta restableciendo la conexión con el servidor !") 
                         } else{
                             toast.error("¡ Error inesperado iniciando sesión !")
                         } 

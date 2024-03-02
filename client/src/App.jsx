@@ -40,7 +40,6 @@ function App() {
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
-  let setNoConnection                 = states.useNoConnection((state)=>( state.setNoConnection))
   let alertRef                          = useRef(null)
   const audioEffect = ()=>{
     alertRef.current.volume = 0.1
@@ -53,7 +52,6 @@ function App() {
     });
     window.addEventListener("offline", ()=>{
       logoutUser()
-      toast.error("¡ Conexión perdida !")
     })
   }, [])
 

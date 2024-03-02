@@ -20,7 +20,6 @@ import {useNoConnection} from "../store"
 export function Home() {
     const navigate                      = useNavigate()
     let executingInSmallDevice        = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
-    let noConnection                    = useNoConnection((state)=>(state.noConnection))
     useEffect(()=>{
         document.title = generateDocumentTitle("Home")
         return ()=>{
@@ -40,18 +39,8 @@ export function Home() {
                     <NotificationsContainer/>
                 </div>
                 <div className={executingInSmallDevice? "users-interface-container small-interface" : "users-interface-container"}>
-                    {
-
-                    noConnection ?
-                        <h3 className="no-connection-title">
-                            Sin conexión :(
-                        </h3>
-                    :
-                        <>
-                            <UsersList/>
-                            <Chat/>
-                        </>
-                    }
+                    <UsersList/>
+                    <Chat/>
                 </div>
             </div>
         )

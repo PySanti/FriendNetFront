@@ -105,7 +105,3 @@ export const useDefaultDarkModeActivated  = create((set)=>({
 }))
 
 
-export const useNoConnection = create((set)=>({
-    noConnection : !navigator.onLine,
-    setNoConnection: (new_val)=>(set(()=>({noConnection : new_val}))),
-}))
