@@ -12,7 +12,6 @@ import "../styles/Home.css"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 import {useExecutingInSmallDevice} from "../store"
 import {resetChats} from "../utils/resetChats"
-import {useNoConnection} from "../store"
 
 /**
  * Pagina principal del sitio
