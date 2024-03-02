@@ -52,21 +52,8 @@ function App() {
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
     window.addEventListener("offline", ()=>{
-      resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
+      logoutUser()
       toast.error("¡ Conexión perdida !")
-      setNoConnection(true)
-    })
-    window.addEventListener("online", ()=>{
-      if (NOTIFICATIONS_WEBSOCKET.current.readyState == WebSocket.OPEN){
-        if (CHAT_WEBSOCKET.current){
-          CHAT_WEBSOCKET.current.send(ChatWSGroupDeleteMsg())
-        }
-      } else {
-        NOTIFICATIONS_WEBSOCKET.current = null
-        initStates(notifications, setNotifications)
-      }
-      setNoConnection(false)
-      toast.success("¡ Conexión recuperada !")
     })
   }, [])
 
