@@ -59,9 +59,13 @@ function App() {
       setNoConnection(true)
     })
     window.addEventListener("online", ()=>{
-      initStates(notifications, setNotifications)
-      setNoConnection(false)
-      toast.success("¡ Conexión recuperada !")
+      const toastId = toast.loading("Recuperando conexión")
+      setTimeout(() => {
+        toast.dismiss(toastId)
+        initStates(notifications, setNotifications)
+        setNoConnection(false)
+        toast.success("¡ Conexión recuperada !")
+      }, 12000);
     })
   }, [])
 
