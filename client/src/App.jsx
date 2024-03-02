@@ -52,20 +52,17 @@ function App() {
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
     window.addEventListener("offline", ()=>{
-      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
       disconnectWebsocket(CHAT_WEBSOCKET)
+      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
       resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
       toast.error("¡ Conexión perdida !")
       setNoConnection(true)
     })
     window.addEventListener("online", ()=>{
-      const toastId = toast.loading("Recuperando conexión")
-      setTimeout(() => {
-        toast.dismiss(toastId)
-        initStates(notifications, setNotifications)
-        setNoConnection(false)
-        toast.success("¡ Conexión recuperada !")
-      }, 12000);
+      disconnectWebsocket(CHAT_WEBSOCKET)
+      initStates(notifications, setNotifications)
+      setNoConnection(false)
+      toast.success("¡ Conexión recuperada !")
     })
   }, [])
 
