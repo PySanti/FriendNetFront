@@ -10,7 +10,7 @@ import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 import {useEffect} from "react"
-import {disconnectWebsocket} from "./utils/disconnectWebsocket"
+import {ChatWSGroupDeleteMsg} from "./utils/ChatWSGroupDeleteMsg"
 import {resetGlobalStates} from "./utils/resetGlobalStates"
 import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH, CHAT_WEBSOCKET} from "./utils/constants"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
@@ -57,9 +57,13 @@ function App() {
       setNoConnection(true)
     })
     window.addEventListener("online", ()=>{
-      console.log(NOTIFICATIONS_WEBSOCKET.current.readyState)
-      // initStates(notifications, setNotifications)
-      // setNoConnection(false)
+      if (NOTIFICATIONS_WEBSOCKET.current.readyState == WebSocket.OPEN){
+        CHAT_WEBSOCKET.current.send(ChatWSGroupDeleteMsg())
+      } else {
+        NOTIFICATIONS_WEBSOCKET.current = null
+        initStates(notifications, setNotifications)
+      }
+      setNoConnection(false)
       toast.success("¡ Conexión recuperada !")
     })
   }, [])
