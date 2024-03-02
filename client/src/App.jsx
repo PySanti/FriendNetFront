@@ -10,6 +10,8 @@ import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 import {useEffect} from "react"
+import {disconnectWebsocket} from "./utils/disconnectWebsocket"
+import {resetGlobalStates} from "./utils/resetGlobalStates"
 import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH, CHAT_WEBSOCKET} from "./utils/constants"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
@@ -38,29 +40,29 @@ function App() {
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
-  let setDefaultDarkModeActivated       = states.useDefaultDarkModeActivated((state)=>(state.setDefaultDarkModeActivated))
+  let setNoConnection                 = states.useNoConnection((state)=>( state.setNoConnection))
   let alertRef                          = useRef(null)
   const audioEffect = ()=>{
     alertRef.current.volume = 0.1
     alertRef.current.play()
   }
   useEffect(()=>{
-    if (window.innerWidth <= SMALL_DEVICE_WIDTH){
-      setExecutingInSmallDevice(true)
-    }
+    initStates(notifications, setNotifications)
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
-    initStates(notifications, setNotifications)
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setDefaultDarkModeActivated(true)
-    } 
-    if (alertRef.current){
-      alertRef.current.addEventListener("ended", ()=>{
-        alertRef.current.pause();
-        alertRef.current.currentTime = 0; // Reiniciar la reproducción al principio
-      })
-    }
+    window.addEventListener("offline", ()=>{
+      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+      disconnectWebsocket(CHAT_WEBSOCKET)
+      resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
+      toast.error("¡ Conexión perdida !")
+      setNoConnection(true)
+    })
+    window.addEventListener("online", ()=>{
+      initStates(notifications, setNotifications)
+      setNoConnection(false)
+      toast.success("¡ Conexión recuperada !")
+    })
   }, [])
 
 
@@ -108,7 +110,10 @@ function App() {
 
   return (
     <>
-    <audio ref={alertRef} src={alert}></audio>
+    <audio ref={alertRef} src={alert} onEnded={()=>{
+      alertRef.current.pause();
+      alertRef.current.currentTime = 0; // Reiniciar la reproducción al principio
+    }}></audio>
     <Toaster 
       position="bottom-right"
       closeButton

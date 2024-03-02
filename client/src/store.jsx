@@ -1,3 +1,4 @@
+import { SMALL_DEVICE_WIDTH} from "./utils/constants"
 import create from "zustand"
 
 
@@ -93,15 +94,18 @@ export const useTypingDB = create((set)=>({
 
 
 export const useExecutingInSmallDevice  = create((set)=>({
-    executingInSmallDevice : false,
+    executingInSmallDevice : window.innerWidth <= SMALL_DEVICE_WIDTH,
     setExecutingInSmallDevice: (new_val)=>(set(()=>({executingInSmallDevice : new_val}))),
 }))
 
 export const useDefaultDarkModeActivated  = create((set)=>({
-    defaultDarkModeActivated : false,
+    defaultDarkModeActivated : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
     setDefaultDarkModeActivated: (new_val)=>(set(()=>({defaultDarkModeActivated : new_val}))),
     reset : ()=>(set(()=>({defaultDarkModeActivated: false})))
 }))
 
 
-
+export const useNoConnection = create((set)=>({
+    noConnection : !navigator.onLine,
+    setNoConnection: (new_val)=>(set(()=>({noConnection : new_val}))),
+}))

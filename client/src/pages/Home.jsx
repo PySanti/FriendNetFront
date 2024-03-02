@@ -12,6 +12,7 @@ import "../styles/Home.css"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 import {useExecutingInSmallDevice} from "../store"
 import {resetChats} from "../utils/resetChats"
+import {useNoConnection} from "../store"
 
 /**
  * Pagina principal del sitio
@@ -19,6 +20,7 @@ import {resetChats} from "../utils/resetChats"
 export function Home() {
     const navigate                      = useNavigate()
     let executingInSmallDevice        = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
+    let noConnection                    = useNoConnection((state)=>(state.noConnection))
     useEffect(()=>{
         document.title = generateDocumentTitle("Home")
         return ()=>{
@@ -38,8 +40,18 @@ export function Home() {
                     <NotificationsContainer/>
                 </div>
                 <div className={executingInSmallDevice? "users-interface-container small-interface" : "users-interface-container"}>
-                    <UsersList/>
-                    <Chat/>
+                    {
+
+                    noConnection ?
+                        <h3 className="no-connection-title">
+                            Sin conexión :(
+                        </h3>
+                    :
+                        <>
+                            <UsersList/>
+                            <Chat/>
+                        </>
+                    }
                 </div>
             </div>
         )

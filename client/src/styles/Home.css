@@ -36,6 +36,14 @@
     flex-direction: row;
     justify-content: center;
 }
+.no-connection-title{
+    width: inherit;
+    height: inherit;
+    display: flex;
+    align-items : center;
+    justify-content: center;
+    font-size: var(--base-input-font-size);
+}
 .users-interface-container > *{
     margin : 0 10px 0 10px;
     border-radius :10px;
