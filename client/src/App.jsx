@@ -53,9 +53,14 @@ function App() {
     });
     window.addEventListener("offline", ()=>{
       resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
-      setNoConnection(true)
-      logoutUser()
       toast.error("¡ Conexión perdida !")
+      setNoConnection(true)
+    })
+    window.addEventListener("online", ()=>{
+      console.log(NOTIFICATIONS_WEBSOCKET.current.readyState)
+      // initStates(notifications, setNotifications)
+      // setNoConnection(false)
+      toast.success("¡ Conexión recuperada !")
     })
   }, [])
 
