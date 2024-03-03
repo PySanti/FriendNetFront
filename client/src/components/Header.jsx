@@ -16,7 +16,12 @@ export function Header({msg}) {
             <header className="header-container">
                 <div className="header-title-container">
                     <h1 className="header-content">
-                        <img className="header-logo" src={!darkModeActivated ? logo1URL : logo2URL}/>
+                        {
+                            navigator.onLine ?
+                                <img className="header-logo" src={!darkModeActivated ? logo1URL : logo2URL}/>
+                            :
+                                'F'
+                        }
                         riendNet{userData && `, ${userData.username}`}
                     </h1>
                 </div>
