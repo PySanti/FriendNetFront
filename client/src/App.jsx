@@ -51,7 +51,9 @@ function App() {
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
     window.addEventListener("offline", ()=>{
-      logoutUser()
+      if (getUserDataFromLocalStorage()){
+        logoutUser()
+      } 
     })
   }, [])
 
