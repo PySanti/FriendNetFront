@@ -104,4 +104,14 @@ export const useDefaultDarkModeActivated  = create((set)=>({
     reset : ()=>(set(()=>({defaultDarkModeActivated: false})))
 }))
 
+export const useChatScrollBtnPressed = create((set)=>({
+    chatScrollBtnPressed : false,
+    setChatScrollBtnPressed: (new_val)=>(set(()=>({chatScrollBtnPressed : new_val}))),
+}))
+
+export const useChatScrollBtnActivated = create((set)=>({
+    chatScrollBtnActivated : false,
+    setChatScrollBtnActivated: (new_val)=>(set(()=>({chatScrollBtnActivated : new_val}))),
+}))
+
 

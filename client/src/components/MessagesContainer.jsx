@@ -14,6 +14,7 @@ import {useMessagesHistorial} from "../store"
 import {BASE_MESSAGES_LIST_PAGE_SIZE, BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
 import {nonToastedApiCall} from "../utils/nonToastedApiCall"
+import {useChatScrollBtnPressed, useChatScrollBtnActivated} from "../store"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
@@ -24,7 +25,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
-    const [messagesHistorial, setMessagesHistorial]                     = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
+    let [messagesHistorial, setMessagesHistorial]                       = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
+    let [setChatScrollBtnPressed, chatScrollBtnPressed]                 = useChatScrollBtnPressed((state)=>([state.setChatScrollBtnPressed,state.chatScrollBtnPressed]))
+    let setChatScrollBtnActivated                                       = useChatScrollBtnActivated((state)=>(state.setChatScrollBtnActivated))
 
     const loadMessages = async ()=>{
         const response = await nonToastedApiCall(async ()=>{
@@ -75,8 +78,16 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 // la ultima condicion se pone para evitar que se llame a la api cuando no se ha scrolleado
                 await loadMessages()
             }
+        } else if ((event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - (event.target.scrollHeight / 200))){
+            setChatScrollBtnActivated(false)
         }
     }
+    useEffect(()=>{
+        if (chatScrollBtnPressed){
+            setChatScrollBtnPressed(false)
+            containerRef.current.scrollTop = containerRef.current.scrollHeight
+        }
+    }, [chatScrollBtnPressed])
 
     useEffect(()=>{
         if (containerRef.current && messagesHistorial.length <= BASE_MESSAGES_LIST_PAGE_SIZE){
@@ -104,7 +115,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                         :
                         "Selecciona un usuario para chatear"
                     }
-                        </h3>
+                </h3>
             }
         </div>
     )
@@ -113,5 +124,5 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
 MessagesContainer.propTypes = {
     newMsg : PropTypes.object,
     messagesHistorialPage : PropTypes.object.isRequired,
-    noMoreMessages : PropTypes.object.isRequired
+    noMoreMessages : PropTypes.object.isRequired,
 }

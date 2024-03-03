@@ -3,26 +3,26 @@
     justify-content: center;
     align-items : center;
     height: 10vh;
+    gap: 50px;
 }
 .message-counter{
     display: flex;
     justify-content: center;
     width: 3vw;
-    font-size: 10px;
     align-self: center;
-    margin-left: 20px;
+    font-size: var(--base-button-font-size);
 }
 
 @media screen and (max-width : 400px){
-
-    .message-counter{
-        font-size: 6px;
+    .message-sending-input-container{
+        gap: 5%;
     }
 }
 @media screen and (max-height : 500px){
     .message-sending-input{
         padding: 0;
     }
+
 }
 .message-sending-form{
     display: flex;
@@ -30,7 +30,26 @@
     align-items: center;
     justify-content: center;
 }
+.chat-scroll{
+    display: flex;
+    cursor : pointer;
+    font-size: var(--base-input-font-size);
+    user-select: none;
+}
 
+.chat-scroll::after{
+    content : "";
+    opacity: 0;
+    padding: 3px;
+    border-radius: 20px;
+    background-color : #0f0;
+    align-self: self-start;
+    transition-property: opacity;
+    transition-duration: .3s;
+}
+.chat-scroll__activated::after{
+    opacity: 1;
+}
 .message-sending-input:focus{
     padding-left: 10px;
 }

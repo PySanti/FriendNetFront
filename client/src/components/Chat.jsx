@@ -20,7 +20,8 @@ import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotification
 import {useLastClickedUser, useTypingDB} from "../store"
 import "../styles/Chat.css"
 import {logoutUser} from "../utils/logoutUser"
-import {useExecutingInSmallDevice} from "../store"
+import {useExecutingInSmallDevice, useChatScrollBtnActivated} from "../store"
+
 
 /**
  * 
@@ -36,6 +37,7 @@ export function Chat(){
     let executingInSmallDevice                                              = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
+    let setChatScrollBtnActivated                                       = useChatScrollBtnActivated((state)=>(state.setChatScrollBtnActivated))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
     const userData                                                          = getUserDataFromLocalStorage()
     const navigate                                                          = useNavigate()
@@ -93,6 +95,7 @@ export function Chat(){
                 if (data.type === "message_broadcast"){
                     if (Number(data.value.parent_id) !== Number(userData.id)){
                         setMessagesHistorial([...messagesHistorial, data.value])
+                        setChatScrollBtnActivated(true)
                     }
                 } else if (data.type === "connection_inform"){
                     if (data.value.user_id == clickedUser.id){
@@ -110,8 +113,8 @@ export function Chat(){
     return (
         <div className={executingInSmallDevice? (clickedUser? "chat-container" : "chat-container not-displayed") : "chat-container"}>
             {clickedUser  && <ClickedUserHeader/>}
-            <MessagesContainer newMsg={newMsg}  messagesHistorialPage={messagesHistorialPage} noMoreMessages={noMoreMessages}/>
-            {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)}/>}
+            <MessagesContainer  newMsg={newMsg}   messagesHistorialPage={messagesHistorialPage}  noMoreMessages={noMoreMessages}  />
+            {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)} />}
         </div>
     )
 }

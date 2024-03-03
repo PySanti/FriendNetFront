@@ -7,6 +7,7 @@ import {NOTIFICATIONS_WEBSOCKET, BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../u
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useClickedUser} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
+import {useChatScrollBtnPressed, useChatScrollBtnActivated} from "../store"
 /**
  * Input creado para el envio de mensajes
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
@@ -17,6 +18,8 @@ export function MsgSendingInput({onMsgSending}){
     let [clickedUserWhenTyping, setClickedUserWhenTyping]   = useState(null)
     let [lettersCount, setLettersCount]                     = useState(0)
     let [timeoutDB, setTimeoutDB]                           = useState({})
+    let setChatScrollBtnPressed                             = useChatScrollBtnPressed((state)=>(state.setChatScrollBtnPressed))
+    let chatScrollBtnActivated                              = useChatScrollBtnActivated((state)=>(state.chatScrollBtnActivated))
     const userData                                          = getUserDataFromLocalStorage()
     const resetInput = ()=>{
         reset()
@@ -59,6 +62,10 @@ export function MsgSendingInput({onMsgSending}){
     }
     return (
         <div className="message-sending-input-container">
+
+            <div className="message-counter">
+                {lettersCount}/{BASE_MESSAGE_MAX_LENGTH}
+            </div>
             <form onChange = {handleMsgSendingInput} className="message-sending-form " onSubmit={onSubmit}>
                 <input 
                     placeholder="Envíale un mensaje" 
@@ -68,13 +75,15 @@ export function MsgSendingInput({onMsgSending}){
                     minLength={1} 
                     {...register("msg")}/>
             </form>
-            <div className="message-counter">
-                {lettersCount}/{BASE_MESSAGE_MAX_LENGTH}
-            </div>
+            <span className={chatScrollBtnActivated ? "material-symbols-outlined chat-scroll chat-scroll__activated" : "material-symbols-outlined chat-scroll" } onClick={()=>{setChatScrollBtnPressed(true)}}>
+                expand_circle_down
+            </span>
+
         </div>
     )
 }
 
 MsgSendingInput.propTypes = {
-    onMsgSending : PropTypes.func
+    onMsgSending : PropTypes.func,
+    chatScrollerState : PropTypes.object
 }
