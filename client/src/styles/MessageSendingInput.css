@@ -18,6 +18,12 @@
     }
 
 }
+@media screen and (max-height : 250px){
+    .message-sending-input{
+        width: 60%;
+    }
+
+}
 .message-sending-form{
     display: flex;
     flex-direction: column;

@@ -9,7 +9,7 @@
     transition-duration: .2s;
 }
 .clicked-user__username{
-    font-size: 23px;
+    font-size: var(--base-input-font-size);
 }
 
 .clicked-user__typing{
@@ -25,18 +25,6 @@
     font-size: var(--base-button-font-size);
     margin-left: 10px;
     cursor: pointer;
-}
-
-
-@media screen and (max-width : 575px){
-    .clicked-user__username{
-        font-size: 18px;
-    }
-}
-@media screen and (max-width : 300px){
-    .clicked-user__username{
-        font-size: 13px;
-    }
 }
 
 
