@@ -118,6 +118,9 @@ input:focus{
   scrollbar-width: thin;
 }
 
+.material-symbols-outlined{
+  user-select: none;
+}
 .not-displayed{
   display: none;
 }

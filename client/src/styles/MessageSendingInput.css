@@ -28,7 +28,6 @@
     display: flex;
     cursor : pointer;
     font-size: var(--base-input-font-size);
-    user-select: none;
 }
 
 .chat-scroll::after{
