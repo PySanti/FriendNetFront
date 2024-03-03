@@ -14,7 +14,7 @@ export function ClickedUserHeader(){
             {
                 executingInSmallDevice &&
                 <span className="material-symbols-outlined back-chat-button" onClick={()=>resetChats()}>
-                    arrow_back_ios
+                    keyboard_backspace
                 </span>
             }
             <UserPhoto photoFile={clickedUser.photo_link} chatPhoto/>

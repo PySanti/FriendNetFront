@@ -22,8 +22,8 @@
 }
 
 .back-chat-button{
-    font-size: var(--base-button-font-size);
-    margin-left: 10px;
+    font-size: var(--base-input-font-size);
+    margin-left: 5%;
     cursor: pointer;
 }
 
