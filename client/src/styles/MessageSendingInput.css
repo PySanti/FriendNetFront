@@ -5,13 +5,7 @@
     height: 10vh;
     gap: 50px;
 }
-.message-counter{
-    display: flex;
-    justify-content: center;
-    width: 3vw;
-    align-self: center;
-    font-size: var(--base-button-font-size);
-}
+
 
 @media screen and (max-width : 400px){
     .message-sending-input-container{

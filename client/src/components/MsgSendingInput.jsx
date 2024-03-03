@@ -16,14 +16,12 @@ export function MsgSendingInput({onMsgSending}){
     let clickedUser                                         = useClickedUser((state)=>state.clickedUser)
     let {register, handleSubmit, reset}                     = useForm()
     let [clickedUserWhenTyping, setClickedUserWhenTyping]   = useState(null)
-    let [lettersCount, setLettersCount]                     = useState(0)
     let [timeoutDB, setTimeoutDB]                           = useState({})
     let setChatScrollBtnPressed                             = useChatScrollBtnPressed((state)=>(state.setChatScrollBtnPressed))
     let chatScrollBtnActivated                              = useChatScrollBtnActivated((state)=>(state.chatScrollBtnActivated))
     const userData                                          = getUserDataFromLocalStorage()
     const resetInput = ()=>{
         reset()
-        setLettersCount(0)
     }
     const onSubmit                      = handleSubmit((data)=>{
         const new_msg = data.msg.trim()
@@ -43,7 +41,6 @@ export function MsgSendingInput({onMsgSending}){
         resetInput()
     }, [clickedUser])
     const handleMsgSendingInput = (e)=>{
-        setLettersCount(e.target.value.length)
         setClickedUserWhenTyping(clickedUser)
         if (timeoutDB[clickedUser.id]){
             clearTimeout(timeoutDB[clickedUser.id])
@@ -62,10 +59,6 @@ export function MsgSendingInput({onMsgSending}){
     }
     return (
         <div className="message-sending-input-container">
-
-            <div className="message-counter">
-                {lettersCount}/{BASE_MESSAGE_MAX_LENGTH}
-            </div>
             <form onChange = {handleMsgSendingInput} className="message-sending-form " onSubmit={onSubmit}>
                 <input 
                     placeholder="Envíale un mensaje" 
