@@ -25,7 +25,7 @@ export function ForgotPasswordPage(){
     const handleCodeInput = async (data)=>{
         let response = await toastedApiCall(async ()=>{
             return await checkSecurityCodeAPI(data.email, data.code)
-        }, "Validando código")
+        },navigate, "Validando código")
         if (response){
             if (response.status == 200){
                 toast.success("Código valido, modifica tu contraseña")
