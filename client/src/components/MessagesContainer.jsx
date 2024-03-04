@@ -27,7 +27,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     let [messagesHistorial, setMessagesHistorial]                       = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [setChatScrollBtnPressed, chatScrollBtnPressed]                 = useChatScrollBtnPressed((state)=>([state.setChatScrollBtnPressed,state.chatScrollBtnPressed]))
-    let setChatScrollBtnActivated                                       = useChatScrollBtnActivated((state)=>(state.setChatScrollBtnActivated))
+    let [chatScrollBtnActivated,setChatScrollBtnActivated]              = useChatScrollBtnActivated((state)=>([state.chatScrollBtnActivated,state.setChatScrollBtnActivated]))
 
     const loadMessages = async ()=>{
         const response = await nonToastedApiCall(async ()=>{
@@ -78,7 +78,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 // la ultima condicion se pone para evitar que se llame a la api cuando no se ha scrolleado
                 await loadMessages()
             }
-        } else if ((event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - (event.target.scrollHeight / 200))){
+        } else if ((event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - 20)){
             setChatScrollBtnActivated(false)
         }
     }
@@ -88,6 +88,14 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
             containerRef.current.scrollTop = containerRef.current.scrollHeight
         }
     }, [chatScrollBtnPressed])
+    useEffect(()=>{
+        if (chatScrollBtnActivated && containerRef.current){
+            if ((containerRef.current.scrollTop + containerRef.current.clientHeight) >= (containerRef.current.scrollHeight - 200)){
+                containerRef.current.scrollTop = containerRef.current.scrollHeight
+                setChatScrollBtnActivated(false)
+            }
+        }
+    }, [chatScrollBtnActivated])
 
     useEffect(()=>{
         if (containerRef.current && messagesHistorial.length <= BASE_MESSAGES_LIST_PAGE_SIZE){

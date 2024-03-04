@@ -6,6 +6,7 @@
     align-items: center;
     justify-content: center;
 }
+
 .messages-list-container{
     display: flex;
     padding-right: 5px;
@@ -13,6 +14,8 @@
     height: auto;
     width: 98%;
     overflow: scroll;
+    scroll-behavior: smooth;
+    min-height: 100%;
 }
 .messages-container__title{
     text-align: center;
