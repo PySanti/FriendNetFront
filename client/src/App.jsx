@@ -44,17 +44,13 @@ function App() {
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                          = useRef(null)
   const disconnect = ()=>{
-    if (!connectionLost){
       disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
       disconnectWebsocket(CHAT_WEBSOCKET)
       setConnectionLost(true)
-    }
   }
   const connect = ()=>{
-    if (connectionLost){
-      initStates(notifications, setNotifications)
-      setConnectionLost(false)
-    }
+    initStates(notifications, setNotifications)
+    setConnectionLost(false)
   }
   const audioEffect = ()=>{
     alertRef.current.volume = 0.1
