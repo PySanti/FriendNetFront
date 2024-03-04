@@ -75,7 +75,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         return <Message key={v4()} messageObj={msg}/>
     }
     const scrollHandler = async (e)=>{
-        if (e.target.scrollTop <= 5){
+        if (e.target.scrollTop <= 0){
             if (!noMoreMessages.current && thersScroll()){  
                 messagesHistorialPage.current += 1
                 // la ultima condicion se pone para evitar que se llame a la api cuando no se ha scrolleado
