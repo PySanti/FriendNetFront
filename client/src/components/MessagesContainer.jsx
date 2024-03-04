@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types"
 import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
-import { useEffect, useRef, useState} from "react"
+import { useEffect, useRef} from "react"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import { sendMsgAPI } from "../api/sendMsg.api"
@@ -11,7 +11,7 @@ import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store"
 import {useMessagesHistorial} from "../store"
-import {BASE_MESSAGES_LIST_PAGE_SIZE, BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
+import { BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
 import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 import {useChatScrollBtnPressed, useChatScrollBtnActivated, useGottaScrollChat} from "../store"
@@ -29,7 +29,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     let [setChatScrollBtnPressed, chatScrollBtnPressed]                 = useChatScrollBtnPressed((state)=>([state.setChatScrollBtnPressed,state.chatScrollBtnPressed]))
     let [chatScrollBtnActivated,setChatScrollBtnActivated]              = useChatScrollBtnActivated((state)=>([state.chatScrollBtnActivated,state.setChatScrollBtnActivated]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
-
+    const thersScroll = ()=>{
+        return containerRef.current.scrollHeight > containerRef.current.clientHeight
+    }
     const loadMessages = async ()=>{
         const response = await nonToastedApiCall(async ()=>{
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
@@ -73,8 +75,8 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         return <Message key={v4()} messageObj={msg}/>
     }
     const scrollHandler = async (e)=>{
-        if (e.target.scrollTop <= 0){
-            if (!noMoreMessages.current && messagesHistorial.length >= BASE_MESSAGES_LIST_PAGE_SIZE){  
+        if (e.target.scrollTop <= 5){
+            if (!noMoreMessages.current && thersScroll()){  
                 messagesHistorialPage.current += 1
                 // la ultima condicion se pone para evitar que se llame a la api cuando no se ha scrolleado
                 await loadMessages()
@@ -86,7 +88,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     useEffect(()=>{
         if (chatScrollBtnPressed){
             setChatScrollBtnPressed(false)
-            containerRef.current.scrollTop = containerRef.current.scrollHeight
+            setGottaScrollChat(true)
         }
     }, [chatScrollBtnPressed])
     useEffect(()=>{
@@ -100,7 +102,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
 
     useEffect(()=>{
         if (containerRef.current && gottaScrollChat){
-            if (containerRef.current.scrollHeight > containerRef.current.clientHeight){
+            if (thersScroll()){
                 containerRef.current.scrollTop = containerRef.current.scrollHeight
             }
             setGottaScrollChat(false)
@@ -110,7 +112,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (newMsg){
             (async function(){
                 await sendMsg(newMsg)
-                containerRef.current.scrollTop = containerRef.current.scrollHeight
+                setGottaScrollChat(true)
             })();
         }
     }, [newMsg])
