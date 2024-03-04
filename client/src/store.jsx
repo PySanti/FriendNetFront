@@ -114,4 +114,9 @@ export const useChatScrollBtnActivated = create((set)=>({
     setChatScrollBtnActivated: (new_val)=>(set(()=>({chatScrollBtnActivated : new_val}))),
 }))
 
+export const useGottaScrollChat = create((set)=>({
+    gottaScrollChat : false,
+    setGottaScrollChat: (new_val)=>(set(()=>({gottaScrollChat : new_val}))),
+}))
+
 

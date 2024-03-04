@@ -7,7 +7,7 @@ import {NOTIFICATIONS_WEBSOCKET, BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../u
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useClickedUser} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
-import {useChatScrollBtnPressed, useChatScrollBtnActivated} from "../store"
+import {useChatScrollBtnPressed, useChatScrollBtnActivated, useGottaScrollChat} from "../store"
 /**
  * Input creado para el envio de mensajes
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
@@ -19,6 +19,7 @@ export function MsgSendingInput({onMsgSending}){
     let [timeoutDB, setTimeoutDB]                           = useState({})
     let setChatScrollBtnPressed                             = useChatScrollBtnPressed((state)=>(state.setChatScrollBtnPressed))
     let chatScrollBtnActivated                              = useChatScrollBtnActivated((state)=>(state.chatScrollBtnActivated))
+    let setGottaScrollChat                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
     const userData                                          = getUserDataFromLocalStorage()
     const resetInput = ()=>{
         reset()
@@ -28,7 +29,9 @@ export function MsgSendingInput({onMsgSending}){
         if (new_msg.length > 0){
             onMsgSending(data)
             resetInput()
+            setGottaScrollChat(true)
         }
+
     })
 
     useEffect(()=>{

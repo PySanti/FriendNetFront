@@ -20,7 +20,7 @@ import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotification
 import {useLastClickedUser, useTypingDB} from "../store"
 import "../styles/Chat.css"
 import {logoutUser} from "../utils/logoutUser"
-import {useExecutingInSmallDevice, useChatScrollBtnActivated} from "../store"
+import {useExecutingInSmallDevice, useChatScrollBtnActivated, useGottaScrollChat} from "../store"
 
 
 /**
@@ -37,7 +37,8 @@ export function Chat(){
     let executingInSmallDevice                                              = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
-    let setChatScrollBtnActivated                                       = useChatScrollBtnActivated((state)=>(state.setChatScrollBtnActivated))
+    let setChatScrollBtnActivated                                           = useChatScrollBtnActivated((state)=>(state.setChatScrollBtnActivated))
+    let setGottaScrollChat                                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
     const userData                                                          = getUserDataFromLocalStorage()
     const navigate                                                          = useNavigate()
@@ -56,6 +57,7 @@ export function Chat(){
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
+                setGottaScrollChat(true)
                 clickedUser.is_online = response.data.is_online
                 if (relatedNotification && response.data.notification_deleted){
                     removeAndUpdateNotifications(relatedNotification, setNotifications)
