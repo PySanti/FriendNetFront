@@ -119,4 +119,13 @@ export const useGottaScrollChat = create((set)=>({
     setGottaScrollChat: (new_val)=>(set(()=>({gottaScrollChat : new_val}))),
 }))
 
+export const useConnectionLost = create((set)=>({
+    connectionLost : false,
+    setConnectionLost: (new_val)=>(set(()=>({connectionLost : new_val}))),
+}))
+
+
+
+
+
 

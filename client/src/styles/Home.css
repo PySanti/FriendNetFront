@@ -42,7 +42,13 @@
     border-radius :10px;
     border : 1px solid var(--base-letter-color);
 }
-
+.no-connection{
+    font-size: var(--base-input-font-size);
+    display: flex;
+    align-items : center;
+    justify-content: center;
+    border : none;
+}
 
 .small-interface > *{
     width: 100%;

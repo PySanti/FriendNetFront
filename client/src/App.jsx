@@ -10,15 +10,16 @@ import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 import {useEffect} from "react"
-import {ChatWSGroupDeleteMsg} from "./utils/ChatWSGroupDeleteMsg"
-import {resetGlobalStates} from "./utils/resetGlobalStates"
 import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH, CHAT_WEBSOCKET} from "./utils/constants"
+import {NotificationsWSInitialize} from "./utils/NotificationsWSInitialize"
+import {disconnectWebsocket} from "./utils/disconnectWebsocket"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
 import {logoutUser} from "./utils/logoutUser"
 import {Page404} from "./pages/Page404"
 import {shiftUser} from "./utils/shiftUser"
+import {resetGlobalStates} from "./utils/resetGlobalStates"
 import * as states from "./store"
 import {initStates} from "./utils/initStates"
 import alert from "./sounds/alert.mp3"
@@ -39,6 +40,7 @@ function App() {
   let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
+  let setConnectionLost                 = states.useConnectionLost((state)=>(state.setConnectionLost))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                          = useRef(null)
   const audioEffect = ()=>{
@@ -46,6 +48,16 @@ function App() {
     alertRef.current.play()
   }
   useEffect(()=>{
+    document.addEventListener("visibilitychange", function() {
+      if (document.hidden){
+        disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+        disconnectWebsocket(CHAT_WEBSOCKET)
+        setConnectionLost(true)
+      } else {
+        initStates(notifications, setNotifications)
+        setConnectionLost(false)
+      }
+    });
     initStates(notifications, setNotifications)
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)

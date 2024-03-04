@@ -10,7 +10,7 @@ import { Button } from "../components/Button"
 import "../styles/Home.css"
 // import { destroy } from 'zustand';
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {useExecutingInSmallDevice} from "../store"
+import {useExecutingInSmallDevice, useConnectionLost} from "../store"
 import {resetChats} from "../utils/resetChats"
 
 /**
@@ -18,7 +18,8 @@ import {resetChats} from "../utils/resetChats"
  */
 export function Home() {
     const navigate                      = useNavigate()
-    let executingInSmallDevice        = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
+    let executingInSmallDevice          = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
+    let connectionLost                  = useConnectionLost((state)=>(state.connectionLost))
     useEffect(()=>{
         document.title = generateDocumentTitle("Home")
         return ()=>{
@@ -38,8 +39,17 @@ export function Home() {
                     <NotificationsContainer/>
                 </div>
                 <div className={executingInSmallDevice? "users-interface-container small-interface" : "users-interface-container"}>
-                    <UsersList/>
-                    <Chat/>
+                    {
+                        !connectionLost ?
+                        <>
+                            <UsersList/>
+                            <Chat/>
+                        </>
+                        :
+                        <h3 className="no-connection">
+                            Sin conexión
+                        </h3>
+                    }
                 </div>
             </div>
         )
