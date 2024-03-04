@@ -90,7 +90,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }, [chatScrollBtnPressed])
     useEffect(()=>{
         if (chatScrollBtnActivated && containerRef.current){
-            if ((containerRef.current.scrollTop + containerRef.current.clientHeight) >= (containerRef.current.scrollHeight - 200)){
+            if ((containerRef.current.scrollTop + containerRef.current.clientHeight) >= (containerRef.current.scrollHeight - 100)){
                 containerRef.current.scrollTop = containerRef.current.scrollHeight
                 setChatScrollBtnActivated(false)
             }
