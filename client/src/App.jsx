@@ -39,26 +39,45 @@ function App() {
   let [clickedUser, setClickedUser]     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
   let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
-  let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
-  let setConnectionLost                 = states.useConnectionLost((state)=>(state.setConnectionLost))
+  let [executingInSmallDevice, setExecutingInSmallDevice]         = states.useExecutingInSmallDevice((state)=>([state.executingInSmallDevice, state.setExecutingInSmallDevice]))
+  let [connectionLost, setConnectionLost]                 = states.useConnectionLost((state)=>([state.connectionLost, state.setConnectionLost]))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                          = useRef(null)
+  const disconnect = ()=>{
+    if (!connectionLost){
+      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+      disconnectWebsocket(CHAT_WEBSOCKET)
+      setConnectionLost(true)
+    }
+  }
+  const connect = ()=>{
+    if (connectionLost){
+      initStates(notifications, setNotifications)
+      setConnectionLost(false)
+    }
+  }
   const audioEffect = ()=>{
     alertRef.current.volume = 0.1
     alertRef.current.play()
   }
   useEffect(()=>{
-    document.addEventListener("visibilitychange", function() {
-      window.alert(document.hidden)
-      if (document.hidden){
-        disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-        disconnectWebsocket(CHAT_WEBSOCKET)
-        setConnectionLost(true)
-      } else {
-        initStates(notifications, setNotifications)
-        setConnectionLost(false)
-      }
+    if (executingInSmallDevice){
+      document.addEventListener("focus", ()=>{
+        connect()
+      })
+      document.addEventListener("blur", ()=>{
+        disconnect()
+      })
+    } else {
+      document.addEventListener("visibilitychange", function() {
+        if (document.hidden){
+          disconnect()
+        } else {
+          connect()
+        }
     });
+    }
+
     initStates(notifications, setNotifications)
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
