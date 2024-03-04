@@ -54,6 +54,7 @@ function App() {
         disconnectWebsocket(CHAT_WEBSOCKET)
         setConnectionLost(true)
       } else {
+        window.alert("Holaa")
         initStates(notifications, setNotifications)
         setConnectionLost(false)
       }
