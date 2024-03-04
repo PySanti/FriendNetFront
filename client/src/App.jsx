@@ -49,12 +49,12 @@ function App() {
   }
   useEffect(()=>{
     document.addEventListener("visibilitychange", function() {
+      window.alert(document.hidden)
       if (document.hidden){
         disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         disconnectWebsocket(CHAT_WEBSOCKET)
         setConnectionLost(true)
       } else {
-        window.alert("Holaa")
         initStates(notifications, setNotifications)
         setConnectionLost(false)
       }
