@@ -48,7 +48,7 @@ function App() {
     alertRef.current.play()
   }
   useEffect(()=>{
-    document.addEventListener("visibilitychange", function() {
+    window.addEventListener("visibilitychange", function() {
       if (document.visibilityState === "hidden"){
         disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         disconnectWebsocket(CHAT_WEBSOCKET)
