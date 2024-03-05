@@ -50,7 +50,9 @@ function App() {
   useEffect(()=>{
     initStates(notifications, setNotifications)
     document.onvisibilitychange = function() {
-      window.alert(document.visibilityState )
+      if (document.visibilityState === "visible"){
+        window.alert(NOTIFICATIONS_WEBSOCKET.current.readyState)
+      }
     };
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
