@@ -48,17 +48,6 @@ function App() {
     alertRef.current.play()
   }
   useEffect(()=>{
-    window.addEventListener("beforeunload", ()=>{
-      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-      disconnectWebsocket(CHAT_WEBSOCKET)
-      setConnectionLost(true)
-    })
-    window.addEventListener("visibilitychange", function() {
-      if (document.visibilityState !== "hidden"){
-        initStates(notifications, setNotifications)
-        setConnectionLost(false)
-      }
-    });
     initStates(notifications, setNotifications)
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
