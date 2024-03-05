@@ -11,11 +11,7 @@
     padding-right: .4rem;
     flex-direction: column;
 }
-.users-list-loader{
-    display: flex;
-    justify-content : center;
-    opacity: 0;
-}
+
 .no-users-msg{
     display: flex;
     align-items : center;
@@ -25,21 +21,12 @@
     padding: 0 .5rem 0 .5rem;
     font-size: var(--user-list-font-size);
 }
-.users-list-loader__activated{
-    opacity: 1;
-}
 
-.users-list-loader > *{
-    width:3vw;
-}
 
 
 @media screen and (max-width : 1000px){
     .users-list{
         width: 40%;
-    }
-    .users-list-loader > *{
-        width:10vw;
     }
 }
 
@@ -47,9 +34,6 @@
 @media screen and (max-width : 300px){
     .users-list{
         --user-list-font-size : 12px
-    }
-    .users-list-loader > *{
-        width:15vw;
     }
 }
 
