@@ -104,14 +104,9 @@ export const useDefaultDarkModeActivated  = create((set)=>({
     reset : ()=>(set(()=>({defaultDarkModeActivated: false})))
 }))
 
-export const useChatScrollBtnPressed = create((set)=>({
-    chatScrollBtnPressed : false,
-    setChatScrollBtnPressed: (new_val)=>(set(()=>({chatScrollBtnPressed : new_val}))),
-}))
-
-export const useChatScrollBtnActivated = create((set)=>({
-    chatScrollBtnActivated : false,
-    setChatScrollBtnActivated: (new_val)=>(set(()=>({chatScrollBtnActivated : new_val}))),
+export const useMsgReceivedInChat = create((set)=>({
+    msgReceivedInChat : false,
+    setMsgReceivedInChat: (new_val)=>(set(()=>({msgReceivedInChat : new_val}))),
 }))
 
 export const useGottaScrollChat = create((set)=>({

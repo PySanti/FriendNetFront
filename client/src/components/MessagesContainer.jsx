@@ -14,7 +14,7 @@ import {useMessagesHistorial} from "../store"
 import { BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
 import {nonToastedApiCall} from "../utils/nonToastedApiCall"
-import {useChatScrollBtnPressed, useChatScrollBtnActivated, useGottaScrollChat} from "../store"
+import {useMsgReceivedInChat, useGottaScrollChat} from "../store"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
@@ -26,8 +26,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     let [messagesHistorial, setMessagesHistorial]                       = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
-    let [setChatScrollBtnPressed, chatScrollBtnPressed]                 = useChatScrollBtnPressed((state)=>([state.setChatScrollBtnPressed,state.chatScrollBtnPressed]))
-    let [chatScrollBtnActivated,setChatScrollBtnActivated]              = useChatScrollBtnActivated((state)=>([state.chatScrollBtnActivated,state.setChatScrollBtnActivated]))
+    let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
     const thersScroll = ()=>{
         return containerRef.current.scrollHeight > containerRef.current.clientHeight
@@ -82,23 +81,18 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 await loadMessages()
             }
         } else if ((event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - 20)){
-            setChatScrollBtnActivated(false)
+            setMsgReceivedInChat(false)
         }
     }
+
     useEffect(()=>{
-        if (chatScrollBtnPressed){
-            setChatScrollBtnPressed(false)
-            setGottaScrollChat(true)
-        }
-    }, [chatScrollBtnPressed])
-    useEffect(()=>{
-        if (chatScrollBtnActivated && containerRef.current){
+        if (msgReceivedInChat && containerRef.current){
             if ((containerRef.current.scrollTop + containerRef.current.clientHeight) >= (containerRef.current.scrollHeight - 200)){
                 setGottaScrollChat(true)
-                setChatScrollBtnActivated(false)
+                setMsgReceivedInChat(false)
             }
         }
-    }, [chatScrollBtnActivated])
+    }, [msgReceivedInChat])
 
     useEffect(()=>{
         if (containerRef.current && gottaScrollChat){

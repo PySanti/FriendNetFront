@@ -7,7 +7,7 @@ import {NOTIFICATIONS_WEBSOCKET, BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../u
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useClickedUser} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
-import {useChatScrollBtnPressed, useChatScrollBtnActivated} from "../store"
+import {useMsgReceivedInChat, useGottaScrollChat} from "../store"
 /**
  * Input creado para el envio de mensajes
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
@@ -17,8 +17,8 @@ export function MsgSendingInput({onMsgSending}){
     let {register, handleSubmit, reset}                     = useForm()
     let [clickedUserWhenTyping, setClickedUserWhenTyping]   = useState(null)
     let [timeoutDB, setTimeoutDB]                           = useState({})
-    let setChatScrollBtnPressed                             = useChatScrollBtnPressed((state)=>(state.setChatScrollBtnPressed))
-    let chatScrollBtnActivated                              = useChatScrollBtnActivated((state)=>(state.chatScrollBtnActivated))
+    let setGottaScrollChat                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
+    let msgReceivedInChat                                   = useMsgReceivedInChat((state)=>(state.msgReceivedInChat))
     const userData                                          = getUserDataFromLocalStorage()
     const resetInput = ()=>{
         reset()
@@ -69,7 +69,7 @@ export function MsgSendingInput({onMsgSending}){
                     minLength={1} 
                     {...register("msg")}/>
             </form>
-            <span className={chatScrollBtnActivated ? "material-symbols-outlined chat-scroll chat-scroll__activated" : "material-symbols-outlined chat-scroll" } onClick={()=>{setChatScrollBtnPressed(true)}}>
+            <span className={msgReceivedInChat ? "material-symbols-outlined chat-scroll chat-scroll__activated" : "material-symbols-outlined chat-scroll" } onClick={()=>{setGottaScrollChat(true)}}>
                 expand_circle_down
             </span>
 

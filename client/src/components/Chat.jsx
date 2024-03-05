@@ -20,7 +20,7 @@ import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotification
 import {useLastClickedUser, useTypingDB} from "../store"
 import "../styles/Chat.css"
 import {logoutUser} from "../utils/logoutUser"
-import {useExecutingInSmallDevice, useChatScrollBtnActivated, useGottaScrollChat} from "../store"
+import {useExecutingInSmallDevice, useMsgReceivedInChat, useGottaScrollChat} from "../store"
 
 
 /**
@@ -37,7 +37,7 @@ export function Chat(){
     let executingInSmallDevice                                              = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
-    let setChatScrollBtnActivated                                           = useChatScrollBtnActivated((state)=>(state.setChatScrollBtnActivated))
+    let setMsgReceivedInChat                                                = useMsgReceivedInChat((state)=>(state.setMsgReceivedInChat))
     let setGottaScrollChat                                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
     const userData                                                          = getUserDataFromLocalStorage()
@@ -97,7 +97,7 @@ export function Chat(){
                 if (data.type === "message_broadcast"){
                     if (Number(data.value.parent_id) !== Number(userData.id)){
                         setMessagesHistorial([...messagesHistorial, data.value])
-                        setChatScrollBtnActivated(true)
+                        setMsgReceivedInChat(true)
                     }
                 } else if (data.type === "connection_inform"){
                     if (data.value.user_id == clickedUser.id){
