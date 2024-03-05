@@ -49,6 +49,9 @@ function App() {
   }
   useEffect(()=>{
     initStates(notifications, setNotifications)
+    document.onvisibilitychange = function() {
+      window.alert(document.visibilityState )
+    };
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
