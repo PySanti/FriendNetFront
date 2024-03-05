@@ -48,12 +48,13 @@ function App() {
     alertRef.current.play()
   }
   useEffect(()=>{
+    window.addEventListener("beforeunload", ()=>{
+      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+      disconnectWebsocket(CHAT_WEBSOCKET)
+      setConnectionLost(true)
+    })
     window.addEventListener("visibilitychange", function() {
-      if (document.visibilityState === "hidden"){
-        disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-        disconnectWebsocket(CHAT_WEBSOCKET)
-        setConnectionLost(true)
-      } else {
+      if (document.visibilityState !== "hidden"){
         initStates(notifications, setNotifications)
         setConnectionLost(false)
       }
