@@ -47,12 +47,7 @@ function App() {
     initStates(notifications, setNotifications)
     document.onvisibilitychange = function() {
       if (document.visibilityState === "visible"){
-        try{
-          NOTIFICATIONS_WEBSOCKET.current.send("prueba")
-          window.alert("Websocket activo")
-        } catch{
-          window.alert("Websocket caído")
-        }
+        //
       }
     };
     window.addEventListener('resize', ()=>{
