@@ -10,16 +10,13 @@ import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 import {useEffect} from "react"
-import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH, CHAT_WEBSOCKET} from "./utils/constants"
-import {NotificationsWSInitialize} from "./utils/NotificationsWSInitialize"
-import {disconnectWebsocket} from "./utils/disconnectWebsocket"
+import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH} from "./utils/constants"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
 import {logoutUser} from "./utils/logoutUser"
 import {Page404} from "./pages/Page404"
 import {shiftUser} from "./utils/shiftUser"
-import {resetGlobalStates} from "./utils/resetGlobalStates"
 import * as states from "./store"
 import {initStates} from "./utils/initStates"
 import alert from "./sounds/alert.mp3"
@@ -40,7 +37,6 @@ function App() {
   let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
-  let setConnectionLost                 = states.useConnectionLost((state)=>(state.setConnectionLost))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                          = useRef(null)
   const audioEffect = ()=>{
@@ -51,7 +47,12 @@ function App() {
     initStates(notifications, setNotifications)
     document.onvisibilitychange = function() {
       if (document.visibilityState === "visible"){
-        window.alert(NOTIFICATIONS_WEBSOCKET.current.readyState)
+        try{
+          NOTIFICATIONS_WEBSOCKET.current.send("prueba")
+          window.alert("Websocket activo")
+        } catch{
+          window.alert("Websocket caído")
+        }
       }
     };
     window.addEventListener('resize', ()=>{
