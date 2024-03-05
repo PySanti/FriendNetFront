@@ -57,9 +57,7 @@ export function UsersList(){
     }
     const loadUsersList = async (page)=>{
         callingUsersList.current = true
-        if (page > 1 ){
-            setLoaderActivated(true)
-        }
+        setLoaderActivated(true)
         const response = await nonToastedApiCall(async ()=>{
             return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, page)
         }, navigate, 'Cargando lista de usuarios, espere', 10000)
@@ -88,7 +86,6 @@ export function UsersList(){
     useEffect(()=>{
         if (userIsAuthenticated()  && !firstUsersListCall){
             (async function() {
-                setLoaderActivated(true)
                 await loadUsersList(1)
                 setUsersListPage(2)
                 setFirstUsersListCall(true)
