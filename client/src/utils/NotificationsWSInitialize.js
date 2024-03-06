@@ -16,11 +16,11 @@ export function NotificationsWSInitialize(userId){
             NOTIFICATIONS_WEBSOCKET.current.onclose = ()=>{
                 resetGlobalStates(undefined)
             }
-            const intervalId = setInterval(() => {
+            NOTIFICATIONS_WEBSOCKET.intervalId = setInterval(() => {
                 if (NOTIFICATIONS_WEBSOCKET.current){
                     NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({"type" : "ping"}))
                 } else {
-                    clearInterval(intervalId)
+                    clearInterval(NOTIFICATIONS_WEBSOCKET.intervalId)
                 }
             }, 3000);
         }

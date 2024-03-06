@@ -111,6 +111,7 @@ function App() {
           lastPong.current = currentLastPong
           setTimeout(() => {
             if ((lastPong.current === currentLastPong) && getUserDataFromLocalStorage()){
+              clearInterval(NOTIFICATIONS_WEBSOCKET.intervalId)
               document.addEventListener("visibilitychange", ()=>handleReconnection(true))
             }
           }, 4000);
