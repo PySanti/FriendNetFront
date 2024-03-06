@@ -57,12 +57,7 @@ function App() {
     })
     window.addEventListener("visibilitychange", ()=>{
       if (document.visibilityState === "visible"){
-        if (connectionLost){
-          window.alert("Conexión perdida")
-          setConnectionLost(false)
-        } else {
-          window.alert("La conexión sigue en pie")
-        }
+        window.alert("Conexion normal")
       }
     })
   }, [])
@@ -108,7 +103,11 @@ function App() {
           lastPong.current = currentLastPong
           setTimeout(() => {
             if (lastPong.current === currentLastPong){
-              setConnectionLost(true)
+              document.addEventListener("visibilitychange", ()=>{
+                if (document.visibilityState === "visible"){
+                  window.alert("Conexion perdida")
+                }
+              })
             }
           }, 4000);
         }
