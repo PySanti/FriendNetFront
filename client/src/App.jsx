@@ -108,9 +108,7 @@ function App() {
           lastPong.current = currentLastPong
           setTimeout(() => {
             if (lastPong.current === currentLastPong){
-              if (getUserDataFromLocalStorage()){ // si el usuario sigue logueado
-                setConnectionLost(true)
-              }
+              setConnectionLost(true)
             }
           }, 4000);
         }
