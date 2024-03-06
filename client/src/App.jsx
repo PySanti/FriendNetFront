@@ -60,19 +60,7 @@ function App() {
   useEffect(()=>{
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
-        if (event.data == "pong"){
-          window.alert("pong")
-          const currentLastPong = new Date()
-          lastPong.current = currentLastPong
-          setTimeout(() => {
-            if (lastPong.current === currentLastPong){
-              window.alert("Error")
-              logoutUser()
-            }
-          }, 4000);
-        } else {
         const data = JSON.parse(event.data)
-        console.log(data)
         if (data.type == "new_notification"){
             if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
               audioEffect()
@@ -104,9 +92,18 @@ function App() {
             typingDB[data.value.user_id] = data.value.typing
             setTypingDB(typingDB)
           }
+        } else if (data.type === "pong"){
+          window.alert("pong")
+          const currentLastPong = new Date()
+          lastPong.current = currentLastPong
+          setTimeout(() => {
+            if (lastPong.current === currentLastPong){
+              window.alert("Error")
+              logoutUser()
+            }
+          }, 4000);
         }
       }
-    }
   }
   }, [notifications, usersList, clickedUser])
 
