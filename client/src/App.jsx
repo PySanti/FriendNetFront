@@ -46,6 +46,18 @@ function App() {
     alertRef.current.volume = 0.1
     alertRef.current.play()
   }
+  const handleReconnection = (disconnectedWebsocket)=>{
+    if (document.visibilityState === "visible"){
+      window.alert(disconnectedWebsocket ? "Reconectando" : "Sin reconectar, no hace falta")
+      if (disconnectedWebsocket){
+        disconnectWebsocket(CHAT_WEBSOCKET)
+        disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+        resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
+        initStates(notifications, setNotifications)
+        document.addEventListener("visibilitychange", ()=>handleReconnection(false))
+      }
+    }
+  }
   useEffect(()=>{
     initStates(notifications, setNotifications)
     window.addEventListener('resize', ()=>{
@@ -99,14 +111,7 @@ function App() {
           lastPong.current = currentLastPong
           setTimeout(() => {
             if (lastPong.current === currentLastPong){
-              document.addEventListener("visibilitychange", ()=>{
-                if (document.visibilityState === "visible"){
-                  disconnectWebsocket(CHAT_WEBSOCKET)
-                  disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-                  resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
-                  initStates(notifications, setNotifications)
-                }
-              })
+              document.addEventListener("visibilitychange", ()=>handleReconnection(true))
             }
           }, 4000);
         }
