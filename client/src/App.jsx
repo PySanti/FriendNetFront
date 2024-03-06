@@ -10,7 +10,7 @@ import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 import {useEffect} from "react"
-import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH} from "./utils/constants"
+import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH, CHAT_WEBSOCKET} from "./utils/constants"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
@@ -21,7 +21,9 @@ import * as states from "./store"
 import {initStates} from "./utils/initStates"
 import alert from "./sounds/alert.mp3"
 import {DarkModeButton} from "./components/DarkModeButton"
-import {useRef, useState} from "react"
+import {useRef} from "react"
+import {resetGlobalStates} from "./utils/resetGlobalStates"
+import {disconnectWebsocket} from "./utils/disconnectWebsocket"
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
@@ -38,7 +40,6 @@ function App() {
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
-  let [connectionLost, setConnectionLost] = useState(false)
   let alertRef                          = useRef(null)
   let lastPong                          = useRef(null)
   const audioEffect = ()=>{
@@ -54,11 +55,6 @@ function App() {
       if (getUserDataFromLocalStorage()){
         logoutUser()
       } 
-    })
-    window.addEventListener("visibilitychange", ()=>{
-      if (document.visibilityState === "visible"){
-        window.alert("Conexion normal")
-      }
     })
   }, [])
 
@@ -105,7 +101,10 @@ function App() {
             if (lastPong.current === currentLastPong){
               document.addEventListener("visibilitychange", ()=>{
                 if (document.visibilityState === "visible"){
-                  window.alert("Conexion perdida")
+                  disconnectWebsocket(CHAT_WEBSOCKET)
+                  disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+                  resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
+                  initStates(notifications, setNotifications)
                 }
               })
             }
