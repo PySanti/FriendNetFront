@@ -10,12 +10,15 @@ export function NotificationsWSInitialize(userId){
         NOTIFICATIONS_WEBSOCKET.current = new WebSocket(NOTIFICATIONS_WEBSOCKET_ENDPOINT + `${userId}/`)
         NOTIFICATIONS_WEBSOCKET.current.onopen = ()=>{
             console.log('Estableciendo conexion')
+            NOTIFICATIONS_WEBSOCKET.current.onerror = ()=>{
+                window.alert("Error con websocket")
+            }
             NOTIFICATIONS_WEBSOCKET.current.onclose = ()=>{
                 resetGlobalStates(undefined)
             }
             const intervalId = setInterval(() => {
                 if (NOTIFICATIONS_WEBSOCKET.current){
-                    NOTIFICATIONS_WEBSOCKET.current.send("ping")
+                    NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({"type" : "ping"}))
                     console.log("Enviando ping")
                 } else {
                     clearInterval(intervalId)

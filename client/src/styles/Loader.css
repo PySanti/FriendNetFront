@@ -29,15 +29,25 @@
         width:10vw;
     }
     .big-loader > *{
-        width: 20vw;
+        width: 13vw;
+    }
+}
+
+@media screen and (max-width : 600px){
+    .users-list-loader > *{
+        width:15vw;
+    }
+    .big-loader > *{
+        width: 17vw;
     }
 }
 
 
-@media screen and (max-width : 300px){
 
+
+@media screen and (max-width : 300px){
     .users-list-loader > *{
-        width:15vw;
+        width:20vw;
     }
     .big-loader > *{
         width: 25vw;
