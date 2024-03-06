@@ -16,6 +16,7 @@ export function NotificationsWSInitialize(userId){
             const intervalId = setInterval(() => {
                 if (NOTIFICATIONS_WEBSOCKET.current){
                     NOTIFICATIONS_WEBSOCKET.current.send("ping")
+                    console.log("Enviando ping")
                 } else {
                     clearInterval(intervalId)
                 }
