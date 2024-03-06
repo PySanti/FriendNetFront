@@ -50,8 +50,6 @@ function App() {
     if (document.visibilityState === "visible"){
       window.alert(disconnectedWebsocket ? "Reconectando" : "Sin reconectar, no hace falta")
       if (disconnectedWebsocket){
-        disconnectWebsocket(CHAT_WEBSOCKET)
-        disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
         resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
         initStates(notifications, setNotifications)
         document.addEventListener("visibilitychange", ()=>handleReconnection(false))
@@ -111,7 +109,8 @@ function App() {
           lastPong.current = currentLastPong
           setTimeout(() => {
             if ((lastPong.current === currentLastPong) && getUserDataFromLocalStorage()){
-              clearInterval(NOTIFICATIONS_WEBSOCKET.intervalId)
+              disconnectWebsocket(CHAT_WEBSOCKET)
+              disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
               document.addEventListener("visibilitychange", ()=>handleReconnection(true))
             }
           }, 4000);
