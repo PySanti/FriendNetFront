@@ -93,7 +93,6 @@ function App() {
             setTypingDB(typingDB)
           }
         } else if (data.type === "pong"){
-          window.alert("pong")
           const currentLastPong = new Date()
           lastPong.current = currentLastPong
           setTimeout(() => {
