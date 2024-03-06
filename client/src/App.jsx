@@ -61,7 +61,7 @@ function App() {
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
         if (event.data == "pong"){
-          console.log("pong")
+          window.alert("recibiendo pong")
           const currentLastPong = new Date()
           lastPong.current = currentLastPong
           setTimeout(() => {
