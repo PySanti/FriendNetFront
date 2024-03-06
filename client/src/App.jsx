@@ -94,6 +94,7 @@ function App() {
           }
         } else if (data.type === "pong"){
           const currentLastPong = new Date()
+          window.alert("pong")
           lastPong.current = currentLastPong
           setTimeout(() => {
             if (lastPong.current === currentLastPong){
