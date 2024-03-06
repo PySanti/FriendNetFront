@@ -41,22 +41,23 @@ function App() {
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                          = useRef(null)
+  let connectionLost                    = useRef(false)
   let lastPong                          = useRef(null)
   const audioEffect = ()=>{
     alertRef.current.volume = 0.1
     alertRef.current.play()
   }
-  const handleReconnection = (disconnectedWebsocket)=>{
-    if (document.visibilityState === "visible"){
-      window.alert(disconnectedWebsocket ? "Reconectando" : "Sin reconectar, no hace falta")
-      if (disconnectedWebsocket){
-        resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
-        initStates(notifications, setNotifications)
-        document.addEventListener("visibilitychange", ()=>handleReconnection(false))
-      }
-    }
-  }
   useEffect(()=>{
+    document.addEventListener("visibilitychange", ()=>{
+      if (document.visibilityState === "visible"){
+        window.alert(connectionLost.current ? "Reconectando" : "Sin reconectar, no hace falta")
+        if (connectionLost.current){
+          resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
+          initStates(notifications, setNotifications)
+          connectionLost.current = false
+        }
+      }
+    })
     initStates(notifications, setNotifications)
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
@@ -111,7 +112,7 @@ function App() {
             if ((lastPong.current === currentLastPong) && getUserDataFromLocalStorage()){
               disconnectWebsocket(CHAT_WEBSOCKET)
               disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-              document.addEventListener("visibilitychange", ()=>handleReconnection(true))
+              connectionLost.current = true
             }
           }, 4000);
         }
