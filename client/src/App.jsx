@@ -38,6 +38,7 @@ function App() {
   let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
+  let [connectionLost, setConnectionLost] = useState(false)
   let alertRef                          = useRef(null)
   let lastPong                          = useRef(null)
   const audioEffect = ()=>{
@@ -53,6 +54,16 @@ function App() {
       if (getUserDataFromLocalStorage()){
         logoutUser()
       } 
+    })
+    window.addEventListener("visibilitychange", ()=>{
+      if (document.visibilityState === "visible"){
+        if (connectionLost){
+          window.alert("Conexión perdida")
+          setConnectionLost(false)
+        } else {
+          window.alert("La conexión sigue en pie")
+        }
+      }
     })
   }, [])
 
@@ -94,12 +105,12 @@ function App() {
           }
         } else if (data.type === "pong"){
           const currentLastPong = new Date()
-          window.alert("pong")
           lastPong.current = currentLastPong
           setTimeout(() => {
             if (lastPong.current === currentLastPong){
-              window.alert("Error")
-              logoutUser()
+              if (getUserDataFromLocalStorage()){ // si el usuario sigue logueado
+                setConnectionLost(true)
+              }
             }
           }, 4000);
         }
