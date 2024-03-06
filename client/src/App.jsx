@@ -60,6 +60,7 @@ function App() {
   useEffect(()=>{
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
+        console.log(event.data)
         if (event.data == "pong"){
           console.log("pong")
           const currentLastPong = new Date()
