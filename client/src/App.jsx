@@ -21,7 +21,7 @@ import * as states from "./store"
 import {initStates} from "./utils/initStates"
 import alert from "./sounds/alert.mp3"
 import {DarkModeButton} from "./components/DarkModeButton"
-import {useRef} from "react"
+import {useRef, useState} from "react"
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
@@ -39,17 +39,13 @@ function App() {
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                          = useRef(null)
+  let lastPong                          = useRef(null)
   const audioEffect = ()=>{
     alertRef.current.volume = 0.1
     alertRef.current.play()
   }
   useEffect(()=>{
     initStates(notifications, setNotifications)
-    document.onvisibilitychange = function() {
-      if (document.visibilityState === "visible"){
-        //
-      }
-    };
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
@@ -64,6 +60,15 @@ function App() {
   useEffect(()=>{
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
+        if (event.data == "pong"){
+          const currentLastPong = new Date()
+          lastPong.current = currentLastPong
+          setTimeout(() => {
+            if (lastPong.current === currentLastPong){
+              logoutUser()
+            }
+          }, 4000);
+        } else {
         const data = JSON.parse(event.data)
         console.log(data)
         if (data.type == "new_notification"){
@@ -100,6 +105,7 @@ function App() {
         }
       }
     }
+  }
   }, [notifications, usersList, clickedUser])
 
 
