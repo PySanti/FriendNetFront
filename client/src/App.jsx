@@ -110,7 +110,7 @@ function App() {
           const currentLastPong = new Date()
           lastPong.current = currentLastPong
           setTimeout(() => {
-            if (lastPong.current === currentLastPong){
+            if ((lastPong.current === currentLastPong) && getUserDataFromLocalStorage()){
               document.addEventListener("visibilitychange", ()=>handleReconnection(true))
             }
           }, 4000);
