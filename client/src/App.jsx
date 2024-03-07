@@ -40,11 +40,14 @@ function App() {
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                          = useRef(null)
+  const reconnectWebsockets             = ()=>{
+    disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+    disconnectWebsocket(CHAT_WEBSOCKET)
+    initStates(notifications, setNotifications)
+  }
   const handleReconnection = ()=>{
     if (document.visibilityState === "visible"){
-      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-      disconnectWebsocket(CHAT_WEBSOCKET)
-      initStates(notifications, setNotifications)
+      reconnectWebsockets()
     }
   }
   const audioEffect = ()=>{
@@ -53,9 +56,7 @@ function App() {
   }
   useEffect(()=>{
     document.addEventListener("visibilitychange", handleReconnection)
-    disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-    disconnectWebsocket(CHAT_WEBSOCKET)
-    initStates(notifications, setNotifications)
+    reconnectWebsockets()
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
