@@ -43,21 +43,21 @@ function App() {
   let alertRef                          = useRef(null)
   let connectionLost                    = useRef(false)
   let lastPong                          = useRef(null)
+  const handleReconnection = ()=>{
+      if (document.visibilityState === "visible"){
+        window.alert(connectionLost.current ? "Reconectando" : "Sin reconectar, no hace falta")
+        if (connectionLost.current){
+          initStates(notifications, setNotifications)
+          connectionLost.current = false
+        }
+      }
+  }
   const audioEffect = ()=>{
     alertRef.current.volume = 0.1
     alertRef.current.play()
   }
   useEffect(()=>{
-    document.addEventListener("visibilitychange", ()=>{
-      if (document.visibilityState === "visible"){
-        window.alert(connectionLost.current ? "Reconectando" : "Sin reconectar, no hace falta")
-        if (connectionLost.current){
-          resetGlobalStates(["useClickedUser", "useLastClickedUser", "useMessagesHistorial"])
-          initStates(notifications, setNotifications)
-          connectionLost.current = false
-        }
-      }
-    })
+    document.addEventListener("visibilitychange", handleReconnection)
     initStates(notifications, setNotifications)
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
@@ -67,6 +67,9 @@ function App() {
         logoutUser()
       } 
     })
+    return ()=>{
+      document.removeEventListener("visibilitychange", handleReconnection)
+    }
   }, [])
 
 
@@ -106,12 +109,14 @@ function App() {
             setTypingDB(typingDB)
           }
         } else if (data.type === "pong"){
+          console.log("recibiendo pong")
           const currentLastPong = new Date()
           lastPong.current = currentLastPong
           setTimeout(() => {
             if ((lastPong.current === currentLastPong) && getUserDataFromLocalStorage()){
-              disconnectWebsocket(CHAT_WEBSOCKET)
+              clearInterval(NOTIFICATIONS_WEBSOCKET.intervalId)
               disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+              disconnectWebsocket(CHAT_WEBSOCKET)
               connectionLost.current = true
             }
           }, 4000);

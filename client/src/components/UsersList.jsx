@@ -91,7 +91,7 @@ export function UsersList(){
                 setFirstUsersListCall(true)
             })()
         }
-    }, [])
+    }, [firstUsersListCall])
     useEffect(()=>{
         if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
             (async function(){
