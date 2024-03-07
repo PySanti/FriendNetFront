@@ -113,25 +113,25 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages,
     }, [newMsg])
     return (
         <div className="messages-container">
-            {messagesHistorial.length !== 0 ?  
-                <div className="messages-list-container scrollbar-container" ref={containerRef} onScroll={scrollHandler}>
-                    {messagesHistorial.map(formatingFunction)}
-                </div>
+            {
+                msgContainerLoaderActivated ?
+                <Loader big loaderActivated={msgContainerLoaderActivated}/>
                 :
                 <>
-                {
-                    msgContainerLoaderActivated ?
-                    <Loader big loaderActivated={msgContainerLoaderActivated}/>
-                    : 
-                    <h3 className="messages-container__title">
-                        {clickedUser?
-                            "No hay mensajes :("
-                            :
-                            "Selecciona un usuario para chatear"
-                        }
-                    </h3>
-                }
-                </> 
+                    {messagesHistorial.length !== 0 ?  
+                        <div className="messages-list-container scrollbar-container" ref={containerRef} onScroll={scrollHandler}>
+                            {messagesHistorial.map(formatingFunction)}
+                        </div>
+                        :
+                        <h3 className="messages-container__title">
+                            {clickedUser?
+                                "No hay mensajes :("
+                                :
+                                "Selecciona un usuario para chatear"
+                            }
+                        </h3>
+                    }
+                </>
             }
         </div>
     )
