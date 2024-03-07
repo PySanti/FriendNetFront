@@ -28,7 +28,7 @@ import {useExecutingInSmallDevice, useMsgReceivedInChat, useGottaScrollChat} fro
  * Contenedor unicamente del chat entre el session user y el clicked user
 */
 export function Chat(){
-
+    let [msgContainerLoaderActivated, setMsgContainerLoaderActivated]       = useState(false)
     let messagesHistorialPage                                               = useRef(1)
     let noMoreMessages                                                      = useRef(false)
     let [newMsg, setNewMsg]                                                 = useState(null)
@@ -50,10 +50,12 @@ export function Chat(){
         }
     }
     const enterChatHandler = async ()=>{
+        setMessagesHistorial([])
+        setMsgContainerLoaderActivated(true)
         const relatedNotification = notifications[clickedUser.id]
         const response = await nonToastedApiCall(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
-        }, navigate, 'Entrando al chat, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
+        }, navigate, 'Entrando al chat, espere', 10000)
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
@@ -80,6 +82,7 @@ export function Chat(){
                 toast.error("¡ Error inesperado entrando al chat !")
             }
         }
+        setMsgContainerLoaderActivated(false)
     }
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
@@ -116,7 +119,7 @@ export function Chat(){
     return (
         <div className={executingInSmallDevice? (clickedUser? "chat-container" : "chat-container not-displayed") : "chat-container"}>
             {clickedUser  && <ClickedUserHeader/>}
-            <MessagesContainer  newMsg={newMsg}   messagesHistorialPage={messagesHistorialPage}  noMoreMessages={noMoreMessages}  />
+            <MessagesContainer  newMsg={newMsg}   messagesHistorialPage={messagesHistorialPage}  noMoreMessages={noMoreMessages}  msgContainerLoaderActivated={msgContainerLoaderActivated}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)} />}
         </div>
     )

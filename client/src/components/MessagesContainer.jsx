@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types"
 import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
-import { useEffect, useRef} from "react"
+import { useEffect, useRef, useState} from "react"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import { sendMsgAPI } from "../api/sendMsg.api"
@@ -15,13 +15,14 @@ import { BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
 import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 import {useMsgReceivedInChat, useGottaScrollChat} from "../store"
+import {Loader} from "../components/Loader"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
  * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
  * @param {Object} messagesHistorialPage
  * @param {Object} noMoreMessages  
 */
-export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}){
+export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages, msgContainerLoaderActivated}){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
@@ -116,14 +117,21 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 <div className="messages-list-container scrollbar-container" ref={containerRef} onScroll={scrollHandler}>
                     {messagesHistorial.map(formatingFunction)}
                 </div>
-                : 
-                <h3 className="messages-container__title">
-                    {clickedUser?
-                        "No hay mensajes :("
-                        :
-                        "Selecciona un usuario para chatear"
-                    }
-                </h3>
+                :
+                <>
+                {
+                    msgContainerLoaderActivated ?
+                    <Loader big loaderActivated={msgContainerLoaderActivated}/>
+                    : 
+                    <h3 className="messages-container__title">
+                        {clickedUser?
+                            "No hay mensajes :("
+                            :
+                            "Selecciona un usuario para chatear"
+                        }
+                    </h3>
+                }
+                </> 
             }
         </div>
     )
@@ -133,4 +141,5 @@ MessagesContainer.propTypes = {
     newMsg : PropTypes.object,
     messagesHistorialPage : PropTypes.object.isRequired,
     noMoreMessages : PropTypes.object.isRequired,
+    msgContainerLoaderActivated : PropTypes.bool.isRequired
 }
