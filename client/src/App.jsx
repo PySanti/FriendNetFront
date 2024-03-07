@@ -53,6 +53,8 @@ function App() {
   }
   useEffect(()=>{
     document.addEventListener("visibilitychange", handleReconnection)
+    disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+    disconnectWebsocket(CHAT_WEBSOCKET)
     initStates(notifications, setNotifications)
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
