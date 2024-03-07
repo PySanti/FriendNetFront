@@ -51,7 +51,6 @@ export function Chat(){
     }
     const enterChatHandler = async ()=>{
         setMsgContainerLoaderActivated(true)
-        setMessagesHistorial([])
         const relatedNotification = notifications[clickedUser.id]
         const response = await nonToastedApiCall(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
