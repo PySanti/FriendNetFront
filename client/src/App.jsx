@@ -22,7 +22,6 @@ import {initStates} from "./utils/initStates"
 import alert from "./sounds/alert.mp3"
 import {DarkModeButton} from "./components/DarkModeButton"
 import {useRef} from "react"
-import {resetGlobalStates} from "./utils/resetGlobalStates"
 import {disconnectWebsocket} from "./utils/disconnectWebsocket"
 /**
 /**
@@ -41,16 +40,12 @@ function App() {
   let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                          = useRef(null)
-  let connectionLost                    = useRef(false)
-  let lastPong                          = useRef(null)
   const handleReconnection = ()=>{
-      if (document.visibilityState === "visible"){
-        window.alert(connectionLost.current ? "Reconectando" : "Sin reconectar, no hace falta")
-        if (connectionLost.current){
-          initStates(notifications, setNotifications)
-          connectionLost.current = false
-        }
-      }
+    if (document.visibilityState === "visible"){
+      disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
+      disconnectWebsocket(CHAT_WEBSOCKET)
+      initStates(notifications, setNotifications)
+    }
   }
   const audioEffect = ()=>{
     alertRef.current.volume = 0.1
@@ -108,19 +103,7 @@ function App() {
             typingDB[data.value.user_id] = data.value.typing
             setTypingDB(typingDB)
           }
-        } else if (data.type === "pong"){
-          console.log("recibiendo pong")
-          const currentLastPong = new Date()
-          lastPong.current = currentLastPong
-          setTimeout(() => {
-            if ((lastPong.current === currentLastPong) && getUserDataFromLocalStorage()){
-              clearInterval(NOTIFICATIONS_WEBSOCKET.intervalId)
-              disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-              disconnectWebsocket(CHAT_WEBSOCKET)
-              connectionLost.current = true
-            }
-          }, 4000);
-        }
+        } 
       }
   }
   }, [notifications, usersList, clickedUser])

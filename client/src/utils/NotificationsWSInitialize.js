@@ -13,15 +13,6 @@ export function NotificationsWSInitialize(userId){
             NOTIFICATIONS_WEBSOCKET.current.onclose = ()=>{
                 resetGlobalStates(undefined)
             }
-            NOTIFICATIONS_WEBSOCKET.intervalId = setInterval(() => {
-                if (NOTIFICATIONS_WEBSOCKET.current){
-                    console.log("enviando pong")
-                    NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({"type" : "ping"}))
-                } else {
-                    console.log("eliminando interval")
-                    clearInterval(NOTIFICATIONS_WEBSOCKET.intervalId)
-                }
-            }, 3000);
         }
     }
 }
