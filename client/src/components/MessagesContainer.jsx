@@ -14,7 +14,7 @@ import {useMessagesHistorial} from "../store"
 import { BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
 import {nonToastedApiCall} from "../utils/nonToastedApiCall"
-import {useMsgReceivedInChat, useGottaScrollChat} from "../store"
+import {useMsgReceivedInChat, useGottaScrollChat, useMessagesLoaderActivated} from "../store"
 import {Loader} from "../components/Loader"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -22,13 +22,14 @@ import {Loader} from "../components/Loader"
  * @param {Object} messagesHistorialPage
  * @param {Object} noMoreMessages  
 */
-export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages, msgContainerLoaderActivated}){
+export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}){
     const containerRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
     let [messagesHistorial, setMessagesHistorial]                       = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
+    let messagesLoaderActivated                                         = useMessagesLoaderActivated((state)=>(state.messagesLoaderActivated))
     const thersScroll = ()=>{
         return containerRef.current.scrollHeight > containerRef.current.clientHeight
     }
@@ -114,8 +115,8 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages,
     return (
         <div className="messages-container">
             {
-                msgContainerLoaderActivated ?
-                <Loader big loaderActivated={msgContainerLoaderActivated}/>
+                messagesLoaderActivated ?
+                <Loader big loaderActivated={messagesLoaderActivated}/>
                 :
                 <>
                     {messagesHistorial.length !== 0 ?  
@@ -141,5 +142,4 @@ MessagesContainer.propTypes = {
     newMsg : PropTypes.object,
     messagesHistorialPage : PropTypes.object.isRequired,
     noMoreMessages : PropTypes.object.isRequired,
-    msgContainerLoaderActivated : PropTypes.bool.isRequired
 }

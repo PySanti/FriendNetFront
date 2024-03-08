@@ -20,7 +20,7 @@ import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotification
 import {useLastClickedUser, useTypingDB} from "../store"
 import "../styles/Chat.css"
 import {logoutUser} from "../utils/logoutUser"
-import {useExecutingInSmallDevice, useMsgReceivedInChat, useGottaScrollChat} from "../store"
+import {useExecutingInSmallDevice, useMsgReceivedInChat, useGottaScrollChat, useMessagesLoaderActivated} from "../store"
 
 
 /**
@@ -28,7 +28,6 @@ import {useExecutingInSmallDevice, useMsgReceivedInChat, useGottaScrollChat} fro
  * Contenedor unicamente del chat entre el session user y el clicked user
 */
 export function Chat(){
-    let [msgContainerLoaderActivated, setMsgContainerLoaderActivated]       = useState(false)
     let messagesHistorialPage                                               = useRef(1)
     let noMoreMessages                                                      = useRef(false)
     let [newMsg, setNewMsg]                                                 = useState(null)
@@ -38,6 +37,7 @@ export function Chat(){
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     let setMsgReceivedInChat                                                = useMsgReceivedInChat((state)=>(state.setMsgReceivedInChat))
+    let setMessagesLoaderActivated                                          = useMessagesLoaderActivated((state)=>(state.setMessagesLoaderActivated))
     let setGottaScrollChat                                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
     const userData                                                          = getUserDataFromLocalStorage()
@@ -50,16 +50,15 @@ export function Chat(){
         }
     }
     const enterChatHandler = async ()=>{
-        setMessagesHistorial([])
-        setMsgContainerLoaderActivated(true)
+        setMessagesLoaderActivated(true)
         const relatedNotification = notifications[clickedUser.id]
         const response = await nonToastedApiCall(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
         }, navigate, 'Entrando al chat, espere', 10000)
         if (response){
             if (response.status == 200){
-                setMsgContainerLoaderActivated(false)
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
+                setMessagesLoaderActivated(false)
                 setGottaScrollChat(true)
                 clickedUser.is_online = response.data.is_online
                 if (relatedNotification && response.data.notification_deleted){
@@ -83,7 +82,7 @@ export function Chat(){
                 toast.error("¡ Error inesperado entrando al chat !")
             }
         }
-        setMsgContainerLoaderActivated(false)
+        setMessagesLoaderActivated(false)
     }
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
@@ -120,7 +119,7 @@ export function Chat(){
     return (
         <div className={executingInSmallDevice? (clickedUser? "chat-container" : "chat-container not-displayed") : "chat-container"}>
             {clickedUser  && <ClickedUserHeader/>}
-            <MessagesContainer  newMsg={newMsg}   messagesHistorialPage={messagesHistorialPage}  noMoreMessages={noMoreMessages}  msgContainerLoaderActivated={msgContainerLoaderActivated}/>
+            <MessagesContainer  newMsg={newMsg}   messagesHistorialPage={messagesHistorialPage}  noMoreMessages={noMoreMessages}/>
             {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)} />}
         </div>
     )
