@@ -30,10 +30,12 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
     let messagesLoaderActivated                                         = useMessagesLoaderActivated((state)=>(state.messagesLoaderActivated))
+    let callingMessagesPage                                             = useRef(false)
     const thersScroll = ()=>{
         return containerRef.current.scrollHeight > containerRef.current.clientHeight
     }
     const loadMessages = async ()=>{
+        callingMessagesPage.current = true
         const response = await nonToastedApiCall(async ()=>{
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
         }, navigate, 'Cargando mensajes, espere', 1000)
@@ -54,6 +56,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 toast.error('¡ Error inesperado cargando los mensajes !')
             }
         }
+        callingMessagesPage.current = false
     }
     const sendMsg = async (data)=>{
         const response = await nonToastedApiCall(async ()=>{
@@ -77,7 +80,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }
     const scrollHandler = async (e)=>{
         if (e.target.scrollTop <= 0){
-            if (!noMoreMessages.current && thersScroll()){  
+            if (!noMoreMessages.current && thersScroll() && !callingMessagesPage.current){  
                 messagesHistorialPage.current += 1
                 // la ultima condicion se pone para evitar que se llame a la api cuando no se ha scrolleado
                 await loadMessages()

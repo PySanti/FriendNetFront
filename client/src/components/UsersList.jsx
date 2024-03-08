@@ -122,7 +122,7 @@ export function UsersList(){
                         <Loader big loaderActivated={loaderActivated}/>
                         :
                         <div className="no-users-msg">
-                            No se han encontrado usuarios :(
+                            {firstUsersListCall && "No se han encontrado usuarios :(" }
                         </div>
                     }
                     </>
