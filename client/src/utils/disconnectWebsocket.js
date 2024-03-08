@@ -10,6 +10,7 @@ export function disconnectWebsocket(websocket){
         if (localStorage.getItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR)){
             // caso borde en el que el usuario se haya desconectado antes de los 600ms despues de haber escrito
             websocket.current.send(NotificationsWSTypingInformMsg(Number(localStorage.getItem("user_typing")), false))
+            localStorage.removeItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR)
         }
         websocket.current.close() 
         websocket.current = null
