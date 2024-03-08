@@ -19,6 +19,13 @@
     justify-content: start;
     align-items : center;
     font-size: var(--base-button-font-size);
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .2s;
+}
+
+.clicked-user__typing__activated{
+    opacity: 1;
 }
 
 .back-chat-button{
@@ -27,4 +34,18 @@
     cursor: pointer;
 }
 
+
+.clicked-user-online{
+    opacity: 0;
+    font-size: inherit;
+
+    transition: none;
+}
+
+.clicked-user-online__activated{
+    opacity: 1;
+
+    transition-property: opacity;
+    transition-duration: .1s;
+}
 
