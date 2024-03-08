@@ -50,6 +50,7 @@ export function Chat(){
         }
     }
     const enterChatHandler = async ()=>{
+        setMessagesHistorial([])
         setMsgContainerLoaderActivated(true)
         const relatedNotification = notifications[clickedUser.id]
         const response = await nonToastedApiCall(async ()=>{
@@ -57,6 +58,7 @@ export function Chat(){
         }, navigate, 'Entrando al chat, espere', 10000)
         if (response){
             if (response.status == 200){
+                setMsgContainerLoaderActivated(false)
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
                 setGottaScrollChat(true)
                 clickedUser.is_online = response.data.is_online
