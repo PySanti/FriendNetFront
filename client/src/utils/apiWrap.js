@@ -20,8 +20,8 @@ import {CALLING_DB} from "../utils/constants"
     En caso de que timer si se especifique (un tiempo en ms), el loading msg se mostrara
     timer milisegundos despues de la llamada
 */
-export function apiWrap(apiCalling, navigateFunc, loadingMsg, timer, apiId){
-    const execute = ()=>{
+export async function apiWrap(apiCalling, navigateFunc, loadingMsg, timer, apiId){
+    const execute = async ()=>{
         if (timer){
             return nonToastedApiCall(apiCalling, navigateFunc, loadingMsg, timer)
         } else {
@@ -30,7 +30,7 @@ export function apiWrap(apiCalling, navigateFunc, loadingMsg, timer, apiId){
     }
     if (apiId && !CALLING_DB[apiId]){
         CALLING_DB[apiId] = true
-        const response = execute()
+        const response = await execute()
         CALLING_DB[apiId] = false
         return response
     } else if (!apiId){
