@@ -56,7 +56,9 @@ export function NotificationsContainer(){
     return (
         <div className="notifications-container">
             <div className={notificationsActivated? `${baseNotificationsBellClassName} button_hovered` : baseNotificationsBellClassName} onClick={handleNotificationsBellClick}>
-                Notificaciones
+                <h4 className="notifications-container-title">
+                    Notificaciones
+                </h4>
                 <div className={notificationsActivated ? "notifications-list notifications-list__activated" : "notifications-list"}>
                     {
                         (notifications && Object.keys(notifications).length > 0) &&

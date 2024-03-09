@@ -6,7 +6,6 @@
     align-items: center;
     text-align: center;
     cursor: pointer;
-    border-radius : 10px;
 
 }
 .individual-notification-container:hover{
@@ -19,6 +18,8 @@
 }
 
 .individual-notification-delete-btn{
+    display: flex;
+    align-items : center;
     border: none;
     background-color: inherit;
     padding: 0 .3rem;
