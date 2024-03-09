@@ -16,7 +16,7 @@
 }
 
 
-@media screen and (max-width : 1000px){
+@media screen and (max-width : 1100px){
 .notifications-bell{
     width: 30vw;
 }
@@ -28,6 +28,14 @@
         width: 45vw;
     }
 }
+
+@media screen and (max-width : 300px){
+    .notifications-bell{
+        width: 70vw;
+    }
+}
+
+
 
 .notifications-container-title , .notifications-alert{
     font-size: var(--base-button-font-size);
