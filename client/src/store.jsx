@@ -121,14 +121,7 @@ export const useMessagesLoaderActivated = create((set)=>({
 }))
 
 
-
-
-
-
-
-
-
-
-
-
-
+export const useActivateNewMessageSound = create((set)=>({
+    activateNewMessageSound : false,
+    setActivateNewMessageSound: (new_val)=>(set(()=>({activateNewMessageSound : new_val}))),
+}))

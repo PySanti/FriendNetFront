@@ -20,7 +20,7 @@ import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotification
 import {useLastClickedUser, useTypingDB} from "../store"
 import "../styles/Chat.css"
 import {logoutUser} from "../utils/logoutUser"
-import {useExecutingInSmallDevice, useMsgReceivedInChat, useGottaScrollChat, useMessagesLoaderActivated} from "../store"
+import {useExecutingInSmallDevice, useMsgReceivedInChat, useGottaScrollChat, useMessagesLoaderActivated, useActivateNewMessageSound} from "../store"
 
 
 /**
@@ -37,6 +37,7 @@ export function Chat(){
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     let setMsgReceivedInChat                                                = useMsgReceivedInChat((state)=>(state.setMsgReceivedInChat))
+    let setActivateNewMessageSound                                          = useActivateNewMessageSound((state)=>(state.setActivateNewMessageSound))
     let setMessagesLoaderActivated                                          = useMessagesLoaderActivated((state)=>(state.setMessagesLoaderActivated))
     let setGottaScrollChat                                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
@@ -102,6 +103,7 @@ export function Chat(){
                     if (Number(data.value.parent_id) !== Number(userData.id)){
                         setMessagesHistorial([...messagesHistorial, data.value])
                         setMsgReceivedInChat(true)
+                        setActivateNewMessageSound(true)
                     }
                 } else if (data.type === "connection_inform"){
                     if (data.value.user_id == clickedUser.id){

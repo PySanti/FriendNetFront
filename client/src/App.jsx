@@ -20,6 +20,7 @@ import {shiftUser} from "./utils/shiftUser"
 import * as states from "./store"
 import {initStates} from "./utils/initStates"
 import alert from "./sounds/alert.mp3"
+import new_message from "./sounds/new_message.mp3"
 import {DarkModeButton} from "./components/DarkModeButton"
 import {useRef} from "react"
 import {disconnectWebsocket} from "./utils/disconnectWebsocket"
@@ -31,15 +32,17 @@ import {disconnectWebsocket} from "./utils/disconnectWebsocket"
  */
 
 function App() {
-  let [notifications, setNotifications] = states.useNotifications((state)=>([state.notifications, state.setNotifications]))
-  let [usersList, setUsersList]         = states.useUsersList((state)=>([state.usersList, state.setUsersList]))
-  let [typingDB, setTypingDB]           = states.useTypingDB((state)=>[state.typingDB, state.setTypingDB])
-  let [clickedUser, setClickedUser]     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
-  let setLastClickedUser                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
-  let [usersIdList, setUsersIdList]     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
-  let setExecutingInSmallDevice         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
-  let userKeyword                       = states.useUserKeyword((state)=>(state.userKeyword))
-  let alertRef                          = useRef(null)
+  let [notifications, setNotifications]                                 = states.useNotifications((state)=>([state.notifications, state.setNotifications]))
+  let [usersList, setUsersList]                                         = states.useUsersList((state)=>([state.usersList, state.setUsersList]))
+  let [typingDB, setTypingDB]                                           = states.useTypingDB((state)=>[state.typingDB, state.setTypingDB])
+  let [clickedUser, setClickedUser]                                     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+  let setLastClickedUser                                                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
+  let [usersIdList, setUsersIdList]                                     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
+  let setExecutingInSmallDevice                                         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
+  let userKeyword                                                       = states.useUserKeyword((state)=>(state.userKeyword))
+  let [activateNewMessageSound, setActivateNewMessageSound]             = states.useActivateNewMessageSound((state)=>([state.activateNewMessageSound, state.setActivateNewMessageSound]))
+  let alertRef                                                          = useRef(null)
+  let newMessageRef                                                     = useRef(null)
   const reconnectWebsockets             = ()=>{
     disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
     disconnectWebsocket(CHAT_WEBSOCKET)
@@ -53,6 +56,10 @@ function App() {
   const audioEffect = ()=>{
     alertRef.current.volume = 0.5
     alertRef.current.play()
+  }
+  const newMessageEffect = ()=>{
+    newMessageRef.current.volume = 0.5
+    newMessageRef.current.play()
   }
   useEffect(()=>{
     document.addEventListener("visibilitychange", handleReconnection)
@@ -69,6 +76,13 @@ function App() {
       document.removeEventListener("visibilitychange", handleReconnection)
     }
   }, [])
+
+  useEffect(()=>{
+    if (activateNewMessageSound){
+      setActivateNewMessageSound(false)
+      newMessageEffect()
+    }
+  }, [activateNewMessageSound])
 
 
   useEffect(()=>{
@@ -117,6 +131,10 @@ function App() {
     <audio ref={alertRef} src={alert} onEnded={()=>{
       alertRef.current.pause();
       alertRef.current.currentTime = 0; // Reiniciar la reproducción al principio
+    }}></audio>
+    <audio ref={newMessageRef} src={new_message} onEnded={()=>{
+      newMessageRef.current.pause();
+      newMessageRef.current.currentTime = 0; // Reiniciar la reproducción al principio
     }}></audio>
     <Toaster 
       position="bottom-right"
