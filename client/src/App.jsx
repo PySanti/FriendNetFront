@@ -51,7 +51,7 @@ function App() {
     }
   }
   const audioEffect = ()=>{
-    alertRef.current.volume = 0.1
+    alertRef.current.volume = 0.5
     alertRef.current.play()
   }
   useEffect(()=>{
