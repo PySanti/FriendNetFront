@@ -69,6 +69,9 @@ export function UsersList(){
                 toast.error("¡ Ha habido un error cargando la lista de usuarios !")
             }
         }
+        if (response == undefined){
+            return
+        }
         setLoaderActivated(false)
     }
     const formatingFunction = (user)=>{
