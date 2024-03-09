@@ -7,7 +7,7 @@ import { Notification } from "./Notification"
 import {useEffect} from "react"
 import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {nonToastedApiCall} from "../utils/nonToastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {useNotifications} from "../store"
@@ -28,7 +28,7 @@ export function NotificationsContainer(){
         }
     }
     const onNotificationDelete = async (notification)=>{
-        const response = await nonToastedApiCall(async ()=>{
+        const response = await apiWrap(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
         }, navigate, 'Eliminando notificación, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "notificationDelete")
         if (response){

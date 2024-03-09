@@ -16,8 +16,7 @@ import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_SECURITY_CODE_CONSTRAINTS} from "../utils/constants"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {toastedApiCall} from "../utils/toastedApiCall"
-import {nonToastedApiCall} from "../utils/nonToastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 import {checkSecurityCodeAPI} from "../api/checkSecurityCode.api"
 /**
  * Pagina creada para llevar activacion de cuenta
@@ -27,7 +26,7 @@ export function AccountActivation() {
     const navigate                                                          = useNavigate();
     const { register, handleSubmit, formState : {errors}}                  = useForm();
     const handleActivationCodeSending = async ()=>{
-        const response = await nonToastedApiCall(async ()=>{
+        const response = await apiWrap(async ()=>{
             return await generateSendSecurityCodeAPI(props.userEmail, `Activa tu cuenta`) 
         }, navigate, 'Enviando correo de activación, espere', 5000, "generateSendSecurityCode1")
         if (response){
@@ -39,15 +38,15 @@ export function AccountActivation() {
         }
     }
     const onSubmit = handleSubmit(async (data) => {
-        let response = await toastedApiCall(async ()=>{
+        let response = await apiWrap(async ()=>{
             return await checkSecurityCodeAPI(props.userEmail, data.activationCode); 
-        }, navigate, 'Revisando código', "checkSecurityCode1")
+        }, navigate, 'Revisando código', undefined,"checkSecurityCode1")
         if (response){
             if (response.status == 200){
                 toast.success("Código valido")
-                response = await toastedApiCall(async ()=>{
+                response = await apiWrap(async ()=>{
                     return await activateUserAPI(props.userId); 
-                }, navigate, 'Activando cuenta', "activateUser")
+                }, navigate, 'Activando cuenta', undefined, "activateUser")
                 if (response){
                     if (response.status == 200){
                         toast.success("Usuario activado con éxito, bienvenid@")

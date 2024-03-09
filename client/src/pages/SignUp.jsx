@@ -17,22 +17,21 @@ import { Button } from "../components/Button";
 import { v4 } from "uuid";
 import {BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {generateLocationProps} from "../utils/generateLocationProps"
-import {toastedApiCall} from "../utils/toastedApiCall"
-import {nonToastedApiCall} from "../utils/nonToastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 /**
  * Page creada para el registro de los usuarios
  */
 export function SignUp() {
     const navigate                                              = useNavigate()
     const onSignUp = async (data) =>{
-        let response = await toastedApiCall(async ()=>{
+        let response = await apiWrap(async ()=>{
             return await checkExistingUserAPI(data['username'], data['email'])
-        }, navigate, 'Creando usuario', "checkExistingUser")
+        }, navigate, 'Creando usuario', undefined, "checkExistingUser")
         if (response){
             if (response.status == 200){
                 if (!response.data.existing){
                     delete data.confirmPwd
-                    response = await nonToastedApiCall(async ()=>{
+                    response = await apiWrap(async ()=>{
                         return await createUsuarioAPI(data)
                     }, navigate, 'Almacenando datos del usuario en el servidor, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "createUser")
                     if (response){

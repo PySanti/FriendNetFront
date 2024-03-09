@@ -5,7 +5,7 @@ import {Form} from "../components/Form"
 import {Header} from "../components/Header"
 import { useForm } from "react-hook-form";
 import {BASE_EMAIL_CONSTRAINTS, BASE_SECURITY_CODE_CONSTRAINTS, BASE_PASSWORD_CONSTRAINTS} from "../utils/constants"
-import {toastedApiCall} from "../utils/toastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 import {generateSendSecurityCodeAPI} from "../api/generateSendSecurityCode.api"
 import {useNavigate} from "react-router-dom"
 import {Button} from "../components/Button"
@@ -23,9 +23,9 @@ export function ForgotPasswordPage(){
     const navigate = useNavigate()
     const {register, handleSubmit, formState: {errors}}  = useForm()
     const handleCodeInput = async (data)=>{
-        let response = await toastedApiCall(async ()=>{
+        let response = await apiWrap(async ()=>{
             return await checkSecurityCodeAPI(data.email, data.code)
-        },navigate, "Validando código", "checkSecurityCode2")
+        },navigate, "Validando código", undefined, "checkSecurityCode2")
         if (response){
             if (response.status == 200){
                 toast.success("Código valido, modifica tu contraseña")
@@ -40,9 +40,9 @@ export function ForgotPasswordPage(){
         }
     }
     const handleEmailInput = async (data)=>{
-        let response = await toastedApiCall(async ()=>{
+        let response = await apiWrap(async ()=>{
             return await generateSendSecurityCodeAPI(data.email, `Recupera tu cuenta`)
-        }, navigate, 'Buscando usuario', "generateSendSecurityCode2")
+        }, navigate, 'Buscando usuario', undefined, "generateSendSecurityCode2")
         if (response){
             if (response.status == 200){
                 toast.success('Correo de recuperación enviado')
@@ -57,9 +57,9 @@ export function ForgotPasswordPage(){
         }
     }
     const handleNewPasswordInput = async (data)=>{
-        let response = await toastedApiCall(async ()=>{
+        let response = await apiWrap(async ()=>{
             return await recoveryPasswordAPI(data.email, data.newPwd, data.code)
-        }, navigate, 'Modificando contraseña', "recoveryPassword")
+        }, navigate, 'Modificando contraseña', undefined, "recoveryPassword")
         if (response){
             if (response.status == 200){
                 toast.success("Contraseña modificada exitosamente")

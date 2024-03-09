@@ -13,7 +13,7 @@ import { UserLogged } from "./UserLogged";
 import { changeEmailForActivationAPI } from "../api/changeEmailForActivation.api";
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {toastedApiCall} from "../utils/toastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 /**
  * Page creada para la modificacion del Email para activacion 
  */
@@ -23,9 +23,9 @@ export function ChangeEmailForActivation(){
     const {register, handleSubmit, formState : {errors}}  = useForm()
     const onSubmit = handleSubmit(async (data)=>{
         if (data.email !== props.userEmail){
-            const response = await toastedApiCall(async ()=>{
+            const response = await apiWrap(async ()=>{
                 return await changeEmailForActivationAPI(props.userId, data.email) 
-            }, navigate, 'Modificando correo electrónico', "changeEmailForActivation")
+            }, navigate, 'Modificando correo electrónico', undefined, "changeEmailForActivation")
             if (response){
                 if (response.status == 200){
                     props.userEmail = data.email

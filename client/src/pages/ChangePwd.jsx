@@ -14,7 +14,7 @@ import { v4 } from "uuid";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {toastedApiCall} from "../utils/toastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 
 /**
  * Pagina creado para cambio de contraseña
@@ -24,9 +24,9 @@ export function ChangePwd(){
     const navigate = useNavigate()
     const changePwd = handleSubmit(async (data)=>{
         if (data['oldPwd'] !== data['newPwd']){
-            const response = await toastedApiCall(async ()=>{
+            const response = await apiWrap(async ()=>{
                 return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
-            }, navigate, 'Modificando contraseña', "changeUserPwd")
+            }, navigate, 'Modificando contraseña', undefined,"changeUserPwd")
             if (response){
                 if (response.status == 200){
                     toast.success("Contraseña modificada exitosamente")

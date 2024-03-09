@@ -16,7 +16,7 @@ import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
 import {useNavigate} from "react-router-dom"
-import {nonToastedApiCall} from "../utils/nonToastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 import {Loader} from "../components/Loader"
 
 /**
@@ -56,7 +56,7 @@ export function UsersList(){
     }
     const loadUsersList = async (page)=>{
         setLoaderActivated(true)
-        const response = await nonToastedApiCall(async ()=>{
+        const response = await apiWrap(async ()=>{
             return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, page)
         }, navigate, 'Cargando lista de usuarios, espere', 10000, "getUsersList")
         if (response){

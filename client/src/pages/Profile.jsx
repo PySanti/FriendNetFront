@@ -15,7 +15,7 @@ import { dataIsDiferent } from "../utils/dataIsDiferent";
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {toastedApiCall} from "../utils/toastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -28,9 +28,9 @@ export function Profile() {
         // el data.photo siempre sera: null, url de imagen actual, un archivo
         const sendingData = { ...data };
         if (dataIsDiferent(data, profileData)) { // lodash
-            const response = await toastedApiCall(async ()=>{
+            const response = await apiWrap(async ()=>{
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
-            }, navigate, 'Modificando perfil', "updateUserData")
+            }, navigate, 'Modificando perfil', undefined,"updateUserData")
             if (response){
                 if (response.status == 200){
                     setProfileData(response.data.user_data_updated);

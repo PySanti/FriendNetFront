@@ -3,7 +3,7 @@ import {useState, useEffect, useRef} from "react"
 import { MessagesContainer } from "./MessagesContainer"
 import { ClickedUserHeader } from "./ClickedUserHeader"
 import { MsgSendingInput } from "./MsgSendingInput"
-import {CHAT_WEBSOCKET, BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
+import {CHAT_WEBSOCKET} from "../utils/constants"
 import {ChatWSGroupCreationMsg}         from "../utils/ChatWSGroupCreationMsg"
 import {ChatWSInitialize}               from "../utils/ChatWSInitialize"
 import {useClickedUser}                 from "../store"
@@ -13,7 +13,6 @@ import {useNotifications} from "../store"
 import {diferentUserHasBeenClicked} from "../utils/diferentUserHasBeenClicked"
 import {useNavigate} from "react-router-dom" 
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
-import {nonToastedApiCall} from "../utils/nonToastedApiCall"
 import {enterChatAPI} from "../api/enterChat.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
@@ -21,6 +20,7 @@ import {useLastClickedUser, useTypingDB} from "../store"
 import "../styles/Chat.css"
 import {logoutUser} from "../utils/logoutUser"
 import {useExecutingInSmallDevice, useMsgReceivedInChat, useGottaScrollChat, useMessagesLoaderActivated, useActivateNewMessageSound} from "../store"
+import {apiWrap} from "../utils/apiWrap"
 
 
 /**
@@ -53,7 +53,7 @@ export function Chat(){
     const enterChatHandler = async ()=>{
         setMessagesLoaderActivated(true)
         const relatedNotification = notifications[clickedUser.id]
-        const response = await nonToastedApiCall(async ()=>{
+        const response = await apiWrap(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
         }, navigate, 'Entrando al chat, espere', 10000, "enterChat")
         if (response){

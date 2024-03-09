@@ -13,7 +13,7 @@ import {useClickedUser} from "../store"
 import {useMessagesHistorial} from "../store"
 import { BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
-import {nonToastedApiCall} from "../utils/nonToastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 import {useMsgReceivedInChat, useGottaScrollChat, useMessagesLoaderActivated} from "../store"
 import {Loader} from "../components/Loader"
 /**
@@ -34,7 +34,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         return containerRef.current.scrollHeight > containerRef.current.clientHeight
     }
     const loadMessages = async ()=>{
-        const response = await nonToastedApiCall(async ()=>{
+        const response = await apiWrap(async ()=>{
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
         }, navigate, 'Cargando mensajes, espere', 1000, "getMessagesHistorial")
         if (response){
@@ -57,7 +57,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }
     }
     const sendMsg = async (data)=>{
-        const response = await nonToastedApiCall(async ()=>{
+        const response = await apiWrap(async ()=>{
             return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
         }, navigate, 'Enviando mensaje, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "sendMsg")
         if (response){

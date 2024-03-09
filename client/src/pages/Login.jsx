@@ -12,8 +12,7 @@ import {BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import {loginUser} from "../utils/loginUser"
 import {generateLocationProps} from "../utils/generateLocationProps"
-import {nonToastedApiCall} from "../utils/nonToastedApiCall"
-import {toastedApiCall} from "../utils/toastedApiCall"
+import {apiWrap} from "../utils/apiWrap"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 /**
@@ -24,9 +23,9 @@ export function Login() {
 
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
-        let response = await toastedApiCall(async ()=>{
+        let response = await apiWrap(async ()=>{
             return await getUserDetailAPI(data.username, data.password)
-        }, navigate, 'Iniciando sesión', "getUserDetail")
+        }, navigate, 'Iniciando sesión', undefined, "getUserDetail")
         if (response){
             if (response.status == 200){
                 const userDetail = response.data.user
@@ -34,7 +33,7 @@ export function Login() {
                     toast.error('Activa tu cuenta antes de continuar')
                     navigate('/signup/activate', {state: generateLocationProps(userDetail.email, userDetail.username, userDetail.id)})
                 } else {
-                    response = await nonToastedApiCall(async ()=>{
+                    response = await apiWrap(async ()=>{
                         return await loginUser(data)
                     }, navigate, 'Generando token de seguridad, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "login")
                     if (response){
