@@ -63,6 +63,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (response){
             if (response.status == 200){
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
+                setGottaScrollChat(true)
             } else {
                 if (response.data.error == "same_user"){
                     toast.error("Error inesperado enviando mensaje, cerrando sesión por seguridad")
@@ -108,7 +109,6 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (newMsg){
             (async function(){
                 await sendMsg(newMsg)
-                setGottaScrollChat(true)
             })();
         }
     }, [newMsg])
