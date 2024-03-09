@@ -26,7 +26,7 @@ export function ChangePwd(){
         if (data['oldPwd'] !== data['newPwd']){
             const response = await toastedApiCall(async ()=>{
                 return await changeUserPwdAPI(data.oldPwd, data.newPwd, getJWTFromLocalStorage().access)
-            }, navigate, 'Modificando contraseña')
+            }, navigate, 'Modificando contraseña', "changeUserPwd")
             if (response){
                 if (response.status == 200){
                     toast.success("Contraseña modificada exitosamente")

@@ -27,14 +27,14 @@ export function SignUp() {
     const onSignUp = async (data) =>{
         let response = await toastedApiCall(async ()=>{
             return await checkExistingUserAPI(data['username'], data['email'])
-        }, navigate, 'Creando usuario')
+        }, navigate, 'Creando usuario', "checkExistingUser")
         if (response){
             if (response.status == 200){
                 if (!response.data.existing){
                     delete data.confirmPwd
                     response = await nonToastedApiCall(async ()=>{
                         return await createUsuarioAPI(data)
-                    }, navigate, 'Almacenando datos del usuario en el servidor, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
+                    }, navigate, 'Almacenando datos del usuario en el servidor, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "createUser")
                     if (response){
                         if (response.status == 200){
                             toast.success("Usuario creado exitosamente, verifica tu correo electrónico")

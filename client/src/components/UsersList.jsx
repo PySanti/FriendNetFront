@@ -11,7 +11,7 @@ import { UserButton } from "./UserButton"
 import "../styles/UsersList.css"
 import { v4 } from "uuid"
 import { UserFilter } from "./UserFilter"
-import {useState, useEffect, useRef} from "react"
+import {useState, useEffect} from "react"
 import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
@@ -31,7 +31,6 @@ export function UsersList(){
     let executingInSmallDevice                                      = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let userKeyword                                                 = useUserKeyword((state)=>(state.userKeyword))
     let clickedUser                                                 = useClickedUser((state)=>(state.clickedUser))
-    let callingUsersList                                            = useRef(false)
     let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
     const navigate = useNavigate()
 
@@ -56,21 +55,20 @@ export function UsersList(){
         }
     }
     const loadUsersList = async (page)=>{
-        callingUsersList.current = true
         setLoaderActivated(true)
         const response = await nonToastedApiCall(async ()=>{
             return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, page)
-        }, navigate, 'Cargando lista de usuarios, espere', 10000)
+        }, navigate, 'Cargando lista de usuarios, espere', 10000, "getUsersList")
         if (response){
             if (response.status == 200){
                 updateUsers(response.data.users_list)
+                setUsersListPage(usersListPage+1)
             } else if (response.data.error=== "no_more_pages"){
                 setNoMoreUsers(true)
             } else {
                 toast.error("¡ Ha habido un error cargando la lista de usuarios !")
             }
         }
-        callingUsersList.current = false
         setLoaderActivated(false)
     }
     const formatingFunction = (user)=>{
@@ -78,9 +76,8 @@ export function UsersList(){
     }
     const scrollDetector = async (event)=>{
         const bottomArrived = (event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - 3)
-        if (bottomArrived && (!callingUsersList.current) && (!noMoreUsers)){
+        if (bottomArrived && (!noMoreUsers)){
             await loadUsersList(usersListPage)
-            setUsersListPage(usersListPage+1)
         }
     }
     useEffect(()=>{

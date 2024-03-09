@@ -30,7 +30,7 @@ export function Profile() {
         if (dataIsDiferent(data, profileData)) { // lodash
             const response = await toastedApiCall(async ()=>{
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
-            }, navigate, 'Modificando perfil')
+            }, navigate, 'Modificando perfil', "updateUserData")
             if (response){
                 if (response.status == 200){
                     setProfileData(response.data.user_data_updated);

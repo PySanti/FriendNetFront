@@ -29,7 +29,7 @@ export function AccountActivation() {
     const handleActivationCodeSending = async ()=>{
         const response = await nonToastedApiCall(async ()=>{
             return await generateSendSecurityCodeAPI(props.userEmail, `Activa tu cuenta`) 
-        }, navigate, 'Enviando correo de activación, espere', 5000)
+        }, navigate, 'Enviando correo de activación, espere', 5000, "generateSendSecurityCode")
         if (response){
             if (response.status == 200){
                 toast.success(`Correo de activación enviado `)
@@ -41,13 +41,13 @@ export function AccountActivation() {
     const onSubmit = handleSubmit(async (data) => {
         let response = await toastedApiCall(async ()=>{
             return await checkSecurityCodeAPI(props.userEmail, data.activationCode); 
-        }, navigate, 'Revisando código')
+        }, navigate, 'Revisando código', "checkSecurityCode")
         if (response){
             if (response.status == 200){
                 toast.success("Código valido")
                 response = await toastedApiCall(async ()=>{
                     return await activateUserAPI(props.userId); 
-                }, navigate, 'Activando cuenta')
+                }, navigate, 'Activando cuenta', "activateUser")
                 if (response){
                     if (response.status == 200){
                         toast.success("Usuario activado con éxito, bienvenid@")

@@ -25,7 +25,7 @@ export function ForgotPasswordPage(){
     const handleCodeInput = async (data)=>{
         let response = await toastedApiCall(async ()=>{
             return await checkSecurityCodeAPI(data.email, data.code)
-        },navigate, "Validando código")
+        },navigate, "Validando código", "checkSecurityCode")
         if (response){
             if (response.status == 200){
                 toast.success("Código valido, modifica tu contraseña")
@@ -42,7 +42,7 @@ export function ForgotPasswordPage(){
     const handleEmailInput = async (data)=>{
         let response = await toastedApiCall(async ()=>{
             return await generateSendSecurityCodeAPI(data.email, `Recupera tu cuenta`)
-        }, navigate, 'Buscando usuario')
+        }, navigate, 'Buscando usuario', "generateSendSecurityCode")
         if (response){
             if (response.status == 200){
                 toast.success('Correo de recuperación enviado')
@@ -59,7 +59,7 @@ export function ForgotPasswordPage(){
     const handleNewPasswordInput = async (data)=>{
         let response = await toastedApiCall(async ()=>{
             return await recoveryPasswordAPI(data.email, data.newPwd, data.code)
-        }, navigate, 'Modificando contraseña')
+        }, navigate, 'Modificando contraseña', "recoveryPassword")
         if (response){
             if (response.status == 200){
                 toast.success("Contraseña modificada exitosamente")

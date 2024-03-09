@@ -55,7 +55,7 @@ export function Chat(){
         const relatedNotification = notifications[clickedUser.id]
         const response = await nonToastedApiCall(async ()=>{
             return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
-        }, navigate, 'Entrando al chat, espere', 10000)
+        }, navigate, 'Entrando al chat, espere', 10000, "enterChat")
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)

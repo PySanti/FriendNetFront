@@ -30,15 +30,13 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
     let messagesLoaderActivated                                         = useMessagesLoaderActivated((state)=>(state.messagesLoaderActivated))
-    let callingMessagesPage                                             = useRef(false)
     const thersScroll = ()=>{
         return containerRef.current.scrollHeight > containerRef.current.clientHeight
     }
     const loadMessages = async ()=>{
-        callingMessagesPage.current = true
         const response = await nonToastedApiCall(async ()=>{
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
-        }, navigate, 'Cargando mensajes, espere', 1000)
+        }, navigate, 'Cargando mensajes, espere', 1000, "getMessagesHistorial")
         if (response){
             if (response.status == 200){
                 const oldScroll = containerRef.current.scrollHeight
@@ -46,6 +44,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 setTimeout(() => {
                     containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScroll
                 }, 0);
+                messagesHistorialPage.current += 1
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
                     noMoreMessages.current = true
@@ -56,12 +55,11 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 toast.error('¡ Error inesperado cargando los mensajes !')
             }
         }
-        callingMessagesPage.current = false
     }
     const sendMsg = async (data)=>{
         const response = await nonToastedApiCall(async ()=>{
             return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
-        }, navigate, 'Enviando mensaje, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
+        }, navigate, 'Enviando mensaje, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "sendMsg")
         if (response){
             if (response.status == 200){
                 setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
@@ -80,8 +78,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }
     const scrollHandler = async (e)=>{
         if (e.target.scrollTop <= 0){
-            if (!noMoreMessages.current && thersScroll() && !callingMessagesPage.current){  
-                messagesHistorialPage.current += 1
+            if (!noMoreMessages.current && thersScroll() ){  
                 // la ultima condicion se pone para evitar que se llame a la api cuando no se ha scrolleado
                 await loadMessages()
             }

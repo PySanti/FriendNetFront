@@ -25,7 +25,7 @@ export function ChangeEmailForActivation(){
         if (data.email !== props.userEmail){
             const response = await toastedApiCall(async ()=>{
                 return await changeEmailForActivationAPI(props.userId, data.email) 
-            }, navigate, 'Modificando correo electrónico')
+            }, navigate, 'Modificando correo electrónico', "changeEmailForActivation")
             if (response){
                 if (response.status == 200){
                     props.userEmail = data.email

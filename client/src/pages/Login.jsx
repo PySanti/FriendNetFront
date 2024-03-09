@@ -26,7 +26,7 @@ export function Login() {
         // en este punto ya se sabe que el usuario no esta autenticado
         let response = await toastedApiCall(async ()=>{
             return await getUserDetailAPI(data.username, data.password)
-        }, navigate, 'Iniciando sesión')
+        }, navigate, 'Iniciando sesión', "getUserDetail")
         if (response){
             if (response.status == 200){
                 const userDetail = response.data.user
@@ -36,7 +36,7 @@ export function Login() {
                 } else {
                     response = await nonToastedApiCall(async ()=>{
                         return await loginUser(data)
-                    }, navigate, 'Generando token de seguridad, espere', BASE_NON_TOASTED_API_CALLS_TIMER)
+                    }, navigate, 'Generando token de seguridad, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "login")
                     if (response){
                         if (response.status == 200){
                             const baseNotifications = userDetail.notifications
