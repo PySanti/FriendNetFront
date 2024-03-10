@@ -67,7 +67,7 @@ export function UsersList(){
         if (response){
             if (response.status == 200){
                 updateUsers(response.data.users_list, lastUserKeyword)
-                setUsersListPage(usersListPage+1)
+                setUsersListPage(page+1)
             } else if (response.data.error=== "no_more_pages"){
                 setNoMoreUsers(true)
             } else {
@@ -88,11 +88,11 @@ export function UsersList(){
             await loadUsersList(usersListPage, undefined, false)
         }
     }
+
     useEffect(()=>{
         if (userIsAuthenticated()  && !firstUsersListCall){
             (async function() {
                 await loadUsersList(1, undefined, false)
-                setUsersListPage(2)
                 setFirstUsersListCall(true)
             })()
         }
