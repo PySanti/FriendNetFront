@@ -38,34 +38,41 @@ export function Chat(){
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     let setMsgReceivedInChat                                                = useMsgReceivedInChat((state)=>(state.setMsgReceivedInChat))
     let setActivateNewMessageSound                                          = useActivateNewMessageSound((state)=>(state.setActivateNewMessageSound))
-    let setMessagesLoaderActivated                                          = useMessagesLoaderActivated((state)=>(state.setMessagesLoaderActivated))
+    let [messagesLoaderActivated, setMessagesLoaderActivated]               = useMessagesLoaderActivated((state)=>([state.messagesLoaderActivated,state.setMessagesLoaderActivated]))
     let setGottaScrollChat                                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
+    let mostRecentClickedUser                                               = useRef(null)
     const userData                                                          = getUserDataFromLocalStorage()
     const navigate                                                          = useNavigate()
-    const handleChatWebsocket = ()=>{
+    const handleChatWebsocket = (newClickedUser)=>{
         if (!CHAT_WEBSOCKET.current){
-            ChatWSInitialize(clickedUser.id)
+            ChatWSInitialize(newClickedUser.id)
         } else {
-            CHAT_WEBSOCKET.current.send(ChatWSGroupCreationMsg(clickedUser.id))
+            CHAT_WEBSOCKET.current.send(ChatWSGroupCreationMsg(newClickedUser.id))
         }
     }
-    const enterChatHandler = async ()=>{
+    const chatLoaded = ()=>{
+        return clickedUser && !messagesLoaderActivated
+    }
+    const enterChatHandler = async (newClickedUser)=>{
         setMessagesLoaderActivated(true)
-        const relatedNotification = notifications[clickedUser.id]
+        const relatedNotification = notifications[newClickedUser.id]
         const response = await apiWrap(async ()=>{
-            return await enterChatAPI(clickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
+            return await enterChatAPI(newClickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
         }, navigate, 'Entrando al chat, espere', 10000, undefined)
+        if (newClickedUser.id != mostRecentClickedUser.current.id){
+            return
+        } 
         if (response){
             if (response.status == 200){
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
                 setMessagesLoaderActivated(false)
                 setGottaScrollChat(true)
-                clickedUser.is_online = response.data.is_online
+                newClickedUser.is_online = response.data.is_online
                 if (relatedNotification && response.data.notification_deleted){
                     removeAndUpdateNotifications(relatedNotification, setNotifications)
                 }
-                handleChatWebsocket()
+                handleChatWebsocket(newClickedUser)
             } else if (response.status == 400){
                 if (response.data.error == "same_user"){
                     toast.error("Error inesperado entrando al chat, cerrando sesión por seguridad")
@@ -90,7 +97,8 @@ export function Chat(){
             (async function() {
                 messagesHistorialPage.current = 1
                 noMoreMessages.current = false
-                await enterChatHandler()
+                mostRecentClickedUser.current = clickedUser
+                await enterChatHandler(clickedUser)
             })();
         }
     }, [clickedUser])
@@ -120,9 +128,9 @@ export function Chat(){
     }, [messagesHistorial, clickedUser])
     return (
         <div className={executingInSmallDevice? (clickedUser? "chat-container" : "chat-container not-displayed") : "chat-container"}>
-            {clickedUser  && <ClickedUserHeader/>}
+            {chatLoaded()   && <ClickedUserHeader/>}
             <MessagesContainer  newMsg={newMsg}   messagesHistorialPage={messagesHistorialPage}  noMoreMessages={noMoreMessages}/>
-            {clickedUser && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)} />}
+            {chatLoaded()   && <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)} />}
         </div>
     )
 }
