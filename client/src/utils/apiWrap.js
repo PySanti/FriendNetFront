@@ -1,5 +1,6 @@
 import {toastedApiCall} from "./toastedApiCall"
 import {nonToastedApiCall} from "./nonToastedApiCall"
+import {executeApi} from "./executeApi"
 import {CALLING_DB} from "../utils/constants"
 
 
@@ -21,13 +22,17 @@ import {CALLING_DB} from "../utils/constants"
     timer milisegundos despues de la llamada
 */
 export async function apiWrap(apiCalling, navigateFunc, loadingMsg, timer, apiId){
-    console.log(CALLING_DB)
     const execute = async ()=>{
-        if (timer){
-            return nonToastedApiCall(apiCalling, navigateFunc, loadingMsg, timer)
+        if (!loadingMsg){
+            return executeApi(apiCalling, navigateFunc)
         } else {
-            return toastedApiCall(apiCalling, navigateFunc, loadingMsg)
+            if (timer){
+                return nonToastedApiCall(apiCalling, navigateFunc, loadingMsg, timer)
+            } else {
+                return toastedApiCall(apiCalling, navigateFunc, loadingMsg)
+            }
         }
+
     }
     if (apiId && !CALLING_DB[apiId]){
         CALLING_DB[apiId] = true
@@ -36,5 +41,7 @@ export async function apiWrap(apiCalling, navigateFunc, loadingMsg, timer, apiId
         return response
     } else if (!apiId){
         return await execute()
+    } else if (apiId && CALLING_DB[apiId]){
+        console.log(`Bloqueando llamada a api ${apiId}`)
     }
 }

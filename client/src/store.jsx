@@ -78,12 +78,6 @@ export const useUserKeyword = create((set)=>({
     reset : ()=>(set(()=>({userKeyword: undefined})))
 }))
 
-export const useUserFilterInput = create((set)=>({
-    userFilterInput : null,
-    setUserFilterInput: (new_val)=>(set(()=>({userFilterInput : new_val}))),
-    reset : ()=>(set(()=>({userFilterInput: null})))
-}))
-
 
 
 export const useTypingDB = create((set)=>({

@@ -11,7 +11,7 @@ import { UserButton } from "./UserButton"
 import "../styles/UsersList.css"
 import { v4 } from "uuid"
 import { UserFilter } from "./UserFilter"
-import {useState, useEffect} from "react"
+import {useState, useEffect, useRef} from "react"
 import { getUsersListAPI } from "../api/getUsersList.api"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { userIsAuthenticated } from "../utils/userIsAuthenticated"
@@ -31,14 +31,15 @@ export function UsersList(){
     let executingInSmallDevice                                      = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let userKeyword                                                 = useUserKeyword((state)=>(state.userKeyword))
     let clickedUser                                                 = useClickedUser((state)=>(state.clickedUser))
+    let mostRecentUserKeyword                                       = useRef(null)
     let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
     const navigate = useNavigate()
 
-    const voidUserKeyword = ()=>{
-        return !userKeyword || userKeyword.length == 0
+    const voidUserKeyword = (lastUserKeyword)=>{
+        return !lastUserKeyword || lastUserKeyword.length == 0
     }
-    const updateUsers = (new_users_list)=>{
-        if (!voidUserKeyword() || (voidUserKeyword() && usersListPage==1)){
+    const updateUsers = (new_users_list, lastUserKeyword)=>{
+        if (!voidUserKeyword(lastUserKeyword) || (voidUserKeyword(lastUserKeyword) && usersListPage==1)){
             setUsersIdList(new_users_list.map(user=>{
                 return user.id
             }))
@@ -54,14 +55,18 @@ export function UsersList(){
             setUsersList(usersList)
         }
     }
-    const loadUsersList = async (page, apiCallingBlock)=>{
+    const loadUsersList = async (page, lastUserKeyword, apiCallingBlock)=>{
         setLoaderActivated(true)
         const response = await apiWrap(async ()=>{
-            return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, page)
-        }, navigate, 'Cargando lista de usuarios, espere', 10000, apiCallingBlock ? undefined : "getUsersList")
+            return await getUsersListAPI(voidUserKeyword(lastUserKeyword) ? undefined : lastUserKeyword, getUserDataFromLocalStorage().id, page)
+        }, navigate, undefined, undefined, apiCallingBlock ? undefined : "getUsersList")
+        if (lastUserKeyword && lastUserKeyword != mostRecentUserKeyword.current){
+            console.log(`Bloqueando : ${lastUserKeyword}`)
+            return
+        }
         if (response){
             if (response.status == 200){
-                updateUsers(response.data.users_list)
+                updateUsers(response.data.users_list, lastUserKeyword)
                 setUsersListPage(usersListPage+1)
             } else if (response.data.error=== "no_more_pages"){
                 setNoMoreUsers(true)
@@ -80,13 +85,13 @@ export function UsersList(){
     const scrollDetector = async (event)=>{
         const bottomArrived = (event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - 3)
         if (bottomArrived && (!noMoreUsers)){
-            await loadUsersList(usersListPage)
+            await loadUsersList(usersListPage, undefined, false)
         }
     }
     useEffect(()=>{
         if (userIsAuthenticated()  && !firstUsersListCall){
             (async function() {
-                await loadUsersList(1)
+                await loadUsersList(1, undefined, false)
                 setUsersListPage(2)
                 setFirstUsersListCall(true)
             })()
@@ -97,7 +102,9 @@ export function UsersList(){
             (async function(){
                 setNoMoreUsers(false)
                 setUsersListPage(1)
-                await loadUsersList(1, true)
+                setUsersList([])
+                mostRecentUserKeyword.current = userKeyword
+                await loadUsersList(1, userKeyword, true)
             })()
         }
     }, [userKeyword])
