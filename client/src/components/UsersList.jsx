@@ -54,11 +54,11 @@ export function UsersList(){
             setUsersList(usersList)
         }
     }
-    const loadUsersList = async (page)=>{
+    const loadUsersList = async (page, apiCallingBlock)=>{
         setLoaderActivated(true)
         const response = await apiWrap(async ()=>{
             return await getUsersListAPI(voidUserKeyword() ? undefined : userKeyword, getUserDataFromLocalStorage().id, page)
-        }, navigate, 'Cargando lista de usuarios, espere', 10000, "getUsersList")
+        }, navigate, 'Cargando lista de usuarios, espere', 10000, apiCallingBlock ? undefined : "getUsersList")
         if (response){
             if (response.status == 200){
                 updateUsers(response.data.users_list)
@@ -97,7 +97,7 @@ export function UsersList(){
             (async function(){
                 setNoMoreUsers(false)
                 setUsersListPage(1)
-                await loadUsersList(1)
+                await loadUsersList(1, true)
             })()
         }
     }, [userKeyword])

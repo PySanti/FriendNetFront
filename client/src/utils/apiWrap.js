@@ -21,6 +21,7 @@ import {CALLING_DB} from "../utils/constants"
     timer milisegundos despues de la llamada
 */
 export async function apiWrap(apiCalling, navigateFunc, loadingMsg, timer, apiId){
+    console.log(CALLING_DB)
     const execute = async ()=>{
         if (timer){
             return nonToastedApiCall(apiCalling, navigateFunc, loadingMsg, timer)
@@ -34,6 +35,6 @@ export async function apiWrap(apiCalling, navigateFunc, loadingMsg, timer, apiId
         CALLING_DB[apiId] = false
         return response
     } else if (!apiId){
-        return execute()
+        return await execute()
     }
 }
