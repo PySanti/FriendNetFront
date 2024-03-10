@@ -38,7 +38,7 @@ function App() {
   let [clickedUser, setClickedUser]                                     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
   let setLastClickedUser                                                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]                                     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
-  let setExecutingInSmallDevice                                         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
+  let [executingInSmallDevice,setExecutingInSmallDevice]                = states.useExecutingInSmallDevice((state)=>([state.executingInSmallDevice, state.setExecutingInSmallDevice]))
   let userKeyword                                                       = states.useUserKeyword((state)=>(state.userKeyword))
   let [activateNewMessageSound, setActivateNewMessageSound]             = states.useActivateNewMessageSound((state)=>([state.activateNewMessageSound, state.setActivateNewMessageSound]))
   let alertRef                                                          = useRef(null)
@@ -137,6 +137,7 @@ function App() {
       newMessageRef.current.currentTime = 0; // Reiniciar la reproducción al principio
     }}></audio>
     <Toaster 
+      visibleToasts={executingInSmallDevice ? 1 : 2}
       position="bottom-right"
       closeButton
       toastOptions={{
