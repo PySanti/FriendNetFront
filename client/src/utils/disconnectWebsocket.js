@@ -8,11 +8,11 @@ import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
 export function disconnectWebsocket(){
     if (NOTIFICATIONS_WEBSOCKET.current){
         console.log('Desconectando websocket')
-        if (localStorage.getItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR)){
+        if (localStorage.getItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR) && NOTIFICATIONS_WEBSOCKET.current){
             // caso borde en el que el usuario se haya desconectado antes de los 600ms despues de haber escrito
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(Number(localStorage.getItem("user_typing")), false))
-            localStorage.removeItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR)
         }
+        localStorage.removeItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR)
         NOTIFICATIONS_WEBSOCKET.current.close() 
         NOTIFICATIONS_WEBSOCKET.current = null
     }

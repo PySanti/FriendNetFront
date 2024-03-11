@@ -46,7 +46,7 @@ export function Chat(){
         const relatedNotification = notifications[newClickedUser.id]
         const response = await apiWrap(async ()=>{
             return await enterChatAPI(newClickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
-        }, navigate, 'Entrando al chat, espere', 10000, undefined)
+        }, navigate, undefined, undefined, undefined)
         if (newClickedUser.id != mostRecentClickedUser.current.id){
             return
         } 
