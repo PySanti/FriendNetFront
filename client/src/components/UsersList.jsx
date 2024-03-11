@@ -59,9 +59,8 @@ export function UsersList(){
         setLoaderActivated(true)
         const response = await apiWrap(async ()=>{
             return await getUsersListAPI(voidUserKeyword(lastUserKeyword) ? undefined : lastUserKeyword, getUserDataFromLocalStorage().id, page)
-        }, navigate, undefined, undefined, apiCallingBlock ? undefined : "getUsersList")
+        }, navigate, undefined, undefined, apiCallingBlock ?  "getUsersList" : undefined)
         if (lastUserKeyword && lastUserKeyword != mostRecentUserKeyword.current){
-            console.log(`Bloqueando : ${lastUserKeyword}`)
             return
         }
         if (response){
@@ -85,14 +84,14 @@ export function UsersList(){
     const scrollDetector = async (event)=>{
         const bottomArrived = (event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - 3)
         if (bottomArrived && (!noMoreUsers)){
-            await loadUsersList(usersListPage, undefined, false)
+            await loadUsersList(usersListPage, undefined, true)
         }
     }
 
     useEffect(()=>{
         if (userIsAuthenticated()  && !firstUsersListCall){
             (async function() {
-                await loadUsersList(1, undefined, false)
+                await loadUsersList(1, undefined, true)
                 setFirstUsersListCall(true)
             })()
         }
@@ -104,7 +103,7 @@ export function UsersList(){
                 setUsersListPage(1)
                 setUsersList([])
                 mostRecentUserKeyword.current = userKeyword
-                await loadUsersList(1, userKeyword, true)
+                await loadUsersList(1, userKeyword, false)
             })()
         }
     }, [userKeyword])
