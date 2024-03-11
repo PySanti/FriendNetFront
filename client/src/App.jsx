@@ -10,7 +10,7 @@ import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 import {useEffect} from "react"
-import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH, CHAT_WEBSOCKET} from "./utils/constants"
+import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH} from "./utils/constants"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
@@ -34,18 +34,18 @@ import {disconnectWebsocket} from "./utils/disconnectWebsocket"
 function App() {
   let [notifications, setNotifications]                                 = states.useNotifications((state)=>([state.notifications, state.setNotifications]))
   let [usersList, setUsersList]                                         = states.useUsersList((state)=>([state.usersList, state.setUsersList]))
+  let [messagesHistorial, setMessagesHistorial]                         = states.useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
   let [typingDB, setTypingDB]                                           = states.useTypingDB((state)=>[state.typingDB, state.setTypingDB])
   let [clickedUser, setClickedUser]                                     = states.useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
   let setLastClickedUser                                                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]                                     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
+  let setMsgReceivedInChat                                              = states.useMsgReceivedInChat((state)=>(state.setMsgReceivedInChat))
   let [executingInSmallDevice,setExecutingInSmallDevice]                = states.useExecutingInSmallDevice((state)=>([state.executingInSmallDevice, state.setExecutingInSmallDevice]))
   let userKeyword                                                       = states.useUserKeyword((state)=>(state.userKeyword))
-  let [activateNewMessageSound, setActivateNewMessageSound]             = states.useActivateNewMessageSound((state)=>([state.activateNewMessageSound, state.setActivateNewMessageSound]))
   let alertRef                                                          = useRef(null)
   let newMessageRef                                                     = useRef(null)
   const reconnectWebsockets             = ()=>{
-    disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-    disconnectWebsocket(CHAT_WEBSOCKET)
+    disconnectWebsocket()
     initStates(notifications, setNotifications)
   }
   const handleReconnection = ()=>{
@@ -76,13 +76,6 @@ function App() {
       document.removeEventListener("visibilitychange", handleReconnection)
     }
   }, [])
-
-  useEffect(()=>{
-    if (activateNewMessageSound){
-      setActivateNewMessageSound(false)
-      newMessageEffect()
-    }
-  }, [activateNewMessageSound])
 
 
   useEffect(()=>{
@@ -120,10 +113,25 @@ function App() {
             typingDB[data.value.user_id] = data.value.typing
             setTypingDB(typingDB)
           }
-        } 
+        } else if (data.type === "message_broadcast"){
+            if (Number(data.value.parent_id) !== Number(getUserDataFromLocalStorage().id)){
+                setMessagesHistorial([...messagesHistorial, data.value])
+                setMsgReceivedInChat(true)
+                newMessageEffect()
+            }
+        } else if (data.type === "connection_inform"){
+            if (data.value.user_id == clickedUser.id){
+                clickedUser.is_online = data.value.connected
+                if (!data.value.connected){
+                    typingDB[clickedUser.id] =  false
+                    setTypingDB(typingDB)
+                }
+                setClickedUser(clickedUser)
+            }
+        }
       }
   }
-  }, [notifications, usersList, clickedUser])
+  }, [notifications, usersList, clickedUser, messagesHistorial])
 
 
   return (

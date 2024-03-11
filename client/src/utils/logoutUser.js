@@ -1,4 +1,3 @@
-import {NOTIFICATIONS_WEBSOCKET, CHAT_WEBSOCKET} from "../utils/constants"
 import {disconnectWebsocket} from "../utils/disconnectWebsocket"
 import {clearLocalStorage} from "../utils/clearLocalStorage"
 import {toast} from "sonner"
@@ -7,8 +6,7 @@ import {toast} from "sonner"
  * @param {Function} navigateFunc referencia a la funcion para redirijir al usuario al root
  */
 export function logoutUser(navigateFunc){
-    disconnectWebsocket(NOTIFICATIONS_WEBSOCKET)
-    disconnectWebsocket(CHAT_WEBSOCKET)
+    disconnectWebsocket()
     if (navigateFunc){
         navigateFunc('/')
     } else {

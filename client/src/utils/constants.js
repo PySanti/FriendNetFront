@@ -71,17 +71,13 @@ export const BASE_PASSWORD_CONSTRAINTS = {
 };
 
 // deploy
-// export const CHAT_WEBSOCKET_ENDPOINT            = "wss://friendnet.online:8001/ws/chat/"
 // export const NOTIFICATIONS_WEBSOCKET_ENDPOINT   = "wss://friendnet.online:8001/ws/notifications/"
 
 // debug
-export const CHAT_WEBSOCKET_ENDPOINT            = "ws://localhost:8000/ws/chat/"
 export const NOTIFICATIONS_WEBSOCKET_ENDPOINT   = "ws://localhost:8000/ws/notifications/"
 
 
-export const CHAT_WEBSOCKET = {
-    'current' : null
-}
+
 export const NOTIFICATIONS_WEBSOCKET = {
     'current' : null
 }

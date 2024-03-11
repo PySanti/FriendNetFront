@@ -3,12 +3,10 @@
  * sera enviado a traves del websocket para la creacion del grupo entre
  * el session user y el clickedUser 
  */
-import {getUserDataFromLocalStorage} from "./getUserDataFromLocalStorage"
-export function ChatWSGroupCreationMsg(clickedUserId){
+export function NotificationsWSGroupCreationMsg(clickedUserId){
     return JSON.stringify({
         'type' : 'group_creation',
         "value" : {
-            'session_user_id' : getUserDataFromLocalStorage().id,
             'clicked_user_id' : clickedUserId
         }
     })
