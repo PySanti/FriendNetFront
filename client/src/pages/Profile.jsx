@@ -27,6 +27,7 @@ export function Profile() {
     const onUpdate = async (data) => {
         // el data.photo siempre sera: null, url de imagen actual, un archivo
         const sendingData = { ...data };
+        console.log(sendingData)
         if (dataIsDiferent(data, profileData)) { // lodash
             const response = await apiWrap(async ()=>{
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
