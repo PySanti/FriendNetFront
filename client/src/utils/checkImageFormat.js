@@ -4,7 +4,7 @@
  */
 export function checkImageFormat(image){
     const imageFormat = image.type.split('/')[1]
-    if (!["jpg","jpeg", "png", "heic"].includes(imageFormat)){
+    if (!["jpg","jpeg", "png", "heic", "heif"].includes(imageFormat)){
         return "¡ Formato de archivo no soportado !"
     } else {
         if (image.size/1000 > 8000){
