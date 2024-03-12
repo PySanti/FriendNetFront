@@ -80,7 +80,7 @@ export function Chat(){
         setMessagesLoaderActivated(false)
     }
     useEffect(()=>{
-        if (diferentUserHasBeenClicked(lastClickedUser, clickedUser)){
+        if (diferentUserHasBeenClicked(lastClickedUser, clickedUser) ){
             (async function() {
                 messagesHistorialPage.current = 1
                 noMoreMessages.current = false

@@ -4,6 +4,8 @@ import {useClickedUser} from "../store"
 import {useLastClickedUser} from "../store"
 import {updateClickedUser} from "../utils/updateClickedUser"
 import {useTypingDB, useNotifications} from "../store"
+import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
+import {toast} from "sonner"
 
 /**
  * Retorna un userButton, button a renderizar en la UsersList
@@ -15,8 +17,15 @@ export function UserButton({user}){
     let setLastClickedUser              = useLastClickedUser((state)=>(state.setLastClickedUser))
     let notifications                   = useNotifications((state)=>(state.notifications))
     const globeCls                      = "user-button-globe"
+    const handleUserButtonClick         = ()=>{
+        if (!NOTIFICATIONS_WEBSOCKET.current || NOTIFICATIONS_WEBSOCKET.current.readyState !== 1){
+            toast.error("¡ Cargando !")
+        } else {
+            updateClickedUser(clickedUser, user, setClickedUser, setLastClickedUser)
+        }
+    }
     return (
-        <button className="user-button" onClick={()=>updateClickedUser(clickedUser, user, setClickedUser, setLastClickedUser)}>
+        <button className="user-button" onClick={handleUserButtonClick}>
             <div className="user-button__username">
                 {user.username}
                 {typingDB[user.id] && " ..."}

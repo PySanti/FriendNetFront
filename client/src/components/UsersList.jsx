@@ -1,12 +1,13 @@
 import {toast} from "sonner"
-import {useUserKeyword} from "../store"
-import {useUsersList} from "../store"
-import {useUsersIdList} from "../store"
-import {useUsersListPage} from "../store"
-import {useNoMoreUsers} from "../store"
-import {useFirstUsersListCall} from "../store"
-import {useExecutingInSmallDevice} from "../store"
-import {useClickedUser} from "../store"
+import {
+    useUserKeyword, 
+    useClickedUser,
+    useExecutingInSmallDevice, 
+    useFirstUsersListCall,
+    useNoMoreUsers, 
+    useUsersListPage,
+    useUsersList,
+    useUsersIdList} from "../store"
 import { UserButton } from "./UserButton"
 import "../styles/UsersList.css"
 import { v4 } from "uuid"
