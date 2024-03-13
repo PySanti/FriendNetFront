@@ -19,6 +19,12 @@ export function Loader({big, loaderActivated}){
             }
         }
     }, [loaderActivated])
+    useEffect(()=>{
+        const loadingRef = loadingAnimationRef.current
+        return ()=>{
+            loadingRef.pause()
+        }
+    }, [])
     return (
         <div className={baseClassName}>
             <Lottie 

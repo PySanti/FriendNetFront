@@ -100,7 +100,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }, [msgReceivedInChat])
 
     useEffect(()=>{
-        if (containerRef.current && resetScroll.current){
+        if (containerRef.current && resetScroll.current){ // si cambia el historial de mensajes por recarga al scrollear ... 
             containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScrollRef.current
             resetScroll.current = false
             containerRef.current.style.scrollBehavior = "smooth"
