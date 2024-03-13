@@ -55,9 +55,6 @@ export function Login() {
                 // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
                 toast.error("¡ Usuario o contraseña inválidos !") 
             } else {
-                console.log(response)
-                console.log(response.data)
-                console.log(response.data.error)
                 toast.error("¡ Error inesperado buscando datos del usuario !")
             }
         }
