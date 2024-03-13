@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import {toast} from "sonner"
+import {handleImageCompressing} from "../utils/handleImageCompressing"
 import { PropTypes } from "prop-types";
 import {
     BASE_EMAIL_CONSTRAINTS,
@@ -25,9 +27,16 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
     let [changeDetected, setChangeDetected] = useState(false)
     const { register, handleSubmit, formState, watch} = useForm();
     const errors = formState.errors
-    const onSubmit = handleSubmit((data) => {
+    const onSubmit = handleSubmit(async (data) => {
         data.photo = currentPhotoFile; // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
-        onFormSubmit(data);
+        const imageCompressingResponse = await handleImageCompressing(data.photo)
+        if (imageCompressingResponse == 1){
+            toast.error("! Error comprimiendo imagen !")
+            return
+        } else{
+            data.photo = imageCompressingResponse
+        }
+        await onFormSubmit(data);
     });
     useEffect(()=>{
         let new_val = false

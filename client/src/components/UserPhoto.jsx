@@ -1,12 +1,10 @@
-import Lottie from "lottie-react"
-import loading from "../../lottie/loading.json"
 import {toast} from "sonner"
 import { useState,useRef, useEffect } from "react";
 import "../styles/UserPhoto.css";
 import { Button } from "./Button";
 import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
-import {getImageFileName} from "../utils/getImageFileName"
+import {Loader} from "./Loader"
 
 /**
  * Contenedor para foto de perfil de usuario
@@ -17,7 +15,6 @@ import {getImageFileName} from "../utils/getImageFileName"
  * Diseniado para trabajar con states dentro de un formulario
  */
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
-    const loadingAnimationRef                       = useRef(null)
     let modalContainerRef                           = useRef(null)
     let [userPhotoLoaded, setUserPhotoLoaded]       = useState(false);
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
@@ -49,8 +46,15 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
         const file = e.target.files[0];
         const imageCheckerResponse = checkImageFormat(file);
         if (imageCheckerResponse === true) {
-            photoFileSetter(file);
-            getImageFileName(file, setCurrentPhotoName)
+            const reader = new FileReader();
+            reader.onerror = ()=>{
+                toast.error("¡ Error al cargar la imagen !")
+            }
+            reader.onload  =  ()=> {
+                setCurrentPhotoName(reader.result);
+                photoFileSetter(file);
+            };
+            reader.readAsDataURL(file);
         } else {
             toast.error(imageCheckerResponse)
         }
@@ -63,8 +67,10 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
             userPhotoRef.current.addEventListener("load", ()=>{
                 setUserPhotoLoaded(true)
             })
+        } else{
+            setUserPhotoLoaded(true)
         }
-    }, [photoFile])
+    }, [currentPhotoName, photoFile])
     return (
         <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
             <div className="user-photo-container" >
@@ -73,12 +79,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                         <img {...imgProps("small")}/>
                         {(!userPhotoLoaded && photoFile) &&
                             <div className="loading-animation-container">
-                                <Lottie 
-                                    loop={true}
-                                    autoPlay={true}
-                                    animationData={loading} 
-                                    lottieRef={loadingAnimationRef}
-                                />
+                                <Loader loaderActivated={!userPhotoLoaded}/>
                             </div>
                         }
                         <div className={modalContainerCls} ref={modalContainerRef}>
