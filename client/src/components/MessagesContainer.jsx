@@ -27,7 +27,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     const oldScrollRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
-    let [resetScroll, setResetScroll]                                   = useState(false)
+    let resetScroll                                                     = useRef(false)
     let [messagesHistorial, setMessagesHistorial]                       = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
@@ -42,9 +42,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (response){
             if (response.status == 200){
                 oldScrollRef.current = containerRef.current.scrollHeight
-                updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
-                setResetScroll(true)
+                resetScroll.current = true
                 messagesHistorialPage.current += 1
+                updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
                     noMoreMessages.current = true
@@ -98,11 +98,11 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }, [msgReceivedInChat])
 
     useEffect(()=>{
-        if (containerRef.current && resetScroll){
+        if (containerRef.current && resetScroll.current){
             containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScrollRef.current
-            setResetScroll(false)
+            resetScroll.current = false
         }
-    }, [resetScroll])
+    }, [messagesHistorial])
     useEffect(()=>{
         if (containerRef.current && gottaScrollChat){
             if (thersScroll()){
