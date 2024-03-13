@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types"
 import { Message } from "./Message"
 import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
-import { useEffect, useRef} from "react"
+import { useEffect, useRef, useState} from "react"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import { sendMsgAPI } from "../api/sendMsg.api"
@@ -24,8 +24,10 @@ import {Loader} from "../components/Loader"
 */
 export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}){
     const containerRef                                                  = useRef(null)
+    const oldScrollRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
     const clickedUser                                                   = useClickedUser((state)=>(state.clickedUser))
+    let [resetScroll, setResetScroll]                                   = useState(false)
     let [messagesHistorial, setMessagesHistorial]                       = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
@@ -39,11 +41,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }, navigate, 'Cargando mensajes, espere', 1000, "getMessagesHistorial")
         if (response){
             if (response.status == 200){
-                const oldScroll = containerRef.current.scrollHeight
+                oldScrollRef.current = containerRef.current.scrollHeight
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
-                setTimeout(() => {
-                    containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScroll
-                }, 0);
+                setResetScroll(true)
                 messagesHistorialPage.current += 1
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
@@ -98,13 +98,20 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }, [msgReceivedInChat])
 
     useEffect(()=>{
+        if (containerRef.current && resetScroll){
+            containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScrollRef.current
+            setResetScroll(false)
+        }
+    }, [resetScroll])
+    useEffect(()=>{
         if (containerRef.current && gottaScrollChat){
             if (thersScroll()){
                 containerRef.current.scrollTop = containerRef.current.scrollHeight
             }
-            setGottaScrollChat(false)
         }
-    }, [messagesHistorial, gottaScrollChat])
+        setGottaScrollChat(false)
+    }, [gottaScrollChat])
+
     useEffect(()=>{
         if (newMsg){
             (async function(){
