@@ -41,10 +41,12 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         }, navigate, 'Cargando mensajes, espere', 1000, "getMessagesHistorial")
         if (response){
             if (response.status == 200){
+                containerRef.current.style.scrollBehavior = "auto"
                 oldScrollRef.current = containerRef.current.scrollHeight
                 resetScroll.current = true
                 messagesHistorialPage.current += 1
                 updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
+
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
                     noMoreMessages.current = true
@@ -101,6 +103,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (containerRef.current && resetScroll.current){
             containerRef.current.scrollTop += containerRef.current.scrollHeight - oldScrollRef.current
             resetScroll.current = false
+            containerRef.current.style.scrollBehavior = "smooth"
         }
     }, [messagesHistorial])
     useEffect(()=>{
