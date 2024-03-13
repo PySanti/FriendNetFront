@@ -41,7 +41,7 @@
     font-size: var(--base-button-font-size);
     display: flex;
     transition-property: opacity;
-    transition-duration: .3s;
+    transition-duration: .1s;
 }
 .button_hovered > .notifications-container-title , .notifications-alert__activated{
     opacity: 0.2 !important;
