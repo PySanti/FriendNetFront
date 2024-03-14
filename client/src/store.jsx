@@ -109,3 +109,11 @@ export const useGottaScrollChat = create((set)=>({
 }))
 
 
+export const useEnterChatLoaderActivated = create((set)=>({
+    enterChatLoaderActivated : false,
+    setEnterChatLoaderActivated: (new_val)=>(set(()=>({enterChatLoaderActivated : new_val}))),
+}))
+
+
+
+

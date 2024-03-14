@@ -17,7 +17,7 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import "../styles/Chat.css"
 import {logoutUser} from "../utils/logoutUser"
-import {useExecutingInSmallDevice, useGottaScrollChat, useLastClickedUser} from "../store"
+import {useEnterChatLoaderActivated, useExecutingInSmallDevice, useGottaScrollChat, useLastClickedUser} from "../store"
 import {apiWrap} from "../utils/apiWrap"
 
 
@@ -33,14 +33,13 @@ export function Chat(){
     let executingInSmallDevice                                              = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
-    let [enterChatLoaderActivated, setEnterChatLoaderActivated]             = useState(null)
+    let [enterChatLoaderActivated, setEnterChatLoaderActivated]             = useEnterChatLoaderActivated((state)=>([state.enterChatLoaderActivated, state.setEnterChatLoaderActivated]))
     let setGottaScrollChat                                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
     let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
     let mostRecentClickedUser                                               = useRef(null)
     const navigate                                                          = useNavigate()
     const enterChatHandler = async (newClickedUser)=>{
 
-        setEnterChatLoaderActivated(true)
 
         const relatedNotification = notifications[newClickedUser.id]
         const response = await apiWrap(async ()=>{
