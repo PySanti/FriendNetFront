@@ -32,13 +32,18 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
     let messagesLoaderActivated                                         = useMessagesLoaderActivated((state)=>(state.messagesLoaderActivated))
+    let [messagesScrollLoaderActivated, setMessagesScrollLoaderActivated] = useState(false)
     const thersScroll = ()=>{
         return containerRef.current.scrollHeight > containerRef.current.clientHeight
     }
     const loadMessages = async ()=>{
+        setMessagesScrollLoaderActivated(true)
         const response = await apiWrap(async ()=>{
             return await getMessagesHistorialAPI(clickedUser.id, getJWTFromLocalStorage().access, messagesHistorialPage.current)
-        }, navigate, 'Cargando mensajes, espere', 1000, "getMessagesHistorial")
+        }, navigate, undefined, undefined, "getMessagesHistorial")
+        if (response == undefined){
+            return
+        }
         if (response){
             if (response.status == 200){
                 containerRef.current.style.scrollBehavior = "auto"
@@ -56,7 +61,9 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
             } else {
                 toast.error('Error inesperado cargando los mensajes')
             }
+
         }
+        setMessagesScrollLoaderActivated(false)
     }
     const sendMsg = async (data)=>{
         const response = await apiWrap(async ()=>{
@@ -131,6 +138,12 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 <>
                     {messagesHistorial.length !== 0 ?  
                         <div className="messages-list-container scrollbar-container" ref={containerRef} onScroll={scrollHandler}>
+                            <div className={messagesScrollLoaderActivated ? "scroll-loader-container scroll-loader-container__activated" : "scroll-loader-container"}>
+                                {
+                                    messagesScrollLoaderActivated &&
+                                    <Loader loaderActivated={messagesScrollLoaderActivated}/>
+                                }
+                            </div>
                             {messagesHistorial.map(formatingFunction)}
                         </div>
                         :

@@ -43,5 +43,6 @@ export async function apiWrap(apiCalling, navigateFunc, loadingMsg, timer, apiId
         return await execute()
     } else if (apiId && CALLING_DB[apiId]){
         console.log(`Bloqueando llamada a api ${apiId}`)
+        return undefined
     }
 }

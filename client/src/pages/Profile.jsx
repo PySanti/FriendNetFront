@@ -28,7 +28,6 @@ export function Profile() {
         // el data.photo siempre sera: null, url de imagen actual, un archivo
         const sendingData = { ...data };
         if (dataIsDiferent(data, profileData)) { // lodash
-
             const response = await apiWrap(async ()=>{
                 return await updateUserDataAPI( sendingData, getJWTFromLocalStorage().access)
             }, navigate, 'Modificando perfil', undefined,"updateUserData")

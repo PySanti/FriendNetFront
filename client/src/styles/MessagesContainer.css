@@ -6,8 +6,24 @@
     align-items: center;
     justify-content: center;
 }
+.scroll-loader-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    z-index: 999;
+    top : -20%;
+    transition-property: top;
+    transition-duration: .5s;
+    transition-delay: .5s;
+}
+
+.scroll-loader-container__activated{
+    top: 0;
+}
 
 .messages-list-container{
+    position: relative;
     display: flex;
     padding-right: 5px;
     flex-direction: column;
