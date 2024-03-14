@@ -30,7 +30,7 @@ export function UserButton({user}){
         }
     }
     return (
-        <button className="user-button" onClick={handleUserButtonClick}>
+        <button className={(clickedUser && clickedUser.id == user.id) ? "user-button user-button__selected" : "user-button"} onClick={handleUserButtonClick}>
             <div className="user-button__username">
                 {user.username}
                 {typingDB[user.id] && " ..."}
