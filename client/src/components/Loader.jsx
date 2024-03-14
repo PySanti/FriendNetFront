@@ -5,7 +5,7 @@ import loading from "../../lottie/loading.json"
 import "../styles/Loader.css"
 
 export function Loader({big, loaderActivated}){
-    const loaderClassName       = "users-list-loader" 
+    const loaderClassName       = "loader" 
     let baseClassName           = loaderActivated ? `${loaderClassName} ${loaderClassName+"__activated"}` : loaderClassName
     baseClassName               = big ? baseClassName + " big-loader" : baseClassName
     const loadingAnimationRef   = useRef(null)
