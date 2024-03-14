@@ -108,10 +108,4 @@ export const useGottaScrollChat = create((set)=>({
     setGottaScrollChat: (new_val)=>(set(()=>({gottaScrollChat : new_val}))),
 }))
 
-export const useMessagesLoaderActivated = create((set)=>({
-    messagesLoaderActivated : false,
-    setMessagesLoaderActivated: (new_val)=>(set(()=>({messagesLoaderActivated : new_val}))),
-    reset : ()=>(set(()=>({messagesLoaderActivated: false})))
-}))
-
 

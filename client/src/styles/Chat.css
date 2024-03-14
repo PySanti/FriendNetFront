@@ -3,4 +3,11 @@
     flex-direction: column;
     width: 90%;
 }
-
+.chat-container__title{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items : center;
+    justify-content: center;
+    font-size: var(--base-input-font-size);
+}

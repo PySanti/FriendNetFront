@@ -14,7 +14,7 @@ import {useMessagesHistorial} from "../store"
 import { BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
 import {apiWrap} from "../utils/apiWrap"
-import {useMsgReceivedInChat, useGottaScrollChat, useMessagesLoaderActivated} from "../store"
+import {useMsgReceivedInChat, useGottaScrollChat} from "../store"
 import {Loader} from "../components/Loader"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -31,7 +31,6 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     let [messagesHistorial, setMessagesHistorial]                       = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
-    let messagesLoaderActivated                                         = useMessagesLoaderActivated((state)=>(state.messagesLoaderActivated))
     let [messagesScrollLoaderActivated, setMessagesScrollLoaderActivated] = useState(false)
     const thersScroll = ()=>{
         return containerRef.current.scrollHeight > containerRef.current.clientHeight
@@ -131,31 +130,20 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     }, [newMsg])
     return (
         <div className="messages-container">
-            {
-                messagesLoaderActivated ?
-                <Loader big loaderActivated={messagesLoaderActivated}/>
+            {messagesHistorial.length !== 0 ?  
+                <div className="messages-list-container scrollbar-container" ref={containerRef} onScroll={scrollHandler}>
+                    <div className={messagesScrollLoaderActivated ? "scroll-loader-container scroll-loader-container__activated" : "scroll-loader-container"}>
+                        {
+                            messagesScrollLoaderActivated &&
+                            <Loader loaderActivated={messagesScrollLoaderActivated}/>
+                        }
+                    </div>
+                    {messagesHistorial.map(formatingFunction)}
+                </div>
                 :
-                <>
-                    {messagesHistorial.length !== 0 ?  
-                        <div className="messages-list-container scrollbar-container" ref={containerRef} onScroll={scrollHandler}>
-                            <div className={messagesScrollLoaderActivated ? "scroll-loader-container scroll-loader-container__activated" : "scroll-loader-container"}>
-                                {
-                                    messagesScrollLoaderActivated &&
-                                    <Loader loaderActivated={messagesScrollLoaderActivated}/>
-                                }
-                            </div>
-                            {messagesHistorial.map(formatingFunction)}
-                        </div>
-                        :
-                        <h3 className="messages-container__title">
-                            {clickedUser?
-                                "No hay mensajes :("
-                                :
-                                "Selecciona un usuario para chatear"
-                            }
-                        </h3>
-                    }
-                </>
+                <h3 className="chat-container__title">
+                    No hay mensajes :(
+                </h3>
             }
         </div>
     )

@@ -35,29 +35,18 @@
     scroll-behavior: smooth;
     min-height: 100%;
 }
-.messages-container__title{
-    text-align: center;
-}
+
 
 @media screen and (max-width : 900px){
-    .messages-container__title{
-        font-size: 20px;
-    }
     .messages-list-container{
         width: 95%;
     }
 }
 @media screen and (max-width : 700px){
-    .messages-container__title{
-        font-size: 15px;
-    }
-
 }
 
 @media screen and (max-width : 500px){
-    .messages-container__title{
-        font-size: 12px;
-    }
+
     .messages-list-container{
         width: 90%;
     }
