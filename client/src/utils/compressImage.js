@@ -6,7 +6,7 @@ export async function compressImage(image){
         quality: 0.6, 
         maxWidth: 500,  
         maxHeight: 500,
-        mimeType: "image/jpeg", // Specify the output image format
+        mimeType: "image/jpeg",
         success(result) {
             resolve(result);
         },

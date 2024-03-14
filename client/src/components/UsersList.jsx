@@ -71,7 +71,7 @@ export function UsersList(){
             } else if (response.data.error=== "no_more_pages"){
                 setNoMoreUsers(true)
             } else {
-                toast.error("¡ Ha habido un error cargando la lista de usuarios !")
+                toast.error("Ha habido un error cargando la lista de usuarios")
             }
         }
         if (response == undefined){

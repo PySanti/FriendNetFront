@@ -19,7 +19,7 @@ export function UserButton({user}){
     const globeCls                      = "user-button-globe"
     const handleUserButtonClick         = ()=>{
         if (!NOTIFICATIONS_WEBSOCKET.current || NOTIFICATIONS_WEBSOCKET.current.readyState !== 1){
-            toast.error("¡ Cargando !")
+            toast.error("Cargando")
         } else {
             updateClickedUser(clickedUser, user, setClickedUser, setLastClickedUser)
         }

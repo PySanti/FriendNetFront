@@ -51,10 +51,10 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                 if (response.data.error == "no_more_pages"){
                     noMoreMessages.current = true
                 } else if (response.data.error == "error_while_getting_messages"){
-                    toast.error('¡ Ha habido un error cargando los mensajes !')
+                    toast.error('Ha habido un error cargando los mensajes')
                 }
             } else {
-                toast.error('¡ Error inesperado cargando los mensajes !')
+                toast.error('Error inesperado cargando los mensajes')
             }
         }
     }
@@ -71,7 +71,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
                     toast.error("Error inesperado enviando mensaje, cerrando sesión por seguridad")
                     logoutUser(navigate)
                 } else {
-                    toast.error('¡ Error inesperado enviando el mensaje !')
+                    toast.error('Error inesperado enviando el mensaje')
                 }
             }
         }

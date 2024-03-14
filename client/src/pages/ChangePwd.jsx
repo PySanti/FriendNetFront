@@ -31,9 +31,9 @@ export function ChangePwd(){
                 if (response.status == 200){
                     toast.success("Contraseña modificada exitosamente")
                 } else if (response.data.error === 'invalid_pwd'){
-                    toast.error("¡ Error, la contraseña actual es invalida !")
+                    toast.error("Error, la contraseña actual es invalida")
                 } else {
-                    toast.error('¡ Error inesperado cambiando la contraseña !')
+                    toast.error('Error inesperado cambiando la contraseña')
                 }
             }
         } else {

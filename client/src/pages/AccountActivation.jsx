@@ -33,7 +33,7 @@ export function AccountActivation() {
             if (response.status == 200){
                 toast.success(`Correo de activación enviado `)
             }  else {
-                toast.error("¡ Error inesperado enviando correo de activación !")
+                toast.error("Error inesperado enviando correo de activación")
             }
         }
     }
@@ -52,14 +52,14 @@ export function AccountActivation() {
                         toast.success("Usuario activado con éxito, bienvenid@")
                         navigate("/login/");
                     } else {
-                        toast.error("¡ Error inesperado activando su cuenta !")
+                        toast.error("Error inesperado activando su cuenta")
                     }
                 }
             } else {
                 if (response.data.error == "invalid_security_code"){
-                    toast.error("¡ Código invalido !")
+                    toast.error("Código invalido")
                 } else {
-                    toast.error("¡ Hubo un error inesperado revisando el código !")
+                    toast.error("Hubo un error inesperado revisando el código")
                 }
             }
         }

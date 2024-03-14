@@ -1,4 +1,4 @@
-export const BASE_FALLEN_SERVER_LOG = "¡ Red caída !"
+export const BASE_FALLEN_SERVER_LOG = "Red caída"
 export const BASE_USER_NOT_EXISTS_ERROR = "user_not_exists"
 export const BACKEND_URL = "https://friendnet.online/";
 // export const BACKEND_URL = "http://127.0.0.1:8000/";
@@ -16,7 +16,7 @@ export const BASE_PASSWORD_MIN_LENGTH = 6;
 export const BASE_PASSWORD_MAX_LENGTH = 30
 export const BASE_LOGIN_REQUIRED_ERROR_MSG = "requires_login"
 export const BASE_UNEXPECTED_ERROR_MESSAGE = "unexpected_error"
-export const BASE_UNEXPECTED_ERROR_LOG = "¡ Error inesperado !"
+export const BASE_UNEXPECTED_ERROR_LOG = "Error inesperado"
 export const LOCAL_STORAGE_DARK_MODE_NAME = "darkMode"
 export const BASE_USER_TYPING_LOCAL_STORAGE_ATTR = "user_typing"
 export const BASE_SECURITY_CODE_LENGTH = 10

@@ -32,9 +32,9 @@ export function ForgotPasswordPage(){
                 setCodeEntered(true)
             } else {
                 if (response.data.error == "invalid_security_code"){
-                    toast.error('¡ Código invalido !')
+                    toast.error('Código invalido')
                 } else {
-                    toast.error('¡ Hubo un error inesperado revisando el código !')
+                    toast.error('Hubo un error inesperado revisando el código')
                 }
             }
         }
@@ -49,9 +49,9 @@ export function ForgotPasswordPage(){
                 setEmailSended(true)
             } else {
                 if (response.data.error == "user_not_exists"){
-                    toast.error('¡ Correo inexistente en la base de datos !')
+                    toast.error('Correo inexistente en la base de datos')
                 } else {
-                    toast.error('¡ Hubo un error inesperado buscando usuario !')
+                    toast.error('Hubo un error inesperado buscando usuario')
                 }
             }
         }
@@ -65,7 +65,7 @@ export function ForgotPasswordPage(){
                 toast.success("Contraseña modificada exitosamente")
                 navigate("/login/")
             } else {
-                toast.error('¡ Hubo un error inesperado modificando la contraseña !')
+                toast.error('Hubo un error inesperado modificando la contraseña')
             }
         }
     }

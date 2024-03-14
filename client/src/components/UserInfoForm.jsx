@@ -31,7 +31,7 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
         data.photo = currentPhotoFile; // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
         const imageCompressingResponse = await handleImageCompressing(data.photo)
         if (imageCompressingResponse == 1){
-            toast.error("! Error comprimiendo imagen !")
+            toast.error("Error comprimiendo imagen")
             return
         } else{
             data.photo = imageCompressingResponse

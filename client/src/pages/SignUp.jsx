@@ -39,16 +39,16 @@ export function SignUp() {
                             toast.success("Usuario creado exitosamente, verifica tu correo electrónico")
                             navigate('/signup/activate', {state: generateLocationProps(data.email, data.username, response.data.new_user_id)})
                         } else if (response.data.error == "cloudinary_error"){
-                            toast.error("¡ Error con la nube !")
+                            toast.error("Error con la nube")
                         } else {
-                            toast.error("¡ Error inesperado creando tu usuario !")
+                            toast.error("Error inesperado creando tu usuario")
                         }
                     }
                 }else {
-                    toast.error("¡ Ya existe un usuario con ese Nombre de usuario o Correo electrónico !")
+                    toast.error("Ya existe un usuario con ese Nombre de usuario o Correo electrónico")
                 }
             } else {
-                toast.error("¡ Error inesperado revisando si existe un usuario con esos datos !")
+                toast.error("Error inesperado revisando si existe un usuario con esos datos")
             }
         }
     }

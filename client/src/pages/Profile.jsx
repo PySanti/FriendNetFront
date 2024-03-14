@@ -39,12 +39,12 @@ export function Profile() {
                     toast.success("Perfil modificado exitosamente")
                 } else if (response.status == 400){
                     const log = {
-                        "username_or_email_taken"   : "¡ El usuario o el email ya están tomados !",
-                        "cloudinary_error"          : "¡ Error al subir la imagen a la nube !"
+                        "username_or_email_taken"   : "El usuario o el email ya están tomados",
+                        "cloudinary_error"          : "Error al subir la imagen a la nube"
                     }[response.data.error]
-                    toast.error(log ? log : '¡ Hubo un error actualizando tus datos !')
+                    toast.error(log ? log : 'Hubo un error actualizando tus datos')
                 } else {
-                    toast.error('¡ Hubo un error actualizando tus datos !')
+                    toast.error('Hubo un error actualizando tus datos')
                 }
             }
         } else {

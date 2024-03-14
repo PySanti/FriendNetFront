@@ -45,17 +45,17 @@ export function Login() {
                             toast.success("Sesión iniciada con éxito")
                             navigate('/home/')
                         } else if (response.data.error == "user_is_online"){
-                            toast.error("¡ El usuario ya esta en linea o se esta restableciendo la conexión con el servidor !") 
+                            toast.error("El usuario ya esta en linea o se esta restableciendo la conexión con el servidor") 
                         } else{
-                            toast.error("¡ Error inesperado iniciando sesión !")
+                            toast.error("Error inesperado iniciando sesión")
                         } 
                     }
                 }
             } else if (response.data.error == "user_not_exists"){
                 // por seguridad, la api retornara el mismo codigo de error para cuando el usuario o la contrasenia esten mal
-                toast.error("¡ Usuario o contraseña inválidos !") 
+                toast.error("Usuario o contraseña inválidos") 
             } else {
-                toast.error("¡ Error inesperado buscando datos del usuario !")
+                toast.error("Error inesperado buscando datos del usuario")
             }
         }
     }

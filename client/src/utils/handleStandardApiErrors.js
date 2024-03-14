@@ -14,7 +14,7 @@ export function handleStandardApiErrors(error){
             return false;
         }
     } catch{
-        toast.error("¡ Error inesperado !")
+        toast.error("Error inesperado")
         return true;
     }
 

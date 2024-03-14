@@ -35,7 +35,7 @@ export function NotificationsContainer(){
             if (response.status == 200){
                 removeAndUpdateNotifications(notification, setNotifications)
             } else {
-                toast.error('¡ Ha ocurrido un error eliminando la notificación !')
+                toast.error('Ha ocurrido un error eliminando la notificación')
             }
         }
     }

@@ -32,13 +32,13 @@ export function ChangeEmailForActivation(){
                     toast.success("Correo electrónico modificado exitosamente")
                     navigate('/signup/activate', {state: props})
                 } else if (response.data.error==="email_exists"){
-                    toast.error("¡ Error, ese email ya fue registrado !")
+                    toast.error("Error, ese email ya fue registrado")
                 } else {
-                    toast.error("¡ Error inesperado cambiando tu correo electrónico !")
+                    toast.error("Error inesperado cambiando tu correo electrónico")
                 }
             }
         } else {
-            toast.error('¡ No hay cambios !')
+            toast.error('No hay cambios')
         }
     })
     useEffect(() => {
