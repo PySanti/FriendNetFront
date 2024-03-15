@@ -79,7 +79,9 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                         <img {...imgProps("small")}/>
                         {(!userPhotoLoaded && photoFile) &&
                             <div className="loading-animation-container">
-                                <Loader loaderActivated={!userPhotoLoaded}/>
+                                {
+                                    chatPhoto ? <Loader big loaderActivated={!userPhotoLoaded}/> : <Loader superbig loaderActivated={!userPhotoLoaded}/>
+                                }
                             </div>
                         }
                         <div className={modalContainerCls} ref={modalContainerRef}>

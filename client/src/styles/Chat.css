@@ -11,3 +11,8 @@
     justify-content: center;
     font-size: var(--base-input-font-size);
 }
+
+.chat-container > .loader{
+    width: 100%;
+    height: 100%;
+}

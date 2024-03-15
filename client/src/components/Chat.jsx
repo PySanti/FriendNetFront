@@ -39,8 +39,6 @@ export function Chat(){
     let mostRecentClickedUser                                               = useRef(null)
     const navigate                                                          = useNavigate()
     const enterChatHandler = async (newClickedUser)=>{
-
-
         const relatedNotification = notifications[newClickedUser.id]
         const response = await apiWrap(async ()=>{
             return await enterChatAPI(newClickedUser.id, relatedNotification? relatedNotification.id : undefined, getJWTFromLocalStorage().access)
@@ -92,7 +90,7 @@ export function Chat(){
         <div className={executingInSmallDevice? (clickedUser? "chat-container" : "chat-container not-displayed") : "chat-container"}>
             {
                 enterChatLoaderActivated ?
-                <Loader big loaderActivated={true}/>
+                <Loader superbig loaderActivated={true}/>
                 :
                 <>
                     {clickedUser ?

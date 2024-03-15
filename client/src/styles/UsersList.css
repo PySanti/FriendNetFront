@@ -22,7 +22,9 @@
     font-size: var(--user-list-font-size);
 }
 
-
+.users-list > .big-loader{
+    height: 100%;
+}
 
 @media screen and (max-width : 1000px){
     .users-list{

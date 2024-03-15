@@ -4,10 +4,11 @@ import {useEffect, useRef} from "react"
 import loading from "../../lottie/loading.json"
 import "../styles/Loader.css"
 
-export function Loader({big, loaderActivated}){
+export function Loader({big, superbig, loaderActivated}){
     const loaderClassName       = "loader" 
     let baseClassName           = loaderActivated ? `${loaderClassName} ${loaderClassName+"__activated"}` : loaderClassName
     baseClassName               = big ? baseClassName + " big-loader" : baseClassName
+    baseClassName               = superbig ? baseClassName + " superbig-loader" : baseClassName
     const loadingAnimationRef   = useRef(null)
     useEffect(()=>{
         if (loadingAnimationRef.current){
