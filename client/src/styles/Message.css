@@ -5,7 +5,7 @@
 .message{
     color : #000;
     margin-top: 5px;
-    padding: 1vw;
+    padding: 10px;
     border-radius: 10px;
     background-color: rgb(209, 209, 209);
     max-width: 25vw;
@@ -13,14 +13,14 @@
 }
 .session-msg{
     align-self: flex-end;
-    border-bottom-right-radius: 0px;
+    border-bottom-right-radius: 0px !important;
 }
 
 
 .not-session-msg{
     background-color : rgb(77, 144, 77);
     align-self: flex-start;
-    border-bottom-left-radius: 0px;
+    border-bottom-left-radius: 0px !important;
 }
 
 .message-date{
@@ -29,16 +29,18 @@
 
 
 @media screen and (max-width : 575px){
+    .message{
+        border-radius: 5px;
+    }
     .message-date{
         font-size: 8px;
     }
 }
-@media screen and (max-width : 400px){
-    .message{
-        padding: 1.5vw;
-    }
-}
+
 @media screen and (max-width : 300px){
+    .message{
+        padding: 5px;
+    }
     .message-date{
         font-size: 5px;
     }
