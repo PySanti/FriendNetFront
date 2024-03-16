@@ -29,11 +29,14 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
     const errors = formState.errors
     const onSubmit = handleSubmit(async (data) => {
         data.photo = currentPhotoFile; // currentPhotoFile o es null o es una imagen que ya esta validada o es la misma imagen que el usuario ya tenia
-        const imageCompressingResponse = await handleImageCompressing(data.photo)
-        if (imageCompressingResponse == 1){
-            toast.error("Error comprimiendo imagen")
-            return
-        } else{
+        if (data.photo && typeof data.photo !== "string"){ // si se trata de un archivo de imagen
+            const toastId = toast.loading("Comprimiendo imagen")
+            const imageCompressingResponse = await handleImageCompressing(data.photo)
+            toast.dismiss(toastId)
+            if (imageCompressingResponse == 1){
+                toast.error("Error comprimiendo imagen")
+                return
+            }
             data.photo = imageCompressingResponse
         }
         await onFormSubmit(data);
