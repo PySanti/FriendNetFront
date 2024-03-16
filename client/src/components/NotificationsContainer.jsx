@@ -11,7 +11,6 @@ import {apiWrap} from "../utils/apiWrap"
 import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {useNotifications} from "../store"
-import {initStates} from "../utils/initStates"
 /**
  * Componente creado para contener las notificaciones del usuarios
  */
@@ -50,9 +49,6 @@ export function NotificationsContainer(){
         }
     }, [notifications])
 
-    useEffect(()=>{
-        initStates(notifications, setNotifications)
-    }, [])
     return (
         <div className="notifications-container">
             <div className={notificationsActivated? `${baseNotificationsBellClassName} button_hovered` : baseNotificationsBellClassName} onClick={handleNotificationsBellClick}>

@@ -41,16 +41,14 @@ function App() {
   let [usersIdList, setUsersIdList]                                     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let setMsgReceivedInChat                                              = states.useMsgReceivedInChat((state)=>(state.setMsgReceivedInChat))
   let [executingInSmallDevice,setExecutingInSmallDevice]                = states.useExecutingInSmallDevice((state)=>([state.executingInSmallDevice, state.setExecutingInSmallDevice]))
+  let [websocketMounted,setWebsocketMounted]                            = states.useWebsocketMounted((state)=>([state.websocketMounted, state.setWebsocketMounted]))
   let userKeyword                                                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                                                          = useRef(null)
   let newMessageRef                                                     = useRef(null)
-  const reconnectWebsockets             = ()=>{
-    disconnectWebsocket()
-    initStates(notifications, setNotifications)
-  }
   const handleReconnection = ()=>{
     if (document.visibilityState === "visible"){
-      reconnectWebsockets()
+      disconnectWebsocket()
+      setWebsocketMounted(null)
     }
   }
   const audioEffect = ()=>{
@@ -62,8 +60,11 @@ function App() {
     newMessageRef.current.play()
   }
   useEffect(()=>{
+    if (!websocketMounted && getUserDataFromLocalStorage()){
+      initStates(notifications, setNotifications)
+      setWebsocketMounted(true)
+    }
     document.addEventListener("visibilitychange", handleReconnection)
-    reconnectWebsockets()
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
     });
@@ -75,7 +76,7 @@ function App() {
     return ()=>{
       document.removeEventListener("visibilitychange", handleReconnection)
     }
-  }, [])
+  }, [websocketMounted])
 
 
   useEffect(()=>{
