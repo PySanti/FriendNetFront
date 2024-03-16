@@ -46,9 +46,8 @@ function App() {
   let alertRef                                                          = useRef(null)
   let newMessageRef                                                     = useRef(null)
   const handleReconnection = ()=>{
-    if (document.visibilityState === "visible"){
+    if (document.visibilityState === "visible" && getUserDataFromLocalStorage()){
       disconnectWebsocket()
-      window.alert("cambando el visibility")
       setWebsocketMounted(null)
     }
   }
