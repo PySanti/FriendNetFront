@@ -48,6 +48,7 @@ function App() {
   const handleReconnection = ()=>{
     if (document.visibilityState === "visible"){
       disconnectWebsocket()
+      window.alert("cambando el visibility")
       setWebsocketMounted(null)
     }
   }
