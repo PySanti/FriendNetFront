@@ -22,7 +22,7 @@ export function Home() {
     let executingInSmallDevice          = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     useEffect(()=>{
         document.title = generateDocumentTitle("Home")
-        if (!websocketMounted){
+        if (!websocketMounted){ // esto solo se debe ejecutar cuando venimos del login
             setWebsocketMounted(null)
         }
         return ()=>{

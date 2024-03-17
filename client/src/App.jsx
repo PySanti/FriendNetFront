@@ -24,7 +24,6 @@ import new_message from "./sounds/new_message.mp3"
 import {DarkModeButton} from "./components/DarkModeButton"
 import {useRef} from "react"
 import {disconnectWebsocket} from "./utils/disconnectWebsocket"
-import {resetGlobalStates} from "./utils/resetGlobalStates"
 /**
 /**
  * Toda la implementacion que tenemos del websocket de notificaciones en el app.jsx
