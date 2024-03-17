@@ -18,7 +18,6 @@ import {logoutUser} from "./utils/logoutUser"
 import {Page404} from "./pages/Page404"
 import {shiftUser} from "./utils/shiftUser"
 import * as states from "./store"
-import {initStates} from "./utils/initStates"
 import alert from "./sounds/alert.mp3"
 import new_message from "./sounds/new_message.mp3"
 import {DarkModeButton} from "./components/DarkModeButton"
@@ -27,6 +26,7 @@ import {disconnectWebsocket} from "./utils/disconnectWebsocket"
 import {apiWrap} from "./utils/apiWrap"
 import {getUserNotificationsAPI} from "./api/getUserNotifications.api"
 import {getJWTFromLocalStorage} from "./utils/getJWTFromLocalStorage"
+import {NotificationsWSInitialize} from "./NotificationsWSInitialize"
 
 
 /**
@@ -57,6 +57,7 @@ function App() {
     if (response){
       if (response.status == 200){
         saveNotificationsInLocalStorage(response.data.recent_notifications)
+        setNotifications(response.data.recent_notifications)
       } else {
         toast.error("Error inesperado cargando las notificaciones recientes del usuario")
       }
@@ -80,7 +81,7 @@ function App() {
       (async function(){
           await handleNotificationsReload()
       })();
-      initStates(notifications, setNotifications)
+      NotificationsWSInitialize(getUserDataFromLocalStorage().id)
       setWebsocketMounted(true)
     }
     document.addEventListener("visibilitychange", handleReconnection)
