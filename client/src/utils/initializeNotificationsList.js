@@ -5,5 +5,9 @@ export function initializeNotificationsList(notifications, notificationsSetter){
     const localStorageNotifications = getNotificationsFromLocalStorage()
     if (Object.keys(notifications).length == 0 && localStorageNotifications){
         notificationsSetter(localStorageNotifications)
+    } else {
+        console.log("NO se setearan las notificaciones")
+        console.log(localStorageNotifications)
+        console.log(notifications)
     }
 }
