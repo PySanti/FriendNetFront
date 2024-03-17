@@ -40,6 +40,7 @@ export function DarkModeButton(){
     useEffect(()=>{
         if (defaultDarkModeActivated()){
             updateDarkMode(true)
+            darkModeAnimationRef.current.playSegments([0,16], true)
         } else {
             const currentDarkMode = getDarkModeFromLocalStorage()
             updateDarkMode(currentDarkMode)
