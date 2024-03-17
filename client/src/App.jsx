@@ -50,18 +50,20 @@ function App() {
   let userKeyword                                                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                                                          = useRef(null)
   let newMessageRef                                                     = useRef(null)
+  const handleNotificationsReload = ()=>{
+    const response = await apiWrap(async ()=>{
+      return await getUserNotificationsAPI(getJWTFromLocalStorage().access)
+    }, undefined, 'Cargando notificaciones recientes', 5000, 'getUserNotifications')
+    if (response){
+      if (response.status == 200){
+        saveNotificationsInLocalStorage(response.data.recent_notifications)
+      } else {
+        toast.error("Error inesperado cargando las notificaciones recientes del usuario")
+      }
+    }
+  }
   const handleReconnection = async ()=>{
     if (document.visibilityState === "visible" && getUserDataFromLocalStorage()){
-      const response = await apiWrap(async ()=>{
-        return await getUserNotificationsAPI(getJWTFromLocalStorage().access)
-      }, undefined, 'Cargando notificaciones recientes', 5000, 'getUserNotifications')
-      if (response){
-        if (response.status == 200){
-          saveNotificationsInLocalStorage(response.data.recent_notifications)
-        } else {
-          toast.error("Error inesperado cargando las notificaciones recientes del usuario")
-        }
-      }
       disconnectWebsocket()
     }
   }
@@ -75,6 +77,7 @@ function App() {
   }
   useEffect(()=>{
     if (!websocketMounted && getUserDataFromLocalStorage()){
+      handleNotificationsReload()
       initStates(notifications, setNotifications)
       setWebsocketMounted(true)
     }
