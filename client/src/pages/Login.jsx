@@ -9,19 +9,16 @@ import { Button } from "../components/Button"
 import { v4 } from "uuid"
 import { saveUserDataInLocalStorage } from "../utils/saveUserDataInLocalStorage"
 import {BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
-import { saveNotificationsInLocalStorage } from "../utils/saveNotificationsInLocalStorage"
 import {loginUser} from "../utils/loginUser"
 import {generateLocationProps} from "../utils/generateLocationProps"
 import {apiWrap} from "../utils/apiWrap"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {useWebsocketMounted} from "../store"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
 export function Login() {
     const   navigate          = useNavigate()
-    const setWebsocketMounted = useWebsocketMounted((state)=>(state.setWebsocketMounted))
 
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
@@ -40,10 +37,7 @@ export function Login() {
                     }, navigate, 'Generando token de seguridad, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "login")
                     if (response){
                         if (response.status == 200){
-                            const baseNotifications = userDetail.notifications
-                            delete userDetail.notifications
                             toast.success("Sesión iniciada con éxito")
-                            saveNotificationsInLocalStorage(baseNotifications)
                             saveUserDataInLocalStorage(userDetail)
                             navigate('/home/')
                         } else if (response.data.error == "user_is_online"){
