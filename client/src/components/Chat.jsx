@@ -28,7 +28,6 @@ import {apiWrap} from "../utils/apiWrap"
 export function Chat(){
     let messagesHistorialPage                                               = useRef(1)
     let noMoreMessages                                                      = useRef(false)
-    let [newMsg, setNewMsg]                                                 = useState(null)
     let clickedUser                                                         = useClickedUser((state)=>(state.clickedUser))
     let executingInSmallDevice                                              = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
@@ -96,8 +95,8 @@ export function Chat(){
                     {clickedUser ?
                     <>
                         <ClickedUserHeader/>
-                        <MessagesContainer  newMsg={newMsg}   messagesHistorialPage={messagesHistorialPage}  noMoreMessages={noMoreMessages}/>
-                        <MsgSendingInput onMsgSending={(newMsg)=>setNewMsg(newMsg)} />
+                        <MessagesContainer  messagesHistorialPage={messagesHistorialPage}  noMoreMessages={noMoreMessages}/>
+                        <MsgSendingInput />
                     </>
                     :
                     <h3 className="chat-container__title">

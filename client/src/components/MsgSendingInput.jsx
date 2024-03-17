@@ -7,26 +7,28 @@ import {NOTIFICATIONS_WEBSOCKET, BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../u
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useClickedUser} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
-import {useMsgReceivedInChat, useGottaScrollChat} from "../store"
+import {useNewMsg, useMsgReceivedInChat, useGottaScrollChat} from "../store"
 /**
  * Input creado para el envio de mensajes
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
  */
-export function MsgSendingInput({onMsgSending}){
+export function MsgSendingInput(){
     let clickedUser                                         = useClickedUser((state)=>state.clickedUser)
     let {register, handleSubmit, reset}                     = useForm()
     let [clickedUserWhenTyping, setClickedUserWhenTyping]   = useState(null)
     let [timeoutDB, setTimeoutDB]                           = useState({})
     let setGottaScrollChat                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
     let msgReceivedInChat                                   = useMsgReceivedInChat((state)=>(state.msgReceivedInChat))
+    const setNewMsg                                         = useNewMsg((state)=>(state.setNewMsg))
     const userData                                          = getUserDataFromLocalStorage()
+
     const resetInput = ()=>{
         reset()
     }
     const onSubmit                      = handleSubmit((data)=>{
         const new_msg = data.msg.trim()
         if (new_msg.length > 0){
-            onMsgSending(data)
+            setNewMsg(data)
             resetInput()
         }
 

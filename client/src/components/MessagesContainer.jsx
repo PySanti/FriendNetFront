@@ -14,15 +14,14 @@ import {useMessagesHistorial} from "../store"
 import { BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
 import {logoutUser} from "../utils/logoutUser"
 import {apiWrap} from "../utils/apiWrap"
-import {useMsgReceivedInChat, useGottaScrollChat} from "../store"
+import {useMsgReceivedInChat, useGottaScrollChat, useNewMsg} from "../store"
 import {Loader} from "../components/Loader"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
- * @param {Object} newMsg state creado para cuando se envia un mensaje nuevo
  * @param {Object} messagesHistorialPage
  * @param {Object} noMoreMessages  
 */
-export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}){
+export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
     const containerRef                                                  = useRef(null)
     const oldScrollRef                                                  = useRef(null)
     const navigate                                                      = useNavigate()
@@ -32,6 +31,8 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
     let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
     let [messagesScrollLoaderActivated, setMessagesScrollLoaderActivated] = useState(false)
+    let [newMsg, setNewMsg]                                             = useNewMsg((state)=>([state.newMsg, state.setNewMsg]))
+
     const thersScroll = ()=>{
         return containerRef.current.scrollHeight > containerRef.current.clientHeight
     }
@@ -125,6 +126,7 @@ export function MessagesContainer({newMsg, messagesHistorialPage,noMoreMessages}
         if (newMsg){
             (async function(){
                 await sendMsg(newMsg)
+                setNewMsg(null)
             })();
         }
     }, [newMsg])
