@@ -67,3 +67,8 @@
     }
 }
 
+@media (prefers-color-scheme: dark) {
+    .button {
+        box-shadow : none;
+    }
+}

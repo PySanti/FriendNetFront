@@ -124,3 +124,9 @@ input:focus{
 .not-displayed{
   display: none;
 }
+
+@media (prefers-color-scheme: dark) {
+    input {
+      box-shadow : none !important;
+    }
+}
