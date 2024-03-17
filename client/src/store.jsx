@@ -92,11 +92,7 @@ export const useExecutingInSmallDevice  = create((set)=>({
     setExecutingInSmallDevice: (new_val)=>(set(()=>({executingInSmallDevice : new_val}))),
 }))
 
-export const useDefaultDarkModeActivated  = create((set)=>({
-    defaultDarkModeActivated : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
-    setDefaultDarkModeActivated: (new_val)=>(set(()=>({defaultDarkModeActivated : new_val}))),
-    reset : ()=>(set(()=>({defaultDarkModeActivated: false})))
-}))
+
 
 export const useMsgReceivedInChat = create((set)=>({
     msgReceivedInChat : false,

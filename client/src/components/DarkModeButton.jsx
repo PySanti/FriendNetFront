@@ -8,14 +8,13 @@ import {useDarkMode} from "../store"
 import {useEffect} from "react"
 import {getDarkModeFromLocalStorage} from "../utils/getDarkModeFromLocalStorage"
 import {LOCAL_STORAGE_DARK_MODE_NAME} from "../utils/constants"
-import {useDefaultDarkModeActivated} from "../store.jsx"
+import {defaultDarkModeActivated} from "../utils/defaultDarkModeActivated"
 
 /**
  * Componente creado para el dark mode
  */
 export function DarkModeButton(){
     let [darkModeActivated, setDarkModeActivated] = useDarkMode((state)=>([state.darkModeActivated, state.setDarkModeActivated]))
-    let defaultDarkModeActivated = useDefaultDarkModeActivated((state)=>(state.defaultDarkModeActivated))
     const darkModeClassName = "dark"
     const darkModeAnimationRef = useRef()
     const updateDarkMode = (newDarkMode)=>{
@@ -29,7 +28,7 @@ export function DarkModeButton(){
         localStorage.setItem(LOCAL_STORAGE_DARK_MODE_NAME, newDarkMode)
     }
     const handleClick = ()=>{
-        if (defaultDarkModeActivated){
+        if (defaultDarkModeActivated()){
             toast.error("Desactiva el modo obscuro de tu navegador para usar esta opción")
         } else {
             updateDarkMode(!darkModeActivated)
@@ -39,16 +38,15 @@ export function DarkModeButton(){
     }
 
     useEffect(()=>{
-        const currentDarkMode = getDarkModeFromLocalStorage()
-        updateDarkMode(currentDarkMode)
-        if (currentDarkMode)
-            darkModeAnimationRef.current.playSegments([0,16], true)
-    }, [])
-    useEffect(()=>{
-        if (defaultDarkModeActivated){
-            updateDarkMode("dark")
+        if (defaultDarkModeActivated()){
+            updateDarkMode(true)
+        } else {
+            const currentDarkMode = getDarkModeFromLocalStorage()
+            updateDarkMode(currentDarkMode)
+            if (currentDarkMode)
+                darkModeAnimationRef.current.playSegments([0,16], true)
         }
-    }, [defaultDarkModeActivated])
+    }, [])
     return (
         <div className="dark-mode-button__container" onClick={handleClick}>
             <Lottie 

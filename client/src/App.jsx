@@ -45,7 +45,7 @@ function App() {
   let setLastClickedUser                                                = states.useLastClickedUser((state)=>(state.setLastClickedUser))
   let [usersIdList, setUsersIdList]                                     = states.useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
   let setMsgReceivedInChat                                              = states.useMsgReceivedInChat((state)=>(state.setMsgReceivedInChat))
-  let [executingInSmallDevice,setExecutingInSmallDevice]                = states.useExecutingInSmallDevice((state)=>([state.executingInSmallDevice, state.setExecutingInSmallDevice]))
+  let setExecutingInSmallDevice                                         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let [websocketMounted,setWebsocketMounted]                            = states.useWebsocketMounted((state)=>([state.websocketMounted, state.setWebsocketMounted]))
   let userKeyword                                                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                                                          = useRef(null)
@@ -166,7 +166,7 @@ function App() {
       newMessageRef.current.currentTime = 0; // Reiniciar la reproducción al principio
     }}></audio>
     <Toaster 
-      visibleToasts={executingInSmallDevice ? 1 : 2}
+      visibleToasts={1}
       position="bottom-right"
       closeButton
       toastOptions={{
