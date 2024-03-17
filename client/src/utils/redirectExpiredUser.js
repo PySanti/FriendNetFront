@@ -1,13 +1,10 @@
 import {toast} from "sonner"
-import {disconnectWebsocket} from "../utils/disconnectWebsocket"
-import {clearLocalStorage} from "../utils/clearLocalStorage"
+import {logoutUser} from "../utils/logoutUser"
 /**
  * Redirigira al usuario expirado al root de la app para volver a logearse. 
  * @param {Func} navigateFunc funcion navigate del hook useNavigate creado desde la pagina concurrente
  */
 export function redirectExpiredUser(navigateFunc){
-    navigateFunc('/')
-    clearLocalStorage()
-    disconnectWebsocket()
+    logoutUser(navigateFunc)
     toast.error("Redirigiendo usuario al inicio por vencimiento de token")
 }

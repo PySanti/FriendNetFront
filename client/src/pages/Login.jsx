@@ -42,10 +42,9 @@ export function Login() {
                         if (response.status == 200){
                             const baseNotifications = userDetail.notifications
                             delete userDetail.notifications
+                            toast.success("Sesión iniciada con éxito")
                             saveNotificationsInLocalStorage(baseNotifications)
                             saveUserDataInLocalStorage(userDetail)
-                            toast.success("Sesión iniciada con éxito")
-                            setWebsocketMounted(null)
                             navigate('/home/')
                         } else if (response.data.error == "user_is_online"){
                             toast.error("El usuario ya esta en linea o se esta restableciendo la conexión con el servidor") 

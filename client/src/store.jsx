@@ -117,6 +117,7 @@ export const useEnterChatLoaderActivated = create((set)=>({
 export const useWebsocketMounted = create((set)=>({
     websocketMounted : false,
     setWebsocketMounted: (new_val)=>(set(()=>({websocketMounted : new_val}))),
+    reset : ()=>(set(()=>({websocketMounted: false})))
 }))
 
 

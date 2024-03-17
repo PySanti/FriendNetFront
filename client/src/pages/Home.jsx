@@ -10,7 +10,7 @@ import { Button } from "../components/Button"
 import "../styles/Home.css"
 // import { destroy } from 'zustand';
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {useExecutingInSmallDevice} from "../store"
+import {useWebsocketMounted, useExecutingInSmallDevice} from "../store"
 import {resetChats} from "../utils/resetChats"
 
 /**
@@ -18,9 +18,13 @@ import {resetChats} from "../utils/resetChats"
  */
 export function Home() {
     const navigate                      = useNavigate()
+    let [websocketMounted, setWebsocketMounted] = useWebsocketMounted((state)=>([state.websocketMounted, state.setWebsocketMounted]))
     let executingInSmallDevice          = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     useEffect(()=>{
         document.title = generateDocumentTitle("Home")
+        if (!websocketMounted){
+            setWebsocketMounted(null)
+        }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
             resetChats()
