@@ -50,7 +50,7 @@ function App() {
   let userKeyword                                                       = states.useUserKeyword((state)=>(state.userKeyword))
   let alertRef                                                          = useRef(null)
   let newMessageRef                                                     = useRef(null)
-  const handleNotificationsReload = ()=>{
+  const handleNotificationsReload = async ()=>{
     const response = await apiWrap(async ()=>{
       return await getUserNotificationsAPI(getJWTFromLocalStorage().access)
     }, undefined, 'Cargando notificaciones recientes', 5000, 'getUserNotifications')
@@ -77,7 +77,9 @@ function App() {
   }
   useEffect(()=>{
     if (!websocketMounted && getUserDataFromLocalStorage()){
-      handleNotificationsReload()
+      (async function(){
+          await handleNotificationsReload()
+      })();
       initStates(notifications, setNotifications)
       setWebsocketMounted(true)
     }
