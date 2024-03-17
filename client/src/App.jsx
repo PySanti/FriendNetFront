@@ -26,7 +26,7 @@ import {disconnectWebsocket} from "./utils/disconnectWebsocket"
 import {apiWrap} from "./utils/apiWrap"
 import {getUserNotificationsAPI} from "./api/getUserNotifications.api"
 import {getJWTFromLocalStorage} from "./utils/getJWTFromLocalStorage"
-import {NotificationsWSInitialize} from "./NotificationsWSInitialize"
+import {NotificationsWSInitialize} from "./utils/NotificationsWSInitialize"
 
 
 /**
