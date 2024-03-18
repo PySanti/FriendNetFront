@@ -50,7 +50,7 @@ body{
 
 
 
-input{
+input , textarea{
   outline: 1px solid #949393;
   padding: .2rem;
   border-radius: 8px;
@@ -60,7 +60,7 @@ input{
   background-color : var(--base-background-box-color);
   font-size: var(--base-input-font-size);
 }
-input:focus{
+input:focus, textarea:focus{
   outline: .5px solid var(--base-color);
   box-shadow: 3px 3px 10px;
 }

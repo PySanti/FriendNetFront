@@ -2,41 +2,56 @@
     display: flex;
     justify-content: center;
     align-items : center;
-    height: 10vh;
-    gap: 50px;
+    height: 100%;
+    max-height: 20vh;
+    position: relative;
+}
+
+.message-sending-input{
+    position: relative;
+    max-height:  50%;
+    width: 100%;
+    resize: none;
+    font-size: var(--base-error-msg-font-size);
+}
+.message-sending-input:focus{
+    box-shadow : none;
+}
+.message-sending-input::placeholder{
+    font-family: "futura-pt";
+    opacity: .3;
+    text-align: center;
 }
 
 
-@media screen and (max-width : 400px){
-    .message-sending-input-container{
-        gap: 5%;
-    }
-}
-@media screen and (max-height : 500px){
-    .message-sending-input{
-        padding: 0;
-    }
 
-}
-@media screen and (max-width : 250px){
-    .message-sending-input{
-        width: 60%;
-    }
-
-}
 .message-sending-form{
+    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 .sending-msg-button{
     cursor : pointer;
-    padding: .5em;
+    padding: .7em;
     font-size: var(--base-input-font-size);
 }
 
-.message-sending-input:focus{
-    padding-left: 10px;
+@media screen and (max-width : 1200px){
+    .message-sending-form{
+        width: 50%;
+    }
 }
+
+
+@media screen and (max-width : 500px){
+    .message-sending-form{
+        width: 70%;
+    }
+}
+
+
+
 

@@ -60,10 +60,10 @@ export function MsgSendingInput(){
     return (
         <div className="message-sending-input-container">
             <form onChange = {handleMsgSendingInput} className="message-sending-form " onSubmit={onSubmit}>
-                <input 
+                <textarea 
                     
-                    placeholder="Envíale un mensaje" 
-                    className="message-sending-input non-shadow-input" 
+                    placeholder="Mensaje" 
+                    className="message-sending-input" 
                     type="text" 
                     maxLength={BASE_MESSAGE_MAX_LENGTH} 
                     minLength={1} 
