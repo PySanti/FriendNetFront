@@ -30,25 +30,10 @@
     align-items: center;
     justify-content: center;
 }
-.chat-scroll{
-    display: flex;
+.sending-msg-button{
     cursor : pointer;
-    font-size: var(--base-input-font-size);
 }
 
-.chat-scroll::after{
-    content : "";
-    opacity: 0;
-    padding: 3px;
-    border-radius: 20px;
-    background-color : #0f0;
-    align-self: self-start;
-    transition-property: opacity;
-    transition-duration: .3s;
-}
-.chat-scroll__activated::after{
-    opacity: 1;
-}
 .message-sending-input:focus{
     padding-left: 10px;
 }

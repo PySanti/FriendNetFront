@@ -7,7 +7,7 @@ import {NOTIFICATIONS_WEBSOCKET, BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../u
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useClickedUser} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
-import {useNewMsg, useMsgReceivedInChat, useGottaScrollChat} from "../store"
+import {useNewMsg} from "../store"
 /**
  * Input creado para el envio de mensajes
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
@@ -17,8 +17,6 @@ export function MsgSendingInput(){
     let {register, handleSubmit, reset}                     = useForm()
     let [clickedUserWhenTyping, setClickedUserWhenTyping]   = useState(null)
     let [timeoutDB, setTimeoutDB]                           = useState({})
-    let setGottaScrollChat                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
-    let msgReceivedInChat                                   = useMsgReceivedInChat((state)=>(state.msgReceivedInChat))
     const setNewMsg                                         = useNewMsg((state)=>(state.setNewMsg))
     const userData                                          = getUserDataFromLocalStorage()
 
@@ -33,7 +31,6 @@ export function MsgSendingInput(){
         }
 
     })
-
     useEffect(()=>{
         if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUserWhenTyping){
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, true))
@@ -64,6 +61,7 @@ export function MsgSendingInput(){
         <div className="message-sending-input-container">
             <form onChange = {handleMsgSendingInput} className="message-sending-form " onSubmit={onSubmit}>
                 <input 
+                    
                     placeholder="Envíale un mensaje" 
                     className="message-sending-input non-shadow-input" 
                     type="text" 
@@ -71,10 +69,9 @@ export function MsgSendingInput(){
                     minLength={1} 
                     {...register("msg")}/>
             </form>
-            <span className={msgReceivedInChat ? "material-symbols-outlined chat-scroll chat-scroll__activated" : "material-symbols-outlined chat-scroll" } onClick={()=>{setGottaScrollChat(true)}}>
-                expand_circle_down
+            <span className="material-symbols-outlined sending-msg-button" onClick={onSubmit}>
+                send
             </span>
-
         </div>
     )
 }
