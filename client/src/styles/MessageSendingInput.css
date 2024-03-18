@@ -32,6 +32,7 @@
 }
 .sending-msg-button{
     cursor : pointer;
+    font-size: var(--base-input-font-size);
 }
 
 .message-sending-input:focus{
