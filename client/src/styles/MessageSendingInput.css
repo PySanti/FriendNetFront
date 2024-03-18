@@ -32,6 +32,7 @@
 }
 .sending-msg-button{
     cursor : pointer;
+    padding: .5em;
     font-size: var(--base-input-font-size);
 }
 

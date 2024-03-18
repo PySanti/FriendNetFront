@@ -69,7 +69,7 @@ export function MsgSendingInput(){
                     minLength={1} 
                     {...register("msg")}/>
             </form>
-            <span className="material-symbols-outlined sending-msg-button" onClick={onSubmit}>
+            <span className="material-symbols-outlined sending-msg-button" onClick={onSubmit} onMouseDown={(e)=>{e.preventDefault()}}>
                 send
             </span>
         </div>
