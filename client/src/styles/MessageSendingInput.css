@@ -37,19 +37,29 @@
     font-size: var(--base-input-font-size);
 }
 
-@media screen and (max-width : 1200px){
+@media screen and (max-width : 1400px){
     .message-sending-form{
         width: 50%;
     }
 }
 
 
-@media screen and (max-width : 500px){
+@media screen and (max-width : 575px){
     .message-sending-form{
         width: 70%;
     }
+    .message-sending-input{
+        max-height: 30%;
+    }
 }
 
+
+
+@media screen and (max-width : 300px){
+    .message-sending-input{
+        max-height: 20%;
+    }
+}
 
 
 
