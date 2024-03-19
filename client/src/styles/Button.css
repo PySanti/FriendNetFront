@@ -4,7 +4,8 @@
     justify-content: center;
     align-items : center;
     flex-direction: column;
-    --outline-width : 3px;
+    --outline-width : 2px;
+    --hovered-color :  rgb(212, 212, 212);
     font-size: var(--base-button-font-size);
     border: none;
     border-radius: 5px;
@@ -12,8 +13,6 @@
     width: auto;
     max-height: 8vh;
     padding: .4rem;
-    transition-property: background-color;
-    transition-duration: .1s;
     background-color : var(--base-background-box-color);
     outline: var(--outline-width) solid var(--base-color);
     font-weight: 500;
@@ -29,12 +28,22 @@
 
 
 .button_hovered{
-    background-color: rgb(164, 217, 149);
+    background-color : var(--hovered-color);
 }
+
+
 @media screen and (min-width : 1000px){
     .button:hover{
-        background-color: rgb(164, 217, 149);
+        background-color : var(--hovered-color);
     }
+}
+.submit_button{
+    background-color : var(--base-color);
+}
+.submit_button:hover{
+    --submit-button-hovered :#43b417;
+    background-color : var(--submit-button-hovered);
+    outline: var(--outline-width) solid var(--submit-button-hovered);
 }
 
 @media screen and (max-width : 575px){
@@ -42,14 +51,8 @@
         padding: .3rem;
     }
 }
-
-
-
-
-
 @media screen and (max-width : 175px){
     .button{
         padding: .2rem;
     }
 }
-

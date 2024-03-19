@@ -24,7 +24,6 @@ import { EmailField } from "./EmailField";
  */
 export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
     let [currentPhotoFile, setCurrentPhotoFile] = useState(userData ? userData.photo_link : null);
-    let [changeDetected, setChangeDetected] = useState(false)
     const { register, handleSubmit, formState, watch} = useForm();
     const errors = formState.errors
     const onSubmit = handleSubmit(async (data) => {
@@ -41,17 +40,6 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
         }
         await onFormSubmit(data);
     });
-    useEffect(()=>{
-        let new_val = false
-        if (userData && Object.keys(errors).length == 0  && (watch("username") !== userData.username || watch("email") !== userData.email || currentPhotoFile !== userData.photo_link)){
-            new_val = true
-        } else {
-            new_val = false
-        }
-        if (new_val != changeDetected){
-            setChangeDetected(new_val)
-        }
-    }, [formState])
     const passwordChecking = (type) => {
         return (password) => {
             if (password != watch(type === "password" ? "confirmPwd" : "password")) {
@@ -71,7 +59,7 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
     }, [userData]);
     return (
         <div className="user-form-container">
-            <Form onSubmitFunction={onSubmit}buttonMsg={userData ? "Actualizar" : "Registrar"}buttonsList={extraButtons} button_hovered={changeDetected} containsPassword={!userData}>
+            <Form onSubmitFunction={onSubmit}buttonMsg={userData ? "Actualizar" : "Registrar"}buttonsList={extraButtons} containsPassword={!userData}>
                 <>
                     <UsernameField      defaultValue={userData ? userData.username : undefined }              errors={errors.username && errors.username.message}         registerObject={register(    "username",    BASE_USERNAME_CONSTRAINTS)}/>
                     <EmailField         defaultValue={userData ? userData.email : undefined}       errors={errors.email && errors.email.message}               registerObject={register(    "email",    BASE_EMAIL_CONSTRAINTS)}/>

@@ -1,0 +1,7 @@
+.forgot-password-redirect{
+    font-size : var(--base-error-msg-font-size);
+    padding-top : 1rem;
+    cursor : pointer;
+    text-decoration: underline;
+    color : rgb(53, 56, 247);
+}

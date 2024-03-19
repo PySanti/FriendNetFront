@@ -9,9 +9,11 @@ import {PropTypes} from "prop-types"
  * @param {Boolean} back sera true en caso de que sea un back button
  */
 export function Button({buttonText, onClickFunction, isSubmit, button_hovered, back}){
+    let buttonClass = button_hovered ? "button button_hovered" : "button"
+    buttonClass = isSubmit ? buttonClass + " submit_button" : buttonClass
     return (
         <div className="button-container">
-            <button className={button_hovered ? "button button_hovered" : "button"}type={isSubmit ? "submit" : "button"} onClick={!isSubmit ? onClickFunction : null}>
+            <button className={buttonClass} type={isSubmit ? "submit" : "button"} onClick={!isSubmit ? onClickFunction : null}>
                 {
                 back ? 
                 "Volver"
