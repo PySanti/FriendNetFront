@@ -17,6 +17,7 @@ export function DarkModeButton(){
     let [darkModeActivated, setDarkModeActivated] = useDarkMode((state)=>([state.darkModeActivated, state.setDarkModeActivated]))
     const darkModeClassName = "dark"
     const darkModeAnimationRef = useRef()
+
     const updateDarkMode = (newDarkMode)=>{
         const body = document.getElementsByTagName("body")[0]
         setDarkModeActivated(newDarkMode);
@@ -36,8 +37,15 @@ export function DarkModeButton(){
             darkModeAnimationRef.current.playSegments(!darkModeActivated ? [currentFrame,16] : [currentFrame,0], true)
         }
     }
+    const handleVisibilityChange = ()=>{
+        if (document.visibilityState === "visible" && defaultDarkModeActivated() && !darkModeActivated){
+            updateDarkMode(true)
+            darkModeAnimationRef.current.playSegments([0,16], true)
+        }
+    }
 
     useEffect(()=>{
+        document.addEventListener("visibilitychange", handleVisibilityChange)
         if (defaultDarkModeActivated()){
             updateDarkMode(true)
             darkModeAnimationRef.current.playSegments([0,16], true)
@@ -46,6 +54,9 @@ export function DarkModeButton(){
             updateDarkMode(currentDarkMode)
             if (currentDarkMode)
                 darkModeAnimationRef.current.playSegments([0,16], true)
+        }
+        return ()=>{
+            document.removeEventListener("visibilitychange", handleVisibilityChange)
         }
     }, [])
     return (
