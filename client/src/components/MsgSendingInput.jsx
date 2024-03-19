@@ -61,7 +61,6 @@ export function MsgSendingInput(){
         <div className="message-sending-input-container">
             <form onChange = {handleMsgSendingInput} className="message-sending-form " onSubmit={onSubmit}>
                 <textarea 
-                    
                     placeholder="Mensaje" 
                     className="message-sending-input" 
                     type="text" 
