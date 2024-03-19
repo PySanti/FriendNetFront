@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "react-input-autosize": "^3.0.0"
+  }
+}
