@@ -5,9 +5,9 @@
 }
 
 .users-filter-input{
-    font-size: var(--user-list-font-size);
+    font-size: var(--base-user-button-font-size);
 }
 
 .users-filter-input::placeholder{
-    font-size: var(--user-list-font-size) ;
+    font-size: var(--base-error-msg-font-size) !important;
 }
