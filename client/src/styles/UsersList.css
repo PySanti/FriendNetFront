@@ -1,4 +1,5 @@
 .users-list{
+    --base-users-list-border :1px solid var(--base-letter-color);
     --user-list-font-size : 20px;
     display: flex;
     flex-direction: column;
@@ -9,6 +10,7 @@
     overflow: scroll;
     display: flex;
     flex-direction: column;
+    border-top : var(--base-users-list-border);
 }
 
 .no-users-msg{
