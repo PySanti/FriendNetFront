@@ -11,13 +11,13 @@
     border-radius: 5px;
     height: auto;
     width: auto;
-    max-height: 8vh;
     padding: .4rem;
     background-color : var(--base-background-box-color);
     outline: var(--outline-width) solid var(--base-color);
     font-weight: 500;
     color : #000;
     cursor: pointer;
+    max-height: 8vh;
 }
 
 
@@ -39,6 +39,7 @@
 }
 .submit_button{
     background-color : var(--base-color);
+    color : #fff;
 }
 .submit_button:hover{
     --submit-button-hovered :#43b417;
