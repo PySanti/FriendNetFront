@@ -1,6 +1,4 @@
 import {updateClickedUser} from "../utils/updateClickedUser"
-import {useClickedUser} from "../store"
-import {useLastClickedUser} from "../store"
 import {PropTypes} from "prop-types"
 import "../styles/Notification.css"
 
@@ -11,19 +9,13 @@ import "../styles/Notification.css"
  * @param {Object} notification
  */
 export function Notification({notification, onNotificationDelete}){
-    let [clickedUser, setClickedUser] = useClickedUser((state)=>[state.clickedUser, state.setClickedUser])
-    let setLastClickedUser = useLastClickedUser((state)=>state.setLastClickedUser)
-    
     const handleDeleteClick = (event)=>{
         onNotificationDelete(notification)
         event.stopPropagation()
     }
-    const onNotificationClick = async ()=>{
-        updateClickedUser(clickedUser, notification.sender_user, setClickedUser, setLastClickedUser)
-    }
     return (
         <div className="individual-notification-container" >
-            <h4 className="individual-notification-content"onClick={onNotificationClick}>
+            <h4 className="individual-notification-content"onClick={()=>{updateClickedUser(notification.sender_user)}}>
                 {notification.msg}
             </h4>
             <button className="individual-notification-delete-btn" onClick={handleDeleteClick}>
