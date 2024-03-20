@@ -22,6 +22,9 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     const imgInputRef                                 = useRef(null)
     const containerClsName                          = "user-photo-main-container";
     const modalContainerCls                         = "modal-container"
+    const handleChangePhotoClick = ()=>{
+        imgInputRef.current.click()
+    }
     const handleImgClick = ()=>{
         if (photoFile && userPhotoLoaded){
             modalContainerRef.current.classList.toggle(`${modalContainerCls}__activated`)
@@ -86,10 +89,17 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                         }
                         <div className={modalContainerCls} ref={modalContainerRef}>
                             <img {...imgProps("big")}/>
+                            {
+                                !chatPhoto && 
+                                <div className="user-photo-buttons-container">
+                                    <Button buttonText="Cambiar" onClickFunction={handleChangePhotoClick}/>
+                                    <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto} />
+                                </div>
+                            }
                         </div>
                     </>
                     :
-                    <span id="no-photo-icon" className="material-symbols-outlined user-photo">
+                    <span id="no-photo-icon" className="material-symbols-outlined user-photo" onClick={!chatPhoto ? handleChangePhotoClick : undefined}>
                         no_photography
                     </span>
                 }
@@ -98,8 +108,6 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                 <>
                     <div className="user-photo-input-container">
                         <input ref={imgInputRef} className="user-photo-input" type="file" onChange={onPhotoChange}/>
-                        <Button buttonText="Seleccionar" onClickFunction={() => imgInputRef.current.click() }/>
-                        <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto} />
                     </div>
                 </>
             )}
