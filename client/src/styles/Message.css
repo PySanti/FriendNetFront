@@ -1,6 +1,7 @@
 .message-content{
     font-size: var(--base-button-font-size);
     margin-bottom: 5px;
+    user-select: text;
 }
 .message{
     color : #000;
@@ -10,6 +11,7 @@
     background-color: rgb(209, 209, 209);
     max-width: 25vw;
     overflow-wrap: break-word;
+    cursor: pointer;
 }
 .session-msg{
     align-self: flex-end;
