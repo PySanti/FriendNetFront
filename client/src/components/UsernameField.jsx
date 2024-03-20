@@ -12,7 +12,7 @@ export function UsernameField({errors, registerObject, defaultValue}){
     return (
         <FormField  errors={errors}>
             <input 
-                placeholder="Nombre de usuario"
+                placeholder="Usuario"
                 defaultValue    =   {defaultValue} 
                 type            =   "text"
                 name            =   {registerObject.name}

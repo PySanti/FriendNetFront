@@ -12,7 +12,7 @@ export function UserFilter(){
     return (
         <div className="user-filter-container">
             <input 
-                placeholder="Busca un usuario" 
+                placeholder="Buscar" 
                 className="users-filter-input non-shadow-input" 
                 type="text" 
                 onChange={ (e)=>{setUserKeyword(e.target.value)}} 
