@@ -15,13 +15,25 @@ export function UserButton({user}){
     const globeCls                      = "user-button-globe"
 
     return (
-        <button className={(clickedUser && clickedUser.id == user.id) ? "user-button user-button__selected" : "user-button"} onClick={()=>{updateClickedUser(user)}}>
-            <div className="user-button__username">
-                {user.username}
-                {typingDB[user.id] && " ..."}
+        <div   onClick={()=>{updateClickedUser(user)}} className={(clickedUser && clickedUser.id == user.id) ? "user-button-container user-button__selected" : "user-button-container"}>
+            <div className="user-button__userphoto-container">
+                {user.photo_link ?
+                
+                    <img className="user-button__userphoto" src={user.photo_link}/>
+                :
+                    <span className="material-symbols-outlined userphoto-nophoto">
+                        no_photography
+                    </span>
+            }
             </div>
-            <div className={Object.keys(notifications).includes(`${user.id}`)? `${globeCls} ${globeCls}__activated` : globeCls}></div>
-        </button>
+            <div className="user-button">
+                <div className="user-button__username">
+                    {user.username}
+                    {typingDB[user.id] && " ..."}
+                </div>
+                <div className={Object.keys(notifications).includes(`${user.id}`)? `${globeCls} ${globeCls}__activated` : globeCls}></div>
+            </div>
+        </div>
     )
 }
 

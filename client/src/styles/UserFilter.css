@@ -20,5 +20,6 @@
 }
 
 .loupe{
+    font-size: var(--base-input-font-size) !important;
     color : #000;
 }

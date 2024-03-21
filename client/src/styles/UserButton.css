@@ -1,25 +1,18 @@
 .user-button{
-    border : none;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: inherit;
     padding: 1.5vh;
-    border-bottom : var(--base-users-list-border);
-    cursor : pointer;
     color : var(--base-letter-color);
 }
 
-.user-button:hover{
-    background-color : var(--base-background-dark-box-color);
-}
+
 .user-button__username{
     font-size: var(--user-list-font-size);
+    font-weight: 500;
 }
-.user-button__selected{
-    background-color : var(--base-background-dark-box-color);
-}
+
 
 .user-button-globe{
     background-color : var(--base-color);
@@ -34,3 +27,43 @@
     opacity: 1;
 }
 
+
+.user-button__userphoto-container{
+    --size : 1.5em;
+    width: var(--size);
+    height: var(--size);
+    margin-right: .5em;
+    border-radius : 100%;
+    display: flex;
+    align-items : center;
+    justify-content: center;
+    padding-left: 1em;
+}
+
+
+.user-button__userphoto{
+    width: inherit;
+    height: inherit;
+    object-fit: cover;;
+    border-radius : inherit;
+    outline: 1px solid var(--base-color);
+}
+
+
+.user-button__selected{
+    background-color : var(--base-background-dark-box-color);
+}
+.user-button-container{
+    display: flex;
+    border-bottom : var(--base-users-list-border);
+    align-items : center;
+    cursor : pointer;
+}
+
+.user-button-container:hover{
+    background-color : var(--base-background-dark-box-color);
+}
+
+.userphoto-nophoto{
+    font-size: var(--user-list-font-size);
+}
