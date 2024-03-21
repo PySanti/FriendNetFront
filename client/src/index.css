@@ -65,7 +65,9 @@ input:focus, textarea:focus{
   outline: .5px solid var(--base-color);
   box-shadow: 3px 3px 10px;
 }
-
+input::placeholder{
+  opacity: .7;
+}
 .toast-style{
   border : 1px solid var(--base-letter-color) !important;
   background-color : var(--base-background-color) !important;
