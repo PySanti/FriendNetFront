@@ -4,11 +4,12 @@
  */
 export function checkImageFormat(image){
     const imageFormat = image.type.split('/')[1]
+    const maxSizeMB = 10
     if (!["jpg","jpeg", "png", "heic", "heif"].includes(imageFormat)){
         return "Formato de archivo no soportado"
     } else {
-        if (image.size/1000 > 8000){
-            return "El peso de la imagen debe ser inferior a 8MB"
+        if (image.size/1000 > maxSizeMB*1000){
+            return `El peso de la imagen debe ser inferior a ${maxSizeMB}MB`
         } else {
             return true
         }
