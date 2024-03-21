@@ -27,7 +27,7 @@ body{
 .dark{
   --base-background-color : #22252e;
   --base-background-box-color : #b3aeae;
-  --base-letter-color : #dadada    ;
+  --base-letter-color : #dadada;
   --base-background-dark-box-color : #2f333f;
 }
 
@@ -66,7 +66,8 @@ input:focus, textarea:focus{
   box-shadow: 3px 3px 10px;
 }
 input::placeholder{
-  opacity: .7;
+  color : #000  !important;  
+  opacity: .7   !important  ;
 }
 .toast-style{
   border : 1px solid var(--base-letter-color) !important;
@@ -132,4 +133,5 @@ input::placeholder{
     input {
       box-shadow : none !important;
     }
+
 }
