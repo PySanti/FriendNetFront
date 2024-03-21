@@ -11,6 +11,9 @@ export function UserFilter(){
 
     return (
         <div className="user-filter-container">
+            <span className="material-symbols-outlined loupe">
+                search
+            </span>
             <input 
                 placeholder="Buscar" 
                 className="users-filter-input non-shadow-input" 

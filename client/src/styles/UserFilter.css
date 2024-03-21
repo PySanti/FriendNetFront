@@ -1,13 +1,24 @@
 .user-filter-container{
     padding: .3rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items : center;
+    background-color : var(--base-background-box-color);
+    border-top-left-radius : inherit;
+    border-top-right-radius : inherit;
 }
 
 .users-filter-input{
     font-size: var(--user-list-font-size);
+    outline: 0px solid #000 !important;
+    width: 100%;
 }
 
 .users-filter-input::placeholder{
     font-size: var(--base-error-msg-font-size) !important;
+    text-align: left !important;
+}
+
+.loupe{
+    color : #000;
 }
