@@ -15,7 +15,7 @@
 }
 
 .users-filter-input::placeholder{
-    font-size: var(--base-error-msg-font-size) !important;
+    font-size: var(--base-input-font-size) !important;
     text-align: left !important;
 }
 
