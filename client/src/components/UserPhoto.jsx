@@ -100,7 +100,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                     </>
                     :
                     <span id="no-photo-icon" className="material-symbols-outlined user-photo" onClick={!chatPhoto ? handleChangePhotoClick : undefined}>
-                        no_photography
+                        person
                     </span>
                 }
             </div>
