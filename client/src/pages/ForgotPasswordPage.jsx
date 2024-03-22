@@ -1,6 +1,7 @@
 import {toast} from "sonner"
 import {v4} from "uuid"
 import {EmailField} from "../components/EmailField"
+import {useRef} from "react"
 import {Form} from "../components/Form"
 import {Header} from "../components/Header"
 import { useForm } from "react-hook-form";
@@ -20,6 +21,7 @@ import {checkSecurityCodeAPI} from "../api/checkSecurityCode.api"
 export function ForgotPasswordPage(){
     let [emailSended, setEmailSended] = useState(false)
     let [codeEntered, setCodeEntered] = useState(false)
+    let emailRef    =   useRef(null)
     const navigate = useNavigate()
     const {register, handleSubmit, formState: {errors}}  = useForm()
     const handleCodeInput = async (data)=>{
@@ -41,12 +43,13 @@ export function ForgotPasswordPage(){
     }
     const handleEmailInput = async (data)=>{
         let response = await apiWrap(async ()=>{
-            return await generateSendSecurityCodeAPI(data.email, `Recupera tu cuenta`)
+            return await generateSendSecurityCodeAPI(data.email ? data.email : data, `Recupera tu cuenta`)
         }, navigate, 'Buscando usuario', undefined, "generateSendSecurityCode2")
         if (response){
             if (response.status == 200){
                 toast.success('Correo de recuperación enviado')
                 setEmailSended(true)
+                emailRef.current = data.email
             } else {
                 if (response.data.error == "user_not_exists"){
                     toast.error('Correo inexistente en la base de datos')
@@ -93,7 +96,7 @@ export function ForgotPasswordPage(){
                                     {!emailSended ?
                                         <EmailField errors={errors.email && errors.email.message} registerObject={register("email", BASE_EMAIL_CONSTRAINTS)}/>
                                         :
-                                        <CodeField errors={errors.code && errors.code.message} registerObject={register("code", BASE_SECURITY_CODE_CONSTRAINTS)}/>
+                                        <CodeField errors={errors.code && errors.code.message} registerObject={register("code", BASE_SECURITY_CODE_CONSTRAINTS)} codeSendingFunction={()=>handleEmailInput(emailRef.current)}/>
                                     }
                                 </Form>
                         }

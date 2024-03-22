@@ -28,7 +28,7 @@ export function AccountActivation() {
     const handleActivationCodeSending = async ()=>{
         const response = await apiWrap(async ()=>{
             return await generateSendSecurityCodeAPI(props.userEmail, `Activa tu cuenta`) 
-        }, navigate, 'Enviando correo de activación, espere', 5000, "generateSendSecurityCode1")
+        }, navigate, 'Enviando correo de activación, espere', undefined, "generateSendSecurityCode1")
         if (response){
             if (response.status == 200){
                 toast.success(`Correo de activación enviado `)
@@ -87,7 +87,7 @@ export function AccountActivation() {
                         buttonMsg="Activar" 
                         buttonsList={[<Button key={v4()} back onClickFunction={() => {navigate("/")}} />,<Button key={v4()} buttonText="Cambiar correo" onClickFunction={() => {navigate("/signup/activate/change_email", { state: props })}}/>]}
                         >
-                        <CodeField errors={errors.activationCode && errors.activationCode.message} registerObject={register("activationCode", BASE_SECURITY_CODE_CONSTRAINTS)}/>
+                        <CodeField errors={errors.activationCode && errors.activationCode.message} registerObject={register("activationCode", BASE_SECURITY_CODE_CONSTRAINTS)} codeSendingFunction={handleActivationCodeSending}/>
                     </Form>
                 </div>
             </div>
