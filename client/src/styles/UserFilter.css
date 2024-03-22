@@ -11,6 +11,7 @@
 .users-filter-input{
     font-size: var(--user-list-font-size);
     outline: 0px solid #000 !important;
+    background-color : transparent;
     width: 100%;
 }
 
