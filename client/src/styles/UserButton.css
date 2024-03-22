@@ -3,14 +3,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 1.5vh;
     color : var(--base-letter-color);
 }
 
 
 .user-button__username{
     font-size: var(--user-list-font-size);
-    font-weight: 500;
+    font-weight: 800;
 }
 
 
@@ -37,16 +36,19 @@
     display: flex;
     align-items : center;
     justify-content: center;
-    padding-left: 1em;
+    padding-left: .4em;
+}
+
+.user-button__userphoto-container > *{
+    width: inherit;
+    height: inherit;
+    outline: 1px solid var(--base-letter-color);
+    border-radius : inherit;
 }
 
 
 .user-button__userphoto{
-    width: inherit;
-    height: inherit;
     object-fit: cover;;
-    border-radius : inherit;
-    outline: 1px solid var(--base-color);
 }
 
 
@@ -55,9 +57,9 @@
 }
 .user-button-container{
     display: flex;
-    border-bottom : var(--base-users-list-border);
     align-items : center;
     cursor : pointer;
+    padding: 2vh;
 }
 
 .user-button-container:hover{
@@ -66,4 +68,7 @@
 
 .userphoto-nophoto{
     font-size: var(--user-list-font-size);
+    display: flex;
+    justify-content: center;
+    align-items : center;
 }
