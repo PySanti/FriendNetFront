@@ -119,6 +119,11 @@ input::placeholder{
 .not-displayed{
   display: none;
 }
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
+}
 
 @media (prefers-color-scheme: dark) {
     input {
