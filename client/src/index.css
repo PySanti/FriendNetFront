@@ -89,7 +89,7 @@ input::placeholder{
 
 @media screen and (max-width : 575px){
     body{
-      --base-button-font-size : 11px;
+      --base-button-font-size : 13px;
       --base-input-font-size : 16px;
       --base-error-msg-font-size : 14px;
     }
@@ -97,7 +97,7 @@ input::placeholder{
 
 @media screen and (max-width : 300px){
     body{
-      --base-button-font-size : 8px;
+      --base-button-font-size : 10px;
       --base-input-font-size : 13px;
       --base-error-msg-font-size : 10px;
     }
