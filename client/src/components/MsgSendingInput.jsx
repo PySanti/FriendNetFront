@@ -8,6 +8,8 @@ import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import {useClickedUser} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
 import {useNewMsg} from "../store"
+import { IoSend } from "react-icons/io5";
+
 /**
  * Input creado para el envio de mensajes
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
@@ -68,8 +70,8 @@ export function MsgSendingInput(){
                     minLength={1} 
                     {...register("msg")}/>
             </form>
-            <span className="material-symbols-outlined sending-msg-button" onClick={onSubmit} onMouseDown={(e)=>{e.preventDefault()}}>
-                send
+            <span className="icon sending-msg-button" onClick={onSubmit} onMouseDown={(e)=>{e.preventDefault()}}>
+                <IoSend /> 
             </span>
         </div>
     )

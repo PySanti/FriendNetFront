@@ -2,6 +2,7 @@ import {BASE_USERNAME_MAX_LENGTH} from "../utils/constants"
 import "../styles/UserFilter.css"
 import {useUserKeyword} from "../store"
 import {useRef, useEffect} from "react"
+import { IoSearchSharp } from "react-icons/io5";
 
 
 /**
@@ -17,8 +18,8 @@ export function UserFilter(){
     }, [])
     return (
         <div className="user-filter-container">
-            <span className="material-symbols-outlined loupe">
-                search
+            <span className="icon loupe">
+                <IoSearchSharp />
             </span>
             <input 
                 ref={userFilterInputRef}

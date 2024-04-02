@@ -128,8 +128,11 @@
     height: 100%;
 }
 #no-photo-icon{
-    font-size: var(--base-user-button-font-size);
     display: flex !important;
+}
+
+#no-photo-icon > *{
+    font-size: var(--base-input-font-size);
 }
 
 

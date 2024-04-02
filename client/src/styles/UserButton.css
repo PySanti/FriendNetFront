@@ -66,8 +66,11 @@
 }
 
 .userphoto-nophoto{
-    font-size: var(--user-list-font-size);
     display: flex;
     justify-content: center;
     align-items : center;
+}
+
+.userphoto-nophoto > *{
+    font-size: var(--user-list-font-size);
 }

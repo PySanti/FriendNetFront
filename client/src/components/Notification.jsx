@@ -1,6 +1,7 @@
 import {updateClickedUser} from "../utils/updateClickedUser"
 import {PropTypes} from "prop-types"
 import "../styles/Notification.css"
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 
 /**
@@ -19,9 +20,7 @@ export function Notification({notification, onNotificationDelete}){
                 {notification.msg}
             </h4>
             <button className="individual-notification-delete-btn" onClick={handleDeleteClick}>
-                <span className="material-symbols-outlined">
-                delete
-                </span>
+                <RiDeleteBin6Line />
             </button>
         </div>
     )

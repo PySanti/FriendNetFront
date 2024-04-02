@@ -2,6 +2,7 @@ import { UserPhoto } from "./UserPhoto";
 import "../styles/ClickedUserHeader.css"
 import {useClickedUser, useTypingDB, useExecutingInSmallDevice} from "../store"
 import {resetChats} from "../utils/resetChats"
+import { FaArrowLeftLong } from "react-icons/fa6";
 /**
  * Cabecera del chat con datos del usuario
  */
@@ -13,8 +14,8 @@ export function ClickedUserHeader(){
         <div className= "clicked-user-header-container">
             {
                 executingInSmallDevice &&
-                <span className="material-symbols-outlined back-chat-button" onClick={()=>resetChats()}>
-                    keyboard_backspace
+                <span className="icon back-chat-button" onClick={()=>resetChats()}>
+                    <FaArrowLeftLong />
                 </span>
             }
             <UserPhoto photoFile={clickedUser.photo_link} chatPhoto/>

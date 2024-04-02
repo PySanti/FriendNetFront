@@ -27,10 +27,13 @@
 .clicked-user__typing__activated{
     opacity: 1;
 }
-
 .back-chat-button{
+    display: flex;
+    align-items: center;
+}
+.back-chat-button > *{
     font-size: var(--base-input-font-size);
-    margin-left: 5%;
+    margin: 0 .5em 0 1em;
     cursor: pointer;
 }
 

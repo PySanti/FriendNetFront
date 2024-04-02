@@ -3,6 +3,7 @@ import "../styles/UserButton.css"
 import {useClickedUser} from "../store"
 import {updateClickedUser} from "../utils/updateClickedUser"
 import {useTypingDB, useNotifications, useExecutingInSmallDevice} from "../store"
+import { TiUserOutline } from "react-icons/ti";
 
 /**
  * Retorna un userButton, button a renderizar en la UsersList
@@ -22,8 +23,8 @@ export function UserButton({user}){
                 
                     <img className="user-button__userphoto" src={user.photo_link}/>
                 :
-                    <span className="material-symbols-outlined userphoto-nophoto">
-                        person
+                    <span className="icon userphoto-nophoto">
+                        <TiUserOutline />
                     </span>
             }
             </div>

@@ -17,12 +17,12 @@
     font-size: var(--base-button-font-size);
 }
 
-.individual-notification-delete-btn{
+.individual-notification-delete-btn {
     display: flex;
     align-items : center;
     border: none;
     background-color: inherit;
-    padding: 0 .3rem;
+    padding: 0 .3em;
     cursor: pointer;
 }
 

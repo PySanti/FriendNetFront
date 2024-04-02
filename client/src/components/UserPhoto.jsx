@@ -5,6 +5,7 @@ import { Button } from "./Button";
 import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
 import {Loader} from "./Loader"
+import { MdOutlineNoPhotography } from "react-icons/md";
 
 /**
  * Contenedor para foto de perfil de usuario
@@ -99,8 +100,8 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                         </div>
                     </>
                     :
-                    <span id="no-photo-icon" className="material-symbols-outlined user-photo" onClick={!chatPhoto ? handleChangePhotoClick : undefined}>
-                        person
+                    <span id="no-photo-icon" className="icon user-photo" onClick={!chatPhoto ? handleChangePhotoClick : undefined}>
+                        <MdOutlineNoPhotography />
                     </span>
                 }
             </div>

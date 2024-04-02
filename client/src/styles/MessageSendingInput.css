@@ -31,7 +31,12 @@
     justify-content: center;
     height: 100%;
 }
+
 .sending-msg-button{
+    display: flex;
+    align-items : center
+}
+.sending-msg-button > *{
     cursor : pointer;
     padding: .7em;
     font-size: var(--base-input-font-size);
