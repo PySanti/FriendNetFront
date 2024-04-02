@@ -1,18 +1,16 @@
 .input-error{
     font-size: var(--base-error-msg-font-size);
     height: 5vh;
-    text-align: left;
     display: flex;
     align-items: end;
     color : rgb(250, 90, 90);
     font-weight: 100;
-    width: inherit;
+    align-self: start;
+    word-wrap: break-word;
+    max-width : 20em;
 }
 
-.input-error-container{
-    align-self: start;
-    max-width: 80%;
-}
+
 
 .input-errored > input{
     outline : 1px solid #f00 !important;

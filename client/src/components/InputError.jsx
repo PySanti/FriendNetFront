@@ -11,9 +11,7 @@ export function InputError({msg}){
      * modificacion de espacio en el DOM
      */
     return (
-        <div className="input-error-container">
-            <h2 className="input-error">{msg}</h2>
-        </div>
+        <h2 className="input-error">{msg}</h2>
     )
 }
 
