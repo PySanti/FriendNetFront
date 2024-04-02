@@ -23,7 +23,7 @@ export function UserFilter(){
             <input 
                 ref={userFilterInputRef}
                 placeholder="Buscar" 
-                className="users-filter-input non-shadow-input" 
+                className="users-filter-input" 
                 type="text" 
                 onChange={ (e)=>{setUserKeyword(e.target.value)}} 
                 maxLength={BASE_USERNAME_MAX_LENGTH}/>

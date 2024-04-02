@@ -10,7 +10,7 @@ export function FormField({errors,  children}){
     return (
         <div className="form-field-container">
             <InputError msg={errors}/>
-            <div className="input-pair-container">
+            <div className={errors ? "input-pair-container input-errored" : "input-pair-container"}>
                 {children}
             </div>
         </div>

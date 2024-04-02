@@ -55,17 +55,17 @@ input , textarea{
   outline: 1px solid #949393;
   padding: .2rem;
   border-radius: 8px;
-  border: none;
-  transition-property: box-shadow border;
+  transition-property:  outline;
   transition-duration: .2s;
+  border: none;
   background-color : var(--base-background-box-color);
   font-size: var(--base-input-font-size);
 }
 input:focus, textarea:focus{
-  outline: .5px solid var(--base-color);
-  box-shadow: 3px 3px 10px;
+  outline: 1px solid var(--base-color);
 }
 input::placeholder{
+  font-size: var(--base-error-msg-font-size);
   color : #000  !important;  
   opacity: .7   !important  ;
 }
@@ -83,18 +83,9 @@ input::placeholder{
 .toast-style > div[data-content] > div[data-description]{
   font-size : var(--base-error-msg-font-size) !important;
 }
-.non-shadow-input{
-  border-radius: 20px;
-  outline: 1px solid var(--base-letter-color);
-  border: none;
-}
-.non-shadow-input:focus{
-    box-shadow: none;
-}
-.non-shadow-input::placeholder{
-  font-size: var(--base-button-font-size);
-  text-align: center;
-}
+
+
+
 
 @media screen and (max-width : 575px){
     body{
