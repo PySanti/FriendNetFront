@@ -42,14 +42,18 @@ export function ForgotPasswordPage(){
         }
     }
     const handleEmailInput = async (data)=>{
+        const userEmail = data.email ? data.email : data
         let response = await apiWrap(async ()=>{
-            return await generateSendSecurityCodeAPI(data.email ? data.email : data, `Recupera tu cuenta`)
+            return await generateSendSecurityCodeAPI(userEmail, `Recupera tu cuenta`)
         }, navigate, 'Buscando usuario', undefined, "generateSendSecurityCode2")
+        if (response == undefined){
+            return "call_blocked"
+        }
         if (response){
             if (response.status == 200){
                 toast.success('Correo de recuperación enviado')
                 setEmailSended(true)
-                emailRef.current = data.email
+                emailRef.current = userEmail
             } else {
                 if (response.data.error == "user_not_exists"){
                     toast.error('Correo inexistente en la base de datos')

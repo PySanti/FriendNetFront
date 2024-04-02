@@ -29,6 +29,9 @@ export function AccountActivation() {
         const response = await apiWrap(async ()=>{
             return await generateSendSecurityCodeAPI(props.userEmail, `Activa tu cuenta`) 
         }, navigate, 'Enviando correo de activación, espere', undefined, "generateSendSecurityCode1")
+        if (response == undefined){
+            return "call_blocked"
+        }
         if (response){
             if (response.status == 200){
                 toast.success(`Correo de activación enviado `)

@@ -5,15 +5,18 @@ import Lottie from "lottie-react"
 import reload from "../../lottie/reload.json"
 import {useRef} from "react"
 import "../styles/CodeField.css"
+
 /**
  * @param {Object} errors coleccion de errores del campo creado desde el formulario
  * @param {Object} registerObject objecto devuelto por funcion register del useForm
  */
 export function CodeField({errors, registerObject, codeSendingFunction}){
     const reloadAnimationRef = useRef(null)
-    const handleReloadButtonClick = ()=>{
-        codeSendingFunction()
-        reloadAnimationRef.current.play()
+    const handleReloadButtonClick = async ()=>{
+        reloadAnimationRef.current.playSegments([0, 81], true)
+        if (await codeSendingFunction() === "call_blocked"){
+            reloadAnimationRef.current.pause()
+        }
     }
     return (
         <FormField errors={errors}>

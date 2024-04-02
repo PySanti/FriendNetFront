@@ -3,4 +3,5 @@
     align-items: center;
     width: 1.5em;
     filter : var(--base-image-drop-shadow);
+    cursor: pointer;
 }
