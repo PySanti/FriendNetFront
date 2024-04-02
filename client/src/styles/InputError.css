@@ -1,6 +1,7 @@
 .input-error{
     font-size: var(--base-error-msg-font-size);
-    height: 5vh;
+    height: 3em;
+    margin-bottom: .3em;
     display: flex;
     align-items: end;
     color : rgb(250, 90, 90);
