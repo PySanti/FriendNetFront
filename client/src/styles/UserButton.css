@@ -41,7 +41,7 @@
 .user-button__userphoto-container > *{
     width: inherit;
     height: inherit;
-    outline: 2px solid var(--base-letter-color);
+    box-shadow: 0px 0px 0px 2px var(--base-letter-color);
     border-radius : inherit;
 }
 

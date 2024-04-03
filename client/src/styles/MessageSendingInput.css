@@ -12,9 +12,7 @@
     resize: none;
     font-size: var(--base-error-msg-font-size);
 }
-.message-sending-input:focus{
-    box-shadow : none;
-}
+
 .message-sending-input::placeholder{
     font-family: "futura-pt";
     opacity: .3;

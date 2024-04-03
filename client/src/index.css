@@ -52,17 +52,19 @@ body{
 
 
 input , textarea{
-  outline: 1px solid #949393;
+  --base-input-outline-witdh : 2px;
+  outline: none;
+  box-shadow: 0px 0px 0px var(--base-input-outline-witdh) #949393;
   padding: .2rem;
   border-radius: 5px;
-  transition-property:  outline;
+  transition-property:  box-shadow;
   transition-duration: .2s;
   border: none;
   background-color : var(--base-background-box-color);
   font-size: var(--base-input-font-size);
 }
 input:focus, textarea:focus{
-  outline: 1px solid var(--base-color);
+  box-shadow: 0px 0px 0px var(--base-input-outline-witdh) var(--base-color);
 }
 input::placeholder{
   font-size: var(--base-error-msg-font-size);
@@ -125,9 +127,3 @@ input[type=password]::-ms-clear
     display: none;
 }
 
-@media (prefers-color-scheme: dark) {
-    input {
-      box-shadow : none !important;
-    }
-
-}

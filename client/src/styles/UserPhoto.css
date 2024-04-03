@@ -19,12 +19,12 @@
     border-radius: var(--base-user-photo-border-radius);
     object-fit: cover;
     cursor: pointer;
-    outline: 3px inset var(--base-color);
-    transition-property: outline;
+    box-shadow: 0px 0px 0px 3px var(--base-color);
+    transition-property: box-shadow;
     transition-duration: .1s;
 }
 .user-photo:hover ,.big-user-photo:hover{
-    outline: 7px inset var(--base-color);
+    box-shadow: 0px 0px 0px 7px var(--base-color);
 }
 .user-photo-main-container{
     margin: 5vw;

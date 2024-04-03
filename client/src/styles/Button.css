@@ -13,7 +13,7 @@
     width: auto;
     padding: .4rem;
     background-color : var(--base-background-box-color);
-    outline: var(--outline-width) solid var(--base-color);
+    box-shadow: 0px 0px 0px var(--outline-width) var(--base-color);
     font-weight: 500;
     color : #000;
     cursor: pointer;
@@ -44,7 +44,7 @@
 .submit_button:hover{
     --submit-button-hovered :#43b417;
     background-color : var(--submit-button-hovered);
-    outline: var(--outline-width) solid var(--submit-button-hovered);
+    box-shadow: 0px 0px 0px var(--outline-width) var(--submit-button-hovered);
 }
 
 @media screen and (max-width : 575px){
