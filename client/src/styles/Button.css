@@ -9,7 +9,6 @@
     font-size: var(--base-button-font-size);
     border: none;
     border-radius: 5px;
-    -webkit-border-radius:5px; 
     height: auto;
     width: auto;
     padding: .4rem;
