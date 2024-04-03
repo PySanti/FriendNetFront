@@ -27,13 +27,13 @@ export function Root() {
                             <h4 className="signin-container__title">
                                 ¿Tienes cuenta? 
                             </h4>
-                            <Button buttonText="Inicia Sesión" onClickFunction={()=>{navigate('/login/')}}/>
+                            <Button buttonText="Acceder" onClickFunction={()=>{navigate('/login/')}}/>
                         </div>
                         <div className="signup-container">
                             <h4 className="signup-container__title">
                                 ¿Aun no tienes cuenta?
                             </h4>
-                            <Button buttonText="Regístrate" onClickFunction={()=>{navigate('/signup/')}} />
+                            <Button buttonText="Comenzar" onClickFunction={()=>{navigate('/signup/')}} />
                         </div>
                     </section>
                 </div>
