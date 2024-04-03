@@ -15,6 +15,7 @@
 .user-button-globe{
     background-color : var(--base-color);
     border-radius: 30px;
+    -webkit-border-radius:30px; 
     width:  8px;
     height: 8px;
     opacity: 0;
@@ -32,6 +33,7 @@
     height: var(--size);
     margin-right: .5em;
     border-radius : 100%;
+    -webkit-border-radius:100%; 
     display: flex;
     align-items : center;
     justify-content: center;
@@ -43,6 +45,7 @@
     height: inherit;
     outline: 2px solid var(--base-letter-color);
     border-radius : inherit;
+    -webkit-border-radius:inherit; 
 }
 
 

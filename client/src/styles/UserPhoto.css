@@ -17,6 +17,7 @@
 }
 .user-photo , .big-user-photo{
     border-radius: var(--base-user-photo-border-radius);
+    -webkit-border-radius: var(--base-user-photo-border-radius);
     object-fit: cover;
     cursor: pointer;
     outline: 3px inset var(--base-color);
