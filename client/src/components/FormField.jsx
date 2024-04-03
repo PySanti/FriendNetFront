@@ -8,11 +8,9 @@ import "../styles/FormField.css"
  */
 export function FormField({errors,  children}){
     return (
-        <div className="form-field-container">
+        <div className={errors ? "form-field-container input-errored" : "form-field-container"}>
             <InputError msg={errors}/>
-            <div className={errors ? "input-pair-container input-errored" : "input-pair-container"}>
-                {children}
-            </div>
+            {children}
         </div>
     )
 }

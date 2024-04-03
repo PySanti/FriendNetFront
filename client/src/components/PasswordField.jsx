@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import padlock from "../../lottie/padlock"
 import Lottie from "lottie-react"
 import {BASE_PASSWORD_MAX_LENGTH} from "../utils/constants"
+import "../styles/PasswordFieldStyles.css"
 
 /**
  * Componente creado para campos de contrasenia
@@ -21,14 +22,16 @@ export function PasswordField({errors, registerObject, label}){
         padlockAnimationRef.current.playSegments(!previsualizationActivated ? [0,95] : [95,210], true)
     }
     return (
-        <FormField  errors={errors}>
-            <input 
-                placeholder={label}
-                className="password-input" 
-                type={previsualizationActivated ? "text" : "password"} 
-                name={registerObject.name} 
-                maxLength={BASE_PASSWORD_MAX_LENGTH}
-                {...registerObject}/>
+        <div className="password-field-container">
+            <FormField  errors={errors}>
+                <input 
+                    placeholder={label}
+                    className="password-input" 
+                    type={previsualizationActivated ? "text" : "password"} 
+                    name={registerObject.name} 
+                    maxLength={BASE_PASSWORD_MAX_LENGTH}
+                    {...registerObject}/>
+            </FormField>
             <div className="password-visualization" onClick={handlePadlockClick}>
                 <Lottie 
                     loop={false}
@@ -37,7 +40,7 @@ export function PasswordField({errors, registerObject, label}){
                     lottieRef={padlockAnimationRef} 
                     />
             </div>
-        </FormField>
+        </div>
     )
 }
 

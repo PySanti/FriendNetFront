@@ -19,14 +19,16 @@ export function CodeField({errors, registerObject, codeSendingFunction}){
         }
     }
     return (
-        <FormField errors={errors}>
-            <input
-                placeholder="Código"
-                type        =   "text"
-                maxLength   =   {BASE_SECURITY_CODE_LENGTH}
-                name        =   {registerObject.name}
-                id          =   {registerObject.name}
-                {...registerObject}/>
+        <div className="code-input-container">
+            <FormField errors={errors}>
+                <input
+                    placeholder="Código"
+                    type        =   "text"
+                    maxLength   =   {BASE_SECURITY_CODE_LENGTH}
+                    name        =   {registerObject.name}
+                    id          =   {registerObject.name}
+                    {...registerObject}/>
+            </FormField>
             <div className="reload-animation" onClick={handleReloadButtonClick}>
                 <Lottie 
                     loop={false}
@@ -35,7 +37,7 @@ export function CodeField({errors, registerObject, codeSendingFunction}){
                     lottieRef={reloadAnimationRef} 
                     />
             </div>
-        </FormField>
+        </div>
     )
 }
 

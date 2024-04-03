@@ -2,12 +2,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 }
-.password-form > .form-field-container > .input-pair-container{
-    justify-content: space-between;
-}
-
 
 .form-container-buttons-container{
     padding-top: 1rem;
