@@ -6,6 +6,7 @@ import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
 import {Loader} from "./Loader"
 import { MdOutlineNoPhotography } from "react-icons/md";
+import { TiUserOutline } from "react-icons/ti";
 
 /**
  * Contenedor para foto de perfil de usuario
@@ -101,7 +102,12 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                     </>
                     :
                     <span id="no-photo-icon" className="icon user-photo" onClick={!chatPhoto ? handleChangePhotoClick : undefined}>
-                        <MdOutlineNoPhotography />
+                        {
+                            chatPhoto ?
+                                <TiUserOutline />
+                                :
+                                <MdOutlineNoPhotography />
+                        }
                     </span>
                 }
             </div>
