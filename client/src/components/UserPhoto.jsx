@@ -57,6 +57,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                 toast.error("Error al cargar la imagen")
             }
             reader.onload  =  ()=> {
+                handleImgClick()
                 setCurrentPhotoName(reader.result);
                 photoFileSetter(file);
             };
