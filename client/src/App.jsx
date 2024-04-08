@@ -1,6 +1,7 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import {PageOutOffService} from "./pages/PageOutOffService"
 import {Toaster, toast} from "sonner"
+import {ConnectionFailedPage} from "./pages/ConnectionFailedPage"
 import {Home} from "./pages/Home.jsx"
 import { Login } from "./pages/Login.jsx"
 import { Root } from "./pages/Root.jsx"
@@ -50,6 +51,7 @@ function App() {
   let setExecutingInSmallDevice                                         = states.useExecutingInSmallDevice((state)=>(state.setExecutingInSmallDevice))
   let [websocketMounted,setWebsocketMounted]                            = states.useWebsocketMounted((state)=>([state.websocketMounted, state.setWebsocketMounted]))
   let userKeyword                                                       = states.useUserKeyword((state)=>(state.userKeyword))
+  let [connectionFailed, setConnectionFailed]                           = states.useConnectionFailed((state)=>([state.connectionFailed, state.setConnectionFailed]))
   let alertRef                                                          = useRef(null)
   let newMessageRef                                                     = useRef(null)
   const handleNotificationsReload = async ()=>{
@@ -125,7 +127,7 @@ function App() {
               shiftUser(usersList, setUsersList, data.value.new_notification.sender_user, usersIdList, setUsersIdList, userKeyword)
             }
         } else if (data.type == "connection_error"){
-            logoutUser(undefined)
+          setConnectionFailed(true)
         } else  if (data.type === "updated_user"){
             if (usersList.length > 0){
                 setUsersList(usersList.map(user => { 
@@ -170,88 +172,91 @@ function App() {
       DEBUG ? 
         <PageOutOffService/>
         :
-        <>
-          <audio ref={alertRef} src={alert} onEnded={()=>{
-            alertRef.current.pause();
-            alertRef.current.currentTime = 0; // Reiniciar la reproducción al principio
-          }}></audio>
-          <audio ref={newMessageRef} src={new_message} onEnded={()=>{
-            newMessageRef.current.pause();
-            newMessageRef.current.currentTime = 0; // Reiniciar la reproducción al principio
-          }}></audio>
-          <Toaster 
-            visibleToasts={1}
-            position="bottom-right"
-            closeButton
-            toastOptions={{
-            className : "toast-style",
-            duration : 5000,
-          }}/>
-          <BrowserRouter>
-            <Routes>
-              <Route 
-                exact 
-                path="/"                   
-                element={
-                  <Root />
-              }/>
-              <Route 
-                exact 
-                path="/signup/"            
-                element={
-                  <SignUp />
+        connectionFailed ?
+          <ConnectionFailedPage/>
+          :
+          <>
+            <audio ref={alertRef} src={alert} onEnded={()=>{
+              alertRef.current.pause();
+              alertRef.current.currentTime = 0; // Reiniciar la reproducción al principio
+            }}></audio>
+            <audio ref={newMessageRef} src={new_message} onEnded={()=>{
+              newMessageRef.current.pause();
+              newMessageRef.current.currentTime = 0; // Reiniciar la reproducción al principio
+            }}></audio>
+            <Toaster 
+              visibleToasts={1}
+              position="bottom-right"
+              closeButton
+              toastOptions={{
+              className : "toast-style",
+              duration : 5000,
+            }}/>
+            <BrowserRouter>
+              <Routes>
+                <Route 
+                  exact 
+                  path="/"                   
+                  element={
+                    <Root />
                 }/>
-              <Route 
-                exact 
-                path="/signup/activate/"   
-                element={
-                  <AccountActivation />
-                }/>
-              <Route 
-                exact 
-                path='/signup/activate/change_email'  
-                element={
-                    <ChangeEmailForActivation/> 
-                }/>
-              <Route 
-                exact 
-                path="/login/"             
-                element={ 
-                    <Login/> 
-                }/>
-              <Route 
-                exact 
-                path="/login/forgot_password"             
-                element={ 
-                    <ForgotPasswordPage/> 
-                }/>
-              <Route 
-                exact 
-                path='/home/'              
-                element={
-                  <Home/> 
-                }/>
-              <Route 
-                exact 
-                path='/home/profile/'      
-                element={
-                    <Profile/> 
-                }/>
-              <Route 
-                exact 
-                path='/home/profile/change_pwd'  
-                element={
-                    <ChangePwd/> 
-                }/>
-              <Route 
-                exact 
-                path='/*'  
-                element={
-                    <Page404/> 
-                }/>
-            </Routes>
-          </BrowserRouter>
-        </>
+                <Route 
+                  exact 
+                  path="/signup/"            
+                  element={
+                    <SignUp />
+                  }/>
+                <Route 
+                  exact 
+                  path="/signup/activate/"   
+                  element={
+                    <AccountActivation />
+                  }/>
+                <Route 
+                  exact 
+                  path='/signup/activate/change_email'  
+                  element={
+                      <ChangeEmailForActivation/> 
+                  }/>
+                <Route 
+                  exact 
+                  path="/login/"             
+                  element={ 
+                      <Login/> 
+                  }/>
+                <Route 
+                  exact 
+                  path="/login/forgot_password"             
+                  element={ 
+                      <ForgotPasswordPage/> 
+                  }/>
+                <Route 
+                  exact 
+                  path='/home/'              
+                  element={
+                    <Home/> 
+                  }/>
+                <Route 
+                  exact 
+                  path='/home/profile/'      
+                  element={
+                      <Profile/> 
+                  }/>
+                <Route 
+                  exact 
+                  path='/home/profile/change_pwd'  
+                  element={
+                      <ChangePwd/> 
+                  }/>
+                <Route 
+                  exact 
+                  path='/*'  
+                  element={
+                      <Page404/> 
+                  }/>
+              </Routes>
+            </BrowserRouter>
+          </>
     }
     </>
   )

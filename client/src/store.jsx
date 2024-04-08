@@ -128,3 +128,7 @@ export const useNewMsg = create((set)=>({
 
 
 
+export const useConnectionFailed = create((set)=>({
+    connectionFailed : false,
+    setConnectionFailed : (new_val)=>(set(()=>({connectionFailed : new_val}))),
+}))
