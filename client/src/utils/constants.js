@@ -67,7 +67,7 @@ export const BASE_PASSWORD_CONSTRAINTS = {
         message: `Al menos ${BASE_PASSWORD_MIN_LENGTH} caracteres`,
     },
 };
-export const DEBUG = true
+export const DEBUG = false
 
 // export const BACKEND_URL = "https://friendnet.online/";
 export const BACKEND_URL = "http://127.0.0.1:8000/";

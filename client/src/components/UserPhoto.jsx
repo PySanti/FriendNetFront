@@ -7,6 +7,7 @@ import { checkImageFormat } from "../utils/checkImageFormat";
 import {Loader} from "./Loader"
 import { MdOutlineNoPhotography } from "react-icons/md";
 import { TiUserOutline } from "react-icons/ti";
+import { IoClose } from "react-icons/io5";
 
 /**
  * Contenedor para foto de perfil de usuario
@@ -37,7 +38,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     }
     const imgProps = (type) => {
         return {
-            onClick: handleImgClick,
+            onClick: type === "small" ?  handleImgClick : undefined,
             className: type === "small" ? (userPhotoLoaded || !photoFile? "user-photo user-photo__activated" : "user-photo") : `big-user-photo`,
             src: currentPhotoName? currentPhotoName: photoFile? photoFile: null,
             ref : type=="small"? userPhotoRef : null
@@ -90,6 +91,9 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                             </div>
                         }
                         <div className={modalContainerCls} ref={modalContainerRef}>
+                            <div className="user-photo-back-button-container">
+                                <IoClose onClick={handleImgClick}/>
+                            </div>
                             <img {...imgProps("big")}/>
                             {
                                 !chatPhoto && 
