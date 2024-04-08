@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
+import {PageOutOffService} from "./pages/PageOutOffService"
 import {Toaster, toast} from "sonner"
 import {Home} from "./pages/Home.jsx"
 import { Login } from "./pages/Login.jsx"
@@ -10,7 +11,8 @@ import { Profile } from "./pages/Profile.jsx"
 import { ChangePwd } from "./pages/ChangePwd.jsx"
 import { ChangeEmailForActivation } from "./pages/ChangeEmailForActivation.jsx"
 import {useEffect} from "react"
-import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH} from "./utils/constants"
+import {NOTIFICATIONS_WEBSOCKET, SMALL_DEVICE_WIDTH, DEBUG} from "./utils/constants"
+import {clearLocalStorage} from "./utils/clearLocalStorage"
 import {getUserDataFromLocalStorage} from "./utils/getUserDataFromLocalStorage"
 import {NotificationsWSCanBeUpdated} from "./utils/NotificationsWSCanBeUpdated"
 import {saveNotificationsInLocalStorage} from "./utils/saveNotificationsInLocalStorage"
@@ -77,6 +79,12 @@ function App() {
     newMessageRef.current.play()
   }
   useEffect(()=>{
+    if (DEBUG){
+      // al montar la pagina, si esta en mantenimiento y hay datos en el localStorage, eliminamos la data
+      // y si el websocket esta montado, tambien lo pelamos
+      clearLocalStorage()
+      disconnectWebsocket()
+    }
     if (!websocketMounted && getUserDataFromLocalStorage()){
       (async function(){
           await handleNotificationsReload()
@@ -157,88 +165,95 @@ function App() {
 
   return (
     <>
-    <audio ref={alertRef} src={alert} onEnded={()=>{
-      alertRef.current.pause();
-      alertRef.current.currentTime = 0; // Reiniciar la reproducción al principio
-    }}></audio>
-    <audio ref={newMessageRef} src={new_message} onEnded={()=>{
-      newMessageRef.current.pause();
-      newMessageRef.current.currentTime = 0; // Reiniciar la reproducción al principio
-    }}></audio>
-    <Toaster 
-      visibleToasts={1}
-      position="bottom-right"
-      closeButton
-      toastOptions={{
-      className : "toast-style",
-      duration : 5000,
-    }}/>
     <DarkModeButton/>
-    <BrowserRouter>
-      <Routes>
-        <Route 
-          exact 
-          path="/"                   
-          element={
-            <Root />
-        }/>
-        <Route 
-          exact 
-          path="/signup/"            
-          element={
-            <SignUp />
-          }/>
-        <Route 
-          exact 
-          path="/signup/activate/"   
-          element={
-            <AccountActivation />
-          }/>
-        <Route 
-          exact 
-          path='/signup/activate/change_email'  
-          element={
-              <ChangeEmailForActivation/> 
-          }/>
-        <Route 
-          exact 
-          path="/login/"             
-          element={ 
-              <Login/> 
-          }/>
-        <Route 
-          exact 
-          path="/login/forgot_password"             
-          element={ 
-              <ForgotPasswordPage/> 
-          }/>
-        <Route 
-          exact 
-          path='/home/'              
-          element={
-            <Home/> 
-          }/>
-        <Route 
-          exact 
-          path='/home/profile/'      
-          element={
-              <Profile/> 
-          }/>
-        <Route 
-          exact 
-          path='/home/profile/change_pwd'  
-          element={
-              <ChangePwd/> 
-          }/>
-        <Route 
-          exact 
-          path='/*'  
-          element={
-              <Page404/> 
-          }/>
-      </Routes>
-    </BrowserRouter>
-  </>
+    {
+      DEBUG ? 
+        <PageOutOffService/>
+        :
+        <>
+          <audio ref={alertRef} src={alert} onEnded={()=>{
+            alertRef.current.pause();
+            alertRef.current.currentTime = 0; // Reiniciar la reproducción al principio
+          }}></audio>
+          <audio ref={newMessageRef} src={new_message} onEnded={()=>{
+            newMessageRef.current.pause();
+            newMessageRef.current.currentTime = 0; // Reiniciar la reproducción al principio
+          }}></audio>
+          <Toaster 
+            visibleToasts={1}
+            position="bottom-right"
+            closeButton
+            toastOptions={{
+            className : "toast-style",
+            duration : 5000,
+          }}/>
+          <BrowserRouter>
+            <Routes>
+              <Route 
+                exact 
+                path="/"                   
+                element={
+                  <Root />
+              }/>
+              <Route 
+                exact 
+                path="/signup/"            
+                element={
+                  <SignUp />
+                }/>
+              <Route 
+                exact 
+                path="/signup/activate/"   
+                element={
+                  <AccountActivation />
+                }/>
+              <Route 
+                exact 
+                path='/signup/activate/change_email'  
+                element={
+                    <ChangeEmailForActivation/> 
+                }/>
+              <Route 
+                exact 
+                path="/login/"             
+                element={ 
+                    <Login/> 
+                }/>
+              <Route 
+                exact 
+                path="/login/forgot_password"             
+                element={ 
+                    <ForgotPasswordPage/> 
+                }/>
+              <Route 
+                exact 
+                path='/home/'              
+                element={
+                  <Home/> 
+                }/>
+              <Route 
+                exact 
+                path='/home/profile/'      
+                element={
+                    <Profile/> 
+                }/>
+              <Route 
+                exact 
+                path='/home/profile/change_pwd'  
+                element={
+                    <ChangePwd/> 
+                }/>
+              <Route 
+                exact 
+                path='/*'  
+                element={
+                    <Page404/> 
+                }/>
+            </Routes>
+          </BrowserRouter>
+        </>
+    }
+    </>
   )
 }
 
