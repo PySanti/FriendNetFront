@@ -98,7 +98,7 @@
         font-size: 30px;
     }
 }
-@media screen and (max-width : 400px){
+@media screen and (max-width : 300px){
     .user-photo-back-button-container > *{
         font-size: 20px;
     }
