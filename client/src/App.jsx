@@ -127,6 +127,7 @@ function App() {
               shiftUser(usersList, setUsersList, data.value.new_notification.sender_user, usersIdList, setUsersIdList, userKeyword)
             }
         } else if (data.type == "connection_error"){
+          clearLocalStorage()
           setConnectionFailed(true)
         } else  if (data.type === "updated_user"){
             if (usersList.length > 0){
