@@ -160,6 +160,10 @@ function App() {
                 }
                 setClickedUser(clickedUser)
             }
+        } else if (data.type == "ping"){
+          NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({
+            "type" : "pong"
+          }))
         }
       }
   }
