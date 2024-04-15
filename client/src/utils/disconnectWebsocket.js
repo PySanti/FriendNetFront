@@ -1,6 +1,7 @@
 import {NotificationsWSTypingInformMsg} from "./NotificationsWSTypingInformMsg"
 import {BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../utils/constants"
 import {NOTIFICATIONS_WEBSOCKET} from "../utils/constants"
+import {resetGlobalStates} from "../utils/resetGlobalStates"
 /**
  * Revisa si el Websocket esta inicializado y si lo esta lo desconecta y anula
  * @param {Object} websocket
@@ -15,6 +16,7 @@ export function disconnectWebsocket(){
         }
         localStorage.removeItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR)
         NOTIFICATIONS_WEBSOCKET.current.close() 
+        resetGlobalStates(undefined)
         NOTIFICATIONS_WEBSOCKET.current = null
     }
 }
