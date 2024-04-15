@@ -68,9 +68,7 @@ function App() {
     }
   }
   const handleReconnection = async ()=>{
-    window.alert("Cambio el visibility")
     if (document.visibilityState === "visible" && getUserDataFromLocalStorage()){
-      window.alert("Pagina visible")
       disconnectWebsocket()
     }
   }
