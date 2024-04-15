@@ -3,6 +3,7 @@ import "../styles/UserFilter.css"
 import {useUserKeyword} from "../store"
 import {useRef, useEffect} from "react"
 import { IoSearchSharp } from "react-icons/io5";
+import {IconedInput} from "./IconedInput"
 
 
 /**
@@ -17,10 +18,7 @@ export function UserFilter(){
         }
     }, [])
     return (
-        <div className="user-filter-container">
-            <span className="icon loupe">
-                <IoSearchSharp />
-            </span>
+        <IconedInput icon={<IoSearchSharp />}>
             <input 
                 ref={userFilterInputRef}
                 placeholder="Buscar" 
@@ -28,6 +26,6 @@ export function UserFilter(){
                 type="text" 
                 onChange={ (e)=>{setUserKeyword(e.target.value)}} 
                 maxLength={BASE_USERNAME_MAX_LENGTH}/>
-        </div>
+        </IconedInput>
     )
 }

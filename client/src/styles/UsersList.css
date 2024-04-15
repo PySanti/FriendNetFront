@@ -5,6 +5,10 @@
     flex-direction: column;
     width: 20%;
 }
+
+.users-list::first-child{
+    box-shadow : none !important;
+}
 .users-list-container{
     height: inherit;
     overflow: scroll;
