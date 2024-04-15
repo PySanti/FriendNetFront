@@ -1,4 +1,5 @@
 import { FormField } from "./FormField";
+import {IconedInput} from "./IconedInput"
 import {PropTypes} from "prop-types"
 import "../styles/PasswordField.css"
 import { useState, useRef } from "react";
@@ -6,6 +7,7 @@ import padlock from "../../lottie/padlock"
 import Lottie from "lottie-react"
 import {BASE_PASSWORD_MAX_LENGTH} from "../utils/constants"
 import "../styles/PasswordFieldStyles.css"
+import { TbLock } from "react-icons/tb";
 
 /**
  * Componente creado para campos de contrasenia
@@ -24,13 +26,16 @@ export function PasswordField({errors, registerObject, label}){
     return (
         <div className="password-field-container">
             <FormField  errors={errors}>
-                <input 
-                    placeholder={label}
-                    className="password-input" 
-                    type={previsualizationActivated ? "text" : "password"} 
-                    name={registerObject.name} 
-                    maxLength={BASE_PASSWORD_MAX_LENGTH}
-                    {...registerObject}/>
+                <IconedInput icon={<TbLock/>}>
+                    <input 
+                        placeholder={label}
+                        className="password-input" 
+                        type={previsualizationActivated ? "text" : "password"} 
+                        name={registerObject.name} 
+                        maxLength={BASE_PASSWORD_MAX_LENGTH}
+                        {...registerObject}/>
+                </IconedInput>
+
             </FormField>
             <div className="password-visualization" onClick={handlePadlockClick}>
                 <Lottie 
