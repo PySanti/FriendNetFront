@@ -9,7 +9,6 @@ import {resetGlobalStates} from "../utils/resetGlobalStates"
 export function disconnectWebsocket(){
     if (NOTIFICATIONS_WEBSOCKET.current){
         console.log('Desconectando websocket')
-        window.alert("Desconectando websocket")
         if (localStorage.getItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR) && NOTIFICATIONS_WEBSOCKET.current.readyState === 1 ){
             // caso borde en el que el usuario se haya desconectado antes de los 600ms despues de haber escrito
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(Number(localStorage.getItem("user_typing")), false))
