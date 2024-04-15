@@ -70,7 +70,7 @@ export function MsgSendingInput(){
                     minLength={1} 
                     {...register("msg")}/>
             </form>
-            <span className="icon sending-msg-button" onClick={onSubmit} onMouseDown={(e)=>{e.preventDefault()}}>
+            <span className="sending-msg-button" onClick={onSubmit} onMouseDown={(e)=>{e.preventDefault()}}>
                 <IoSend /> 
             </span>
         </div>

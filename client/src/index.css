@@ -55,13 +55,15 @@ body{
 
 input , textarea{
   outline: none;
-  box-shadow: 0px 0px 0px var(--base-input-outline-witdh) #949393;
   padding: .2rem;
+
+  box-shadow: 0px 0px 0px var(--base-input-outline-witdh) #949393;
   border-radius: 5px;
   transition-property:  box-shadow;
   transition-duration: .2s;
   border: none;
   background-color : var(--base-background-box-color);
+
   font-size: var(--base-input-font-size);
 }
 
@@ -114,7 +116,7 @@ input::placeholder{
   scrollbar-width: thin;
 }
 
-.icon{
+svg{
   user-select: none;
 }
 .not-displayed{

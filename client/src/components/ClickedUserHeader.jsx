@@ -14,7 +14,7 @@ export function ClickedUserHeader(){
         <div className= "clicked-user-header-container">
             {
                 executingInSmallDevice &&
-                <span className="icon back-chat-button" onClick={()=>resetChats()}>
+                <span className="back-chat-button" onClick={()=>resetChats()}>
                     <FaArrowLeftLong />
                 </span>
             }

@@ -106,7 +106,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                         </div>
                     </>
                     :
-                    <span id="no-photo-icon" className="icon user-photo" onClick={!chatPhoto ? handleChangePhotoClick : undefined}>
+                    <span id="no-photo-icon" className="user-photo" onClick={!chatPhoto ? handleChangePhotoClick : undefined}>
                         {
                             chatPhoto ?
                                 <TiUserOutline />

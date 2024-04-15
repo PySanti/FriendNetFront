@@ -23,7 +23,7 @@ export function UserButton({user}){
                 
                     <img className="user-button__userphoto" src={user.photo_link}/>
                 :
-                    <span className="icon userphoto-nophoto">
+                    <span className="userphoto-nophoto">
                         <TiUserOutline />
                     </span>
             }
