@@ -6,8 +6,8 @@
     width: 20%;
 }
 
-.users-list::first-child{
-    box-shadow : none !important;
+.users-list > :first-child{
+    box-shadow : 0px 0px 0px 0px !important;
 }
 .users-list-container{
     height: inherit;
