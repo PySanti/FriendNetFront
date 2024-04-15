@@ -1,0 +1,20 @@
+.iconed-input-container{
+    display: flex;
+    flex-direction: row;
+    align-items : center;
+    justify-content: center;
+    border-radius :5px; 
+    box-shadow: 0px 0px 0px 2px #949393;
+    background-color : var(--base-background-box-color)
+}
+
+.iconed-input-container > svg{
+    opacity: .6;
+}
+.iconed-input-container > input{
+    border-radius : 0;
+    border : none;
+    outline: none;
+    box-shadow : none;
+    background-color : transparent;
+}

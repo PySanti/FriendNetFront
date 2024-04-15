@@ -1,6 +1,8 @@
 import { FormField } from "./FormField";
 import { BASE_USERNAME_MAX_LENGTH } from "../utils/constants";
 import {PropTypes} from "prop-types"
+import {IconedInput} from "./IconedInput"
+import { TiUserOutline } from "react-icons/ti";
 
 /**
  * Componente creado para campos de nombre de usuario
@@ -11,14 +13,17 @@ import {PropTypes} from "prop-types"
 export function UsernameField({errors, registerObject, defaultValue}){
     return (
         <FormField  errors={errors}>
-            <input 
-                placeholder="Usuario"
-                defaultValue    =   {defaultValue} 
-                type            =   "text"
-                name            =   {registerObject.name}
-                id              =   {registerObject.name}
-                maxLength       =   {BASE_USERNAME_MAX_LENGTH} 
-                {...registerObject}/>
+            <IconedInput icon={<TiUserOutline />}>
+                <input 
+                    placeholder="Usuario"
+                    defaultValue    =   {defaultValue} 
+                    type            =   "text"
+                    name            =   {registerObject.name}
+                    id              =   {registerObject.name}
+                    maxLength       =   {BASE_USERNAME_MAX_LENGTH} 
+                    {...registerObject}/>
+            </IconedInput>
+
         </FormField>
     )
 }
