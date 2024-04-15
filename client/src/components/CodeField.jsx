@@ -5,6 +5,8 @@ import Lottie from "lottie-react"
 import reload from "../../lottie/reload.json"
 import {useRef} from "react"
 import "../styles/CodeField.css"
+import { FaCode } from "react-icons/fa6";
+import {IconedInput} from "./IconedInput"
 
 /**
  * @param {Object} errors coleccion de errores del campo creado desde el formulario
@@ -21,13 +23,15 @@ export function CodeField({errors, registerObject, codeSendingFunction}){
     return (
         <div className="code-input-container">
             <FormField errors={errors}>
-                <input
-                    placeholder="Código"
-                    type        =   "text"
-                    maxLength   =   {BASE_SECURITY_CODE_LENGTH}
-                    name        =   {registerObject.name}
-                    id          =   {registerObject.name}
-                    {...registerObject}/>
+                <IconedInput icon={<FaCode/>}>
+                    <input
+                        placeholder="Código"
+                        type        =   "text"
+                        maxLength   =   {BASE_SECURITY_CODE_LENGTH}
+                        name        =   {registerObject.name}
+                        id          =   {registerObject.name}
+                        {...registerObject}/>
+                </IconedInput>
             </FormField>
             <div className="reload-animation" onClick={handleReloadButtonClick}>
                 <Lottie 
