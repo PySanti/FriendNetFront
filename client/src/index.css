@@ -8,7 +8,9 @@
 
 
 body{
+
   display: flex;
+  --base-input-outline-witdh : 2px;
   --base-color                : #379712;
   --base-background-color     : #fff;
   --base-letter-color         : #000;
@@ -52,7 +54,6 @@ body{
 
 
 input , textarea{
-  --base-input-outline-witdh : 2px;
   outline: none;
   box-shadow: 0px 0px 0px var(--base-input-outline-witdh) #949393;
   padding: .2rem;
@@ -63,9 +64,7 @@ input , textarea{
   background-color : var(--base-background-box-color);
   font-size: var(--base-input-font-size);
 }
-input:focus, textarea:focus{
-  box-shadow: 0px 0px 0px var(--base-input-outline-witdh) var(--base-color);
-}
+
 input::placeholder{
   font-size: var(--base-error-msg-font-size);
   color : #000  !important;  

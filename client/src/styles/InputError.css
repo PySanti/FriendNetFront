@@ -12,6 +12,9 @@
 
 
 
-.input-errored > input{
+.input-errored > .iconed-input-container{
     box-shadow : 0px 0px 0px var(--base-input-outline-witdh) #f00 !important;
+}
+.input-errored > .iconed-input-container > svg{
+    color:  #f00 !important;
 }
