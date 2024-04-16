@@ -39,7 +39,8 @@
 
 .users-interface-container > *{
     margin : 0 10px 0 10px;
-    border-radius :5px;
+    --base-interface-radius : 5px;
+    border-radius :var(--base-interface-radius);
     border : 1px solid var(--base-letter-color);
 }
 .no-connection{
