@@ -23,7 +23,6 @@ export function UsernameField({errors, registerObject, defaultValue}){
                     maxLength       =   {BASE_USERNAME_MAX_LENGTH} 
                     {...registerObject}/>
             </IconedInput>
-
         </FormField>
     )
 }

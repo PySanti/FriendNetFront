@@ -18,25 +18,23 @@ export function PasswordField({errors, registerObject, label}){
         setPrevisualizationActivated(!previsualizationActivated)
     }
     return (
-        <div className="password-field-container">
-            <FormField  errors={errors}>
-                <IconedInput 
-                    icon={
-                        previsualizationActivated ?
-                            <TbLockOpen onClick={handlePadlockClick}/>
-                            :
-                            <TbLock     onClick={handlePadlockClick}/>
-                        }>
-                    <input 
-                        placeholder={label}
-                        className="password-input" 
-                        type={previsualizationActivated ? "text" : "password"} 
-                        name={registerObject.name} 
-                        maxLength={BASE_PASSWORD_MAX_LENGTH}
-                        {...registerObject}/>
-                </IconedInput>
-            </FormField>
-        </div>
+        <FormField  errors={errors}>
+            <IconedInput 
+                icon={
+                    previsualizationActivated ?
+                        <TbLockOpen onClick={handlePadlockClick}/>
+                        :
+                        <TbLock     onClick={handlePadlockClick}/>
+                    }>
+                <input 
+                    placeholder={label}
+                    className="password-input" 
+                    type={previsualizationActivated ? "text" : "password"} 
+                    name={registerObject.name} 
+                    maxLength={BASE_PASSWORD_MAX_LENGTH}
+                    {...registerObject}/>
+            </IconedInput>
+        </FormField>
     )
 }
 

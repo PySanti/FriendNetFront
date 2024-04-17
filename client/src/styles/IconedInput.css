@@ -24,4 +24,9 @@
     outline: none;
     box-shadow : none;
     background-color : transparent;
+    width: 100%;
+}
+
+.form-field-container > .iconed-input-container{
+    width: 100%;
 }
