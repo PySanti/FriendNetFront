@@ -6,15 +6,18 @@
 }
 
 .loader-container{
-    display: none;
-    padding: 0 1em;
+    opacity: 0;
+    padding: .3rem 1rem ;
+    display: flex;
+    align-items : center;
+    justify-content: center;
 }
 
 .loader-container__activated{
-    display: flex;
-    align-items : center;
-    justify-content: left;
+    opacity: 1;
 }
+
+
 
 .loading-text{
     font-size: var(--base-button-font-size);

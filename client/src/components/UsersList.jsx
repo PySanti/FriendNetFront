@@ -121,8 +121,7 @@ export function UsersList(){
                             {usersList.map(formatingFunction)}
                         </div>
                         <div className={loaderActivated ? "loader-container loader-container__activated" : "loader-container"}>
-                            <h3 className="loading-text">{loaderActivated && "Cargando  "}</h3>
-                            <Loader loaderActivated={loaderActivated}/>
+                            <h3 className="loading-text">Cargando  ...</h3>
                         </div>
                     </>
                     :
