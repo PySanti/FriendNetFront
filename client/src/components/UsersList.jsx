@@ -120,7 +120,10 @@ export function UsersList(){
                         <div className="users-list-container scrollbar-container"  onScroll={scrollDetector}>
                             {usersList.map(formatingFunction)}
                         </div>
-                        <Loader loaderActivated={loaderActivated}/>
+                        <div className={loaderActivated ? "loader-container loader-container__activated" : "loader-container"}>
+                            <h3 className="loading-text">{loaderActivated && "Cargando  "}</h3>
+                            <Loader loaderActivated={loaderActivated}/>
+                        </div>
                     </>
                     :
                     <>
