@@ -22,9 +22,9 @@ export function PasswordField({errors, registerObject, label}){
             <IconedInput 
                 icon={
                     previsualizationActivated ?
-                        <TbLockOpen onClick={handlePadlockClick}/>
+                        <TbLockOpen className="password-icon" onClick={handlePadlockClick}/>
                         :
-                        <TbLock     onClick={handlePadlockClick}/>
+                        <TbLock     className="password-icon" onClick={handlePadlockClick}/>
                     }>
                 <input 
                     placeholder={label}

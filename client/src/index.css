@@ -119,6 +119,10 @@ input::placeholder{
 svg{
   user-select: none;
 }
+
+.password-icon{
+  cursor : pointer;
+}
 .not-displayed{
   display: none;
 }
