@@ -16,7 +16,7 @@ body{
   --base-letter-color         : #000;
   --base-background-box-color : #d9d6d67c;
   --base-background-dark-box-color : var(--base-background-box-color);
-  --base-image-drop-shadow    : drop-shadow(0px 0px 8px rgb(255, 255, 255));
+  --base-image-drop-shadow    : drop-shadow(0px 0px 3px rgb(255, 255, 255));
   --base-button-font-size     : 15px;
   --base-error-msg-font-size       : 20px;
   --base-input-font-size       : 25px;
