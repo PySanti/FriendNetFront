@@ -6,7 +6,6 @@
   user-select: none;
 }
 
-
 body{
 
   display: flex;
@@ -16,7 +15,7 @@ body{
   --base-letter-color         : #000;
   --base-background-box-color : #d9d6d67c;
   --base-background-dark-box-color : var(--base-background-box-color);
-  --base-image-drop-shadow    : drop-shadow(0px 0px 3px rgb(255, 255, 255));
+  --base-image-drop-shadow    : drop-shadow(0px 0px 6px rgb(255, 255, 255));
   --base-button-font-size     : 15px;
   --base-error-msg-font-size       : 20px;
   --base-input-font-size       : 25px;
@@ -139,4 +138,15 @@ input:-webkit-autofill:active  {
     transition: background-color 5000s ease-in-out 0s;
     -webkit-text-fill-color: #000 !important;
     background-color: transparent !important;
+}
+.lottie-animation{
+  filter : var(--base-image-drop-shadow);
+}
+.lottie-animation path{
+  transition-property: stroke, fill;
+  transition-duration: .3s;
+}
+.dark .lottie-animation path{
+    stroke: #ffffff;
+    fill : #fff;
 }

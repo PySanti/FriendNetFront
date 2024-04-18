@@ -39,6 +39,9 @@ export function CodeField({errors, registerObject, codeSendingFunction}){
                     autoplay={false}
                     animationData={reload} 
                     lottieRef={reloadAnimationRef} 
+                    rendererSettings={{
+                        className:"lottie-animation"
+                    }}
                     />
             </div>
         </div>

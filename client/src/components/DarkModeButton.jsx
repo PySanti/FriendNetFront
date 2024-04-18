@@ -66,6 +66,9 @@ export function DarkModeButton(){
                 autoplay={false}
                 animationData={dark_mode} 
                 lottieRef={darkModeAnimationRef} 
+                rendererSettings={{
+                    className:"lottie-animation"
+                }}
                 />
         </div>
     )

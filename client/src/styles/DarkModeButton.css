@@ -5,8 +5,10 @@
     position: absolute;
     top : 20px;
     right: 30px;
-    filter : var(--base-image-drop-shadow);
 }
+
+
+
 
 @media screen and (max-width : 1000px){
     .dark-mode-button__container{
