@@ -72,9 +72,7 @@ function App() {
       disconnectWebsocket()
     }
   }
-  const handleFreeze = async ()=>{
-    NOTIFICATIONS_WEBSOCKET.current.close()
-  }
+
   const audioEffect = ()=>{
     alertRef.current.volume = 0.5
     alertRef.current.play()
@@ -97,7 +95,6 @@ function App() {
       NotificationsWSInitialize(getUserDataFromLocalStorage().id)
       setWebsocketMounted(true)
     }
-    document.addEventListener('freeze', handleFreeze);
     document.addEventListener("visibilitychange", handleReconnection)
     window.addEventListener('resize', ()=>{
       setExecutingInSmallDevice(window.innerWidth <= SMALL_DEVICE_WIDTH)
@@ -109,7 +106,6 @@ function App() {
     })
     return ()=>{
       document.removeEventListener("visibilitychange", handleReconnection)
-      document.removeEventListener('freeze', handleFreeze);
     }
   }, [websocketMounted])
 
