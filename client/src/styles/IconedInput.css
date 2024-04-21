@@ -11,7 +11,7 @@
 }
 
 .iconed-input-container > svg{
-    opacity: .6;
+    opacity: .7;
     color :#000; 
     font-size: var(--base-input-font-size) !important;
     margin: 0 .3em;
@@ -19,7 +19,7 @@
     transition-duration: .2s;
 }
 .iconed-input-container > input{
-    border-radius : 0;
+    border-radius : inherit;
     border : none;
     outline: none;
     box-shadow : none;
