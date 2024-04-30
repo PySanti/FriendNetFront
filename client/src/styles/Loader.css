@@ -14,7 +14,7 @@
     width: 100px;
 }
 .superbig-loader > *{
-    width: 100px;
+    width: 150px;
 }
 
 @media screen and (max-width : 1000px){
@@ -25,7 +25,7 @@
         width: 120px;
     }
     .superbig-loader > *{
-        width: 150px;
+        width: 200px;
     }
 }
 
@@ -37,7 +37,7 @@
         width: 90px;
     }
     .superbig-loader > *{
-        width: 120px;
+        width: 160px;
     }
 }
 
@@ -52,7 +52,7 @@
         width: 70px;
     }
     .superbig-loader > *{
-        width: 100px;
+        width: 130px;
     }
 }
 
