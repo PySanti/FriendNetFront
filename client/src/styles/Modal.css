@@ -12,7 +12,7 @@
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.959);
     transition-property: opacity  ;
-    transition-duration: .1s;
+    transition-duration: .2s;
 }
 .modal-container__activated{
     display: flex;
