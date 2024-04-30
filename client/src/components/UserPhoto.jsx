@@ -8,6 +8,7 @@ import {Loader} from "./Loader"
 import { MdOutlineNoPhotography } from "react-icons/md";
 import { TiUserOutline } from "react-icons/ti";
 import { IoClose } from "react-icons/io5";
+import {Modal} from "../components/Modal"
 
 /**
  * Contenedor para foto de perfil de usuario
@@ -18,22 +19,18 @@ import { IoClose } from "react-icons/io5";
  * Diseniado para trabajar con states dentro de un formulario
  */
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
-    let modalContainerRef                           = useRef(null)
     let [userPhotoLoaded, setUserPhotoLoaded]       = useState(false);
+    let [modalOpened, setModalOpened]               = useState(false)
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
     const userPhotoRef                              = useRef(null)
     const imgInputRef                                 = useRef(null)
     const containerClsName                          = "user-photo-main-container";
-    const modalContainerCls                         = "modal-container"
     const handleChangePhotoClick = ()=>{
         imgInputRef.current.click()
     }
     const handleImgClick = ()=>{
         if (photoFile && userPhotoLoaded){
-            modalContainerRef.current.classList.toggle(`${modalContainerCls}__activated`)
-            setTimeout(() => {
-                modalContainerRef.current.style.opacity = modalContainerRef.current.classList.contains(`${modalContainerCls}__activated`)? "1" : "0"
-            }, 0);
+            setModalOpened(!modalOpened)
         }
     }
     const imgProps = (type) => {
@@ -91,19 +88,21 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                                 }
                             </div>
                         }
-                        <div className={modalContainerCls} ref={modalContainerRef}>
-                            <div className="user-photo-back-button-container">
-                                <IoClose onClick={handleImgClick}/>
-                            </div>
-                            <img {...imgProps("big")}/>
-                            {
-                                !chatPhoto && 
-                                <div className="user-photo-buttons-container">
-                                    <Button buttonText="Cambiar" onClickFunction={handleChangePhotoClick}/>
-                                    <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto} />
+                        <Modal opened={modalOpened}>
+                            <div className="big-user-photo-container">
+                                <div className="user-photo-back-button-container">
+                                    <IoClose onClick={handleImgClick}/>
                                 </div>
-                            }
-                        </div>
+                                <img {...imgProps("big")}/>
+                                {
+                                    !chatPhoto && 
+                                    <div className="user-photo-buttons-container">
+                                        <Button buttonText="Cambiar" onClickFunction={handleChangePhotoClick}/>
+                                        <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto} />
+                                    </div>
+                                }
+                            </div>
+                        </Modal>
                     </>
                     :
                     <span id="no-photo-icon" className="user-photo" onClick={!chatPhoto ? handleChangePhotoClick : undefined}>
