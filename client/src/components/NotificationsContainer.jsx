@@ -13,6 +13,7 @@ import {notificationDeleteAPI} from "../api/notificationDelete.api"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import {useNotifications} from "../store"
 import {ModalBackButton} from "./ModalBackButton"
+import {updateClickedUser} from "../utils/updateClickedUser"
 /**
  * Componente creado para contener las notificaciones del usuarios
  */
@@ -26,6 +27,10 @@ export function NotificationsContainer(){
         } else {
             toast.error("No tienes notificaciones")
         }
+    }
+    const onNotificationClickFunctionGen = (notification)=>{
+        setNotificationsActivated(false)
+        updateClickedUser(notification.sender_user)
     }
     const onNotificationDelete = async (notification)=>{
         const response = await apiWrap(async ()=>{
@@ -42,7 +47,11 @@ export function NotificationsContainer(){
 
 
     const formatingFunction =(notification_id)=>{
-        return <Notification key={v4()} notification={notifications[notification_id]} onNotificationDelete={onNotificationDelete}/>
+        return <Notification 
+            key={v4()} 
+            notification={notifications[notification_id]} 
+            onNotificationDelete={onNotificationDelete} 
+            onNotificationClick={()=>onNotificationClickFunctionGen(notifications[notification_id])}/>
     }
     useEffect(()=>{
         if (Object.keys(notifications).length == 0){
