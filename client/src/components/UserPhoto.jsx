@@ -43,6 +43,7 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
     };
     const deleteCurrentPhoto = () => {
         photoFileSetter(null);
+        setModalOpened(false)
         setCurrentPhotoName(null);
     };
     const onPhotoChange = (e) => {
