@@ -1,0 +1,20 @@
+.modal-back-button-container {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+}
+.modal-back-button-container > *{
+    font-size: 40px;
+    color : #ddd;
+    cursor: pointer;
+}
+@media screen and (max-width : 800px){
+    .modal-back-button-container > *{
+        font-size: 30px;
+    }
+}
+@media screen and (max-width : 300px){
+    .modal-back-button-container > *{
+        font-size: 20px;
+    }
+}

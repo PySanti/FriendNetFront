@@ -73,32 +73,15 @@
 }
 
 
-.user-photo-back-button-container {
-    position: absolute;
-    right: 5%;
-    top: 5%;
-}
-.user-photo-back-button-container > *{
-    font-size: 40px;
-    color : #ddd;
-    cursor: pointer;
-}
 
-@media screen and (max-width : 800px){
-    .user-photo-back-button-container > *{
-        font-size: 30px;
-    }
-}
+
+
 @media screen and (max-width : 800px){
     .big-user-photo{
         max-width: 300px;
     }
 }
-@media screen and (max-width : 300px){
-    .user-photo-back-button-container > *{
-        font-size: 20px;
-    }
-}
+
 
 
 

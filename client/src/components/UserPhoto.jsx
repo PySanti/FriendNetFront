@@ -7,8 +7,8 @@ import { checkImageFormat } from "../utils/checkImageFormat";
 import {Loader} from "./Loader"
 import { MdOutlineNoPhotography } from "react-icons/md";
 import { TiUserOutline } from "react-icons/ti";
-import { IoClose } from "react-icons/io5";
-import {Modal} from "../components/Modal"
+import {Modal} from "./Modal"
+import {ModalBackButton} from "./ModalBackButton"
 
 /**
  * Contenedor para foto de perfil de usuario
@@ -90,10 +90,8 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
                             </div>
                         }
                         <Modal opened={modalOpened}>
+                            <ModalBackButton onClick={()=>setModalOpened(false)}/>
                             <div className="big-user-photo-container">
-                                <div className="user-photo-back-button-container">
-                                    <IoClose onClick={handleImgClick}/>
-                                </div>
                                 <img {...imgProps("big")}/>
                                 {
                                     !chatPhoto && 
