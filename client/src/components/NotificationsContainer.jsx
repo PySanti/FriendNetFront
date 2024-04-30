@@ -1,4 +1,5 @@
 import {BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
+import {Modal} from "./Modal.jsx"
 import {toast} from "sonner"
 import "../styles/NotificationsContainer.css"
 import {  useState } from "react"
@@ -18,7 +19,6 @@ export function NotificationsContainer(){
     let [notificationsActivated, setNotificationsActivated] = useState(false)
     let [notifications, setNotifications]                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     const navigate                                          = useNavigate()
-    const baseNotificationsBellClassName                    = "notifications-bell button"
     const handleNotificationsBellClick = ()=>{
         if (Object.keys(notifications).length > 0){
             setNotificationsActivated(!notificationsActivated)
@@ -50,20 +50,19 @@ export function NotificationsContainer(){
     }, [notifications])
 
     return (
-        <div className="notifications-container">
-            <div className={notificationsActivated? `${baseNotificationsBellClassName} button_hovered` : baseNotificationsBellClassName} onClick={handleNotificationsBellClick}>
+        <>
+            <div className="notifications-bell button" onClick={handleNotificationsBellClick}>
                 <h4 className="notifications-container-title">
                     Notificaciones
                 </h4>
-                <div className={notificationsActivated ? "notifications-list notifications-list__activated" : "notifications-list"}>
-                    {
-                        (notifications && Object.keys(notifications).length > 0) &&
-                        Object.keys(notifications).map(formatingFunction)
-                    }
-                </div>
+                <div className="notifications-alert">{Object.keys(notifications).length}</div>
             </div>
-            <div className={notificationsActivated? "notifications-alert notifications-alert__activated" : "notifications-alert"}>{Object.keys(notifications).length}</div>
-        </div>
+            <Modal opened={notificationsActivated}>
+                <div className="notifications-list">
+                    {Object.keys(notifications).map(formatingFunction)}
+                </div>
+            </Modal>
+        </>
     )
 }
 
