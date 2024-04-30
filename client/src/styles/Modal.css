@@ -1,6 +1,6 @@
 
 .modal-container{
-    border-radius : 0px;
+    border-radius : 0px !important;
     display: none;
     position: fixed;
     z-index: 99;
