@@ -1,5 +1,6 @@
 import {PropTypes} from "prop-types"
 import "../styles/Notification.css"
+import {useState} from "react"
 import { IoClose } from "react-icons/io5";
 
 
@@ -9,12 +10,16 @@ import { IoClose } from "react-icons/io5";
  * @param {Object} notification
  */
 export function Notification({notification, onNotificationDelete, onNotificationClick}){
+    const [notificationDeleted, setNotificationDeleted] = useState(false)
     const handleDeleteClick = (event)=>{
-        onNotificationDelete(notification)
         event.stopPropagation()
+        setNotificationDeleted(true)
+        setTimeout(() => {
+            onNotificationDelete(notification)
+        }, 100);
     }
     return (
-        <div className="individual-notification-container" >
+        <div className={notificationDeleted ? "individual-notification-container notification_deleted" : "individual-notification-container"  }>
             <h4 className="individual-notification-content"onClick={onNotificationClick}>
                 {notification.msg}
             </h4>
