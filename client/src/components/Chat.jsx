@@ -89,7 +89,7 @@ export function Chat(){
         <div className={executingInSmallDevice? (clickedUser? "chat-container" : "chat-container not-displayed") : "chat-container"}>
             {
                 enterChatLoaderActivated ?
-                <Loader superbig loaderActivated={true}/>
+                <Loader big loaderActivated={true}/>
                 :
                 <>
                     {clickedUser ?
