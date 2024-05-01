@@ -6,6 +6,10 @@
     align-items: center;
     text-align: center;
     cursor: pointer;
+    border-radius : 10px;
+    padding: .3em;
+    margin-bottom: .5em;
+    width: 100%;
 
 }
 .individual-notification-container:hover{
@@ -13,16 +17,16 @@
 }
 .individual-notification-content{
     width: 100%;
-    text-align: center;
-    font-size: var(--base-button-font-size);
+    text-align: left;
+    font-size: var(--base-input-font-size);
 }
 
 .individual-notification-delete-btn {
     display: flex;
     align-items : center;
     border: none;
-    background-color: inherit;
-    padding: 0 .3em;
+    background-color: transparent;
+    padding: 0 .5em;
     cursor: pointer;
 }
 
@@ -30,7 +34,7 @@
 
 
 .individual-notification-delete-btn > *{
-    font-size: var(--base-button-font-size);
+    font-size: var(--base-input-font-size);
     transition-property: filter;
     transition-duration: .2s;
 }
