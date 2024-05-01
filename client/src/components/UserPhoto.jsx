@@ -19,7 +19,7 @@ import {ModalBackButton} from "./ModalBackButton"
  * Diseniado para trabajar con states dentro de un formulario
  */
 export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
-    let [userPhotoLoaded, setUserPhotoLoaded]       = useState(false);
+    let [userPhotoLoaded, setUserPhotoLoaded]       = useState(true);
     let [modalOpened, setModalOpened]               = useState(false)
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
     const userPhotoRef                              = useRef(null)
@@ -68,10 +68,12 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
         if (!currentPhotoName && photoFile){
             // recordar que si el photoFile no es null y currentPhotoName es null, indica que la imagen se esta renderizando a partir de un link
             // En cambio, si el currentPhotoName no es null, indica que la imagen se esta cargando desde la PC local, en tal caso no tiene sentido activar el loader por que la imagen ya esta cargada
-            setUserPhotoLoaded(false)
-            userPhotoRef.current.addEventListener("load", ()=>{
-                setUserPhotoLoaded(true)
-            })
+            if (!userPhotoRef.current.complete){
+                setUserPhotoLoaded(false)
+                userPhotoRef.current.addEventListener("load", ()=>{
+                    setUserPhotoLoaded(true)
+                })
+            }
         } else{
             setUserPhotoLoaded(true)
         }
