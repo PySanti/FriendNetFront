@@ -23,7 +23,7 @@ export function NotificationsContainer(){
     const navigate                                          = useNavigate()
     const handleNotificationsBellClick = ()=>{
         if (Object.keys(notifications).length > 0){
-            setNotificationsActivated(!notificationsActivated)
+            setNotificationsActivated(true)
         } else {
             toast.error("No tienes notificaciones")
         }

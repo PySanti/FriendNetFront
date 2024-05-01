@@ -10,7 +10,7 @@ export function Modal({children, opened}){
         }, 0)
     }, [opened])
     return (
-        <div className={opened ? `${modalContainerCls} modal-container__activated` : modalContainerCls} ref={modalContainerRef}>
+        <div className={opened ? `${modalContainerCls} ${modalContainerCls}__activated` : modalContainerCls} ref={modalContainerRef}>
             {children}
         </div>
     )
