@@ -67,12 +67,17 @@ export function NotificationsContainer(){
                 </h4>
                 <div className="notifications-alert">{Object.keys(notifications).length}</div>
             </div>
-            <Modal opened={notificationsActivated}>
-                <ModalBackButton onClick={()=>setNotificationsActivated(false)}/>
-                <div className="notifications-list">
-                    {Object.keys(notifications).map(formatingFunction)}
-                </div>
-            </Modal>
+            {
+                (Object.keys(notifications).length != 0) &&
+                <>
+                    <Modal opened={notificationsActivated}>
+                        <ModalBackButton onClick={()=>setNotificationsActivated(false)}/>
+                        <div className="notifications-list">
+                            {Object.keys(notifications).map(formatingFunction)}
+                        </div>
+                    </Modal>
+                </>
+            }
         </>
     )
 }

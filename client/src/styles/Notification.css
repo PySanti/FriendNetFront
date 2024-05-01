@@ -12,7 +12,7 @@
     height: 2em;
     padding: .4em .3em;
     transition-property: height ,transform, padding;
-    transition-duration: .1s;
+    transition-duration: .15s;
 }
 
 @media screen and (max-width : 575px){
