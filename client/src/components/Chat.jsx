@@ -47,7 +47,7 @@ export function Chat(){
         } 
         if (response){
             if (response.status == 200){
-                updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
+                updateMessagesHistorial(setMessagesHistorial, 1, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
                 newClickedUser.is_online = response.data.is_online
                 if (relatedNotification && response.data.notification_deleted){
                     removeAndUpdateNotifications(relatedNotification, setNotifications)
@@ -77,10 +77,10 @@ export function Chat(){
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser) ){
             (async function() {
-                messagesHistorialPage.current = 1
                 noMoreMessages.current = false
                 mostRecentClickedUser.current = clickedUser
                 await enterChatHandler(clickedUser)
+                messagesHistorialPage.current = 2
             })();
         }
     }, [clickedUser])
