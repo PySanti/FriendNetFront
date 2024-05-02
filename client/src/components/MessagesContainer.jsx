@@ -5,6 +5,7 @@ import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
 import { useEffect, useRef, useState} from "react"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
 import { useNavigate } from "react-router-dom"
 import { sendMsgAPI } from "../api/sendMsg.api"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
@@ -32,6 +33,8 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
     let [messagesScrollLoaderActivated, setMessagesScrollLoaderActivated] = useState(false)
     let [newMsg, setNewMsg]                                             = useNewMsg((state)=>([state.newMsg, state.setNewMsg]))
+    const lastMessagesHistorialValue = useRef(null)
+
 
     const thersScroll = ()=>{
         return containerRef.current.scrollHeight > containerRef.current.clientHeight
@@ -66,13 +69,22 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
         setMessagesScrollLoaderActivated(false)
     }
     const sendMsg = async (data)=>{
+        const temporalMsg = {
+            "parent_id" : getUserDataFromLocalStorage().id,
+            "content" : data.msg
+        }
+        let newMessagesHistorial = [...lastMessagesHistorialValue.current, temporalMsg]
+        const newMessageIndex = newMessagesHistorial.length-1
+        setMessagesHistorial(newMessagesHistorial)
+        setGottaScrollChat(true)
         const response = await apiWrap(async ()=>{
             return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
-        }, navigate, 'Enviando mensaje, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "sendMsg")
+        }, navigate, undefined, undefined, undefined)
         if (response){
             if (response.status == 200){
-                setMessagesHistorial([...messagesHistorial, response.data.sended_msg])
-                setGottaScrollChat(true)
+                newMessagesHistorial = lastMessagesHistorialValue.current
+                newMessagesHistorial[newMessageIndex] = response.data.sended_msg
+                setMessagesHistorial(newMessagesHistorial)
             } else {
                 if (response.data.error == "same_user"){
                     toast.error("Error inesperado enviando mensaje, cerrando sesión por seguridad")
@@ -112,6 +124,8 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
             resetScroll.current = false
             containerRef.current.style.scrollBehavior = "smooth"
         }
+        lastMessagesHistorialValue.current = messagesHistorial
+
     }, [messagesHistorial])
     useEffect(()=>{
         if (containerRef.current && gottaScrollChat){

@@ -11,7 +11,7 @@ export function Message({messageObj}){
     return (
         <div className={messageObj.parent_id == getUserDataFromLocalStorage().id ? `${messageCls} session-msg` :  `${messageCls} not-session-msg` }>
             <h3 className="message-content">{messageObj.content}</h3>
-            <h3 className="message-date">{messageObj.created_at}</h3>
+            <h3 className="message-date">{messageObj.created_at ? messageObj.created_at : "Enviando mensaje ... "}</h3>
         </div>
     )
 }
