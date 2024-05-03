@@ -26,8 +26,8 @@ export function MsgSendingInput(){
     let {register, handleSubmit, reset}                     = useForm()
     let [clickedUserWhenTyping, setClickedUserWhenTyping]   = useState(null)
     let [timeoutDB, setTimeoutDB]                           = useState({})
-    const navigate                                                      = useNavigate()
-    const lastMessagesHistorialValue = useRef(null)
+    const navigate                                          = useNavigate()
+    const lastMessagesHistorialValue                        = useRef(null)
     const userData                                          = getUserDataFromLocalStorage()
     const sendMsg = async (data)=>{
         const temporalMsg = {
@@ -61,10 +61,9 @@ export function MsgSendingInput(){
         console.log(data)
         const new_msg = data.msg.trim()
         if (new_msg.length > 0){
-            reset()
+            reset({"msg" : " "})
             await sendMsg(data)
         }
-
     })
     useEffect(()=>{
         if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUserWhenTyping){
