@@ -97,6 +97,10 @@
     margin-top: 15vh;
 }
 
+.user-photo-buttons-container > *{
+    background-color : #aeabab !important;
+}
+
 
 
 /*
