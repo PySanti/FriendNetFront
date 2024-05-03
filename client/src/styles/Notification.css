@@ -22,7 +22,7 @@
 }
 
 .individual-notification-container:hover{
-    background-color : var(--base-background-box-color);
+    background-color : #989494;
 }
 
 .individual-notification-content{
