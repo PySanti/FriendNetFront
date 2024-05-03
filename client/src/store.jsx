@@ -118,15 +118,6 @@ export const useWebsocketMounted = create((set)=>({
 
 
 
-export const useNewMsg = create((set)=>({
-    newMsg : null,
-    setNewMsg: (new_val)=>(set(()=>({newMsg : new_val}))),
-    reset : ()=>(set(()=>({newMsg: null})))
-}))
-
-
-
-
 
 export const useConnectionFailed = create((set)=>({
     connectionFailed : false,

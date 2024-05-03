@@ -5,17 +5,14 @@ import "../styles/MessagesContainer.css"
 import { v4 } from "uuid"
 import { useEffect, useRef, useState} from "react"
 import { getJWTFromLocalStorage } from "../utils/getJWTFromLocalStorage"
-import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
+
 import { useNavigate } from "react-router-dom"
-import { sendMsgAPI } from "../api/sendMsg.api"
 import {getMessagesHistorialAPI} from "../api/getMessagesHistorial.api"
 import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {useClickedUser} from "../store"
 import {useMessagesHistorial} from "../store"
-import { BASE_NON_TOASTED_API_CALLS_TIMER} from "../utils/constants"
-import {logoutUser} from "../utils/logoutUser"
 import {apiWrap} from "../utils/apiWrap"
-import {useMsgReceivedInChat, useGottaScrollChat, useNewMsg} from "../store"
+import {useMsgReceivedInChat, useGottaScrollChat} from "../store"
 import {Loader} from "../components/Loader"
 /**
  * Componente encargado de renderizar y mantener la lista de mensajes 
@@ -32,8 +29,6 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
     let [msgReceivedInChat,setMsgReceivedInChat]                        = useMsgReceivedInChat((state)=>([state.msgReceivedInChat,state.setMsgReceivedInChat]))
     let [gottaScrollChat, setGottaScrollChat]                           = useGottaScrollChat((state)=>([state.gottaScrollChat, state.setGottaScrollChat]))
     let [messagesScrollLoaderActivated, setMessagesScrollLoaderActivated] = useState(false)
-    let [newMsg, setNewMsg]                                             = useNewMsg((state)=>([state.newMsg, state.setNewMsg]))
-    const lastMessagesHistorialValue = useRef(null)
 
 
     const thersScroll = ()=>{
@@ -49,12 +44,15 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
         }
         if (response){
             if (response.status == 200){
-                containerRef.current.style.scrollBehavior = "auto"
-                oldScrollRef.current = containerRef.current.scrollHeight
-                resetScroll.current = true
-                messagesHistorialPage.current += 1
-                updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage.current, response.data !== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
-
+                if (response.data.messages_hist == "no_messages_between"){
+                    noMoreMessages.current = true
+                } else {
+                    containerRef.current.style.scrollBehavior = "auto"
+                    oldScrollRef.current = containerRef.current.scrollHeight
+                    resetScroll.current = true
+                    messagesHistorialPage.current += 1
+                    updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage.current, response.data.messages_hist, messagesHistorial)
+                }
             } else if (response.status == 400){
                 if (response.data.error == "no_more_pages"){
                     noMoreMessages.current = true
@@ -68,33 +66,7 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
         }
         setMessagesScrollLoaderActivated(false)
     }
-    const sendMsg = async (data)=>{
-        const temporalMsg = {
-            "parent_id" : getUserDataFromLocalStorage().id,
-            "content" : data.msg
-        }
-        let newMessagesHistorial = [...lastMessagesHistorialValue.current, temporalMsg]
-        const newMessageIndex = newMessagesHistorial.length-1
-        setMessagesHistorial(newMessagesHistorial)
-        setGottaScrollChat(true)
-        const response = await apiWrap(async ()=>{
-            return await sendMsgAPI(clickedUser.id, data.msg, getJWTFromLocalStorage().access)
-        }, navigate, undefined, undefined, undefined)
-        if (response){
-            if (response.status == 200){
-                newMessagesHistorial = lastMessagesHistorialValue.current
-                newMessagesHistorial[newMessageIndex] = response.data.sended_msg
-                setMessagesHistorial(newMessagesHistorial)
-            } else {
-                if (response.data.error == "same_user"){
-                    toast.error("Error inesperado enviando mensaje, cerrando sesión por seguridad")
-                    logoutUser(navigate)
-                } else {
-                    toast.error('Error inesperado enviando el mensaje')
-                }
-            }
-        }
-    }
+
     const formatingFunction = (msg)=>{
         return <Message key={v4()} messageObj={msg}/>
     }
@@ -124,7 +96,6 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
             resetScroll.current = false
             containerRef.current.style.scrollBehavior = "smooth"
         }
-        lastMessagesHistorialValue.current = messagesHistorial
 
     }, [messagesHistorial])
     useEffect(()=>{
@@ -136,14 +107,6 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
         setGottaScrollChat(false)
     }, [gottaScrollChat])
 
-    useEffect(()=>{
-        if (newMsg){
-            (async function(){
-                await sendMsg(newMsg)
-                setNewMsg(null)
-            })();
-        }
-    }, [newMsg])
     return (
         <div className="messages-container">
             {messagesHistorial.length !== 0 ?  
@@ -166,7 +129,6 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
 }
 
 MessagesContainer.propTypes = {
-    newMsg : PropTypes.object,
     messagesHistorialPage : PropTypes.object.isRequired,
     noMoreMessages : PropTypes.object.isRequired,
 }
