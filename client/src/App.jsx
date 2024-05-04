@@ -117,11 +117,9 @@ function App() {
         if (data.type == "new_notification"){
             if (data.value.new_notification.sender_user.id != getUserDataFromLocalStorage().id){
               audioEffect()
-              const message = data.value.new_notification.message
-              delete data.value.new_notification.message
               notifications[data.value.new_notification.sender_user.id] = data.value.new_notification
               toast(data.value.new_notification.sender_user.username, {
-                description:message.length > 20? `${message.substring(0,20)}...` : message,
+                description:data.value.message_prev,
               })
               setNotifications(notifications)
               saveNotificationsInLocalStorage(notifications)
