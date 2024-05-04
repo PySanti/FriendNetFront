@@ -10,8 +10,8 @@
     border-radius : 5px;
     width: 100%;
     height: 2em;
-    padding: .5em .5em;
-    background-color : #9d9292;
+    padding: .5em .8em;
+    background-color : #999999;
     margin-bottom: .2em;
     transition-property: height ,transform, padding, margin;
     transition-duration: .18s;
