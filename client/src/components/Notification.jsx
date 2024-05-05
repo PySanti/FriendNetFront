@@ -12,6 +12,7 @@ import { IoClose } from "react-icons/io5";
 export function Notification({notification, onNotificationDelete, onNotificationClick}){
     const [notificationDeleted, setNotificationDeleted] = useState(false)
     const handleDeleteClick = (event)=>{
+        console.log(notification)
         event.stopPropagation()
         setNotificationDeleted(true)
         setTimeout(() => {
@@ -20,9 +21,14 @@ export function Notification({notification, onNotificationDelete, onNotification
     }
     return (
         <div className={notificationDeleted ? "individual-notification-container notification_deleted" : "individual-notification-container"  }>
-            <h4 className="individual-notification-content"onClick={onNotificationClick}>
-                {notification.msg}
-            </h4>
+            <div className="individual-notification-content"onClick={onNotificationClick}>
+                <h4 className="notification-username">
+                    {notification.sender_user.username}
+                </h4>
+                <p className="notification-content">
+                    {notification.msg}
+                </p>
+            </div>
             <button className="individual-notification-delete-btn" onClick={handleDeleteClick}>
                 <IoClose/>
             </button>

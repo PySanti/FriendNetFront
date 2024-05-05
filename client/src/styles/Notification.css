@@ -28,6 +28,8 @@
     width: 100%;
     text-align: left;
     font-size: var(--base-input-font-size);
+    display: flex;
+    flex-direction: column;
 }
 
 .individual-notification-delete-btn {

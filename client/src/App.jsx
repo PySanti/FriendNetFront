@@ -119,7 +119,7 @@ function App() {
               audioEffect()
               notifications[data.value.new_notification.sender_user.id] = data.value.new_notification
               toast(data.value.new_notification.sender_user.username, {
-                description:data.value.message_prev,
+                description:data.value.new_notification.msg,
               })
               setNotifications(notifications)
               saveNotificationsInLocalStorage(notifications)
