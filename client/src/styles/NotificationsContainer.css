@@ -54,6 +54,7 @@
     color : #000000;
     height: 10rem;
     max-width: 70%;
+    min-width: 30%;
     overflow-y: scroll;
     overflow-x: hidden;
     display: flex;

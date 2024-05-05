@@ -60,4 +60,29 @@
     max-height: 0;
     margin: 0;
 }
+.notification-username{
+    font-size: 30px;
+}
 
+.notification-content{
+    font-size: 20px;
+    margin-top: 1em;
+    transition-property: margin;
+    transition-duration: .18s;
+}
+.notification-deleted > .notification-content{
+    margin-top: 0;
+}
+
+
+@media screen and (max-width : 1200px){
+    .notification-username{
+        font-size: 20px;
+    }
+
+    .notification-content{
+        font-size: 14px;
+
+    }
+
+}
