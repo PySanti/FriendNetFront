@@ -12,7 +12,7 @@ export function ChatPhoto({photo, modal, big}){
             <div className={big ? "chat-photo-container big-photo" : "chat-photo-container"} onClick={(modal && photo) ? ()=>setModalOpened(true) : undefined}>
                 {photo ?
                 
-                    <img className="chat-photo" src={photo}/>
+                    <img className="chat-photo" src={photo} onMouseDown={(e)=>e.preventDefault()}/>
                 :
                     <span className="chat-photo-nophoto">
                         <TiUserOutline />
