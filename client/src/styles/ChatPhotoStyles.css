@@ -4,12 +4,10 @@
     --size : 1.5em;
     width: var(--size);
     height: var(--size);
-    margin-right: .5em;
     border-radius : 100%;
     display: flex;
     align-items : center;
     justify-content: center;
-    padding-left: .4em;
     cursor : pointer;
 }
 

@@ -8,6 +8,10 @@
     transition-property: background-color color;
     transition-duration: .2s;
 }
+
+.clicked-user-header-container > .chat-photo-container{
+    margin: 1em;
+}
 .clicked-user__username{
     font-size: var(--base-input-font-size);
 }
