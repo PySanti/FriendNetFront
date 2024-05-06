@@ -26,30 +26,6 @@
 }
 
 
-.user-button__userphoto-container{
-    --size : 1.5em;
-    width: var(--size);
-    height: var(--size);
-    margin-right: .5em;
-    border-radius : 100%;
-    display: flex;
-    align-items : center;
-    justify-content: center;
-    padding-left: .4em;
-}
-
-.user-button__userphoto-container > *{
-    width: inherit;
-    height: inherit;
-    box-shadow: 0px 0px 0px 2px var(--base-letter-color);
-    border-radius : inherit;
-}
-
-
-.user-button__userphoto{
-    object-fit: cover;;
-}
-
 
 .user-button__selected{
     background-color : var(--base-background-dark-box-color);
@@ -65,12 +41,3 @@
     background-color : var(--base-background-dark-box-color);
 }
 
-.userphoto-nophoto{
-    display: flex;
-    justify-content: center;
-    align-items : center;
-}
-
-.userphoto-nophoto > *{
-    font-size: var(--user-list-font-size);
-}

@@ -1,30 +1,28 @@
 import {toast} from "sonner"
 import { useState,useRef, useEffect } from "react";
-import "../styles/UserPhoto.css";
+import "../styles/UserPhotoInput.css";
 import { Button } from "./Button";
 import { PropTypes } from "prop-types";
 import { checkImageFormat } from "../utils/checkImageFormat";
 import {Loader} from "./Loader"
 import { MdOutlineNoPhotography } from "react-icons/md";
-import { TiUserOutline } from "react-icons/ti";
 import {Modal} from "./Modal"
 import {ModalBackButton} from "./ModalBackButton"
+import {BigUserPhoto} from "../components/BigUserPhoto.jsx"
 
 /**
  * Contenedor para foto de perfil de usuario
  * @param {String} photoFile sera la foto que se desea renderizar por defecto
- * @param {Boolean}  withInput sera true si se desea que el componente contenga una opcion para modificar la foto
  * @param {Function} photoFileSetter se ejecutara cuando se cambie la foto y la misma se le sera enviada por parametro.
- * @param {Boolean} chatPhoto sera true cuando sea una imagen para renderizar en el chat, de este modo le cambiaremos los estilos
  * Diseniado para trabajar con states dentro de un formulario
  */
-export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
+export function UserPhotoInput({photoFile,photoFileSetter}) {
     let [userPhotoLoaded, setUserPhotoLoaded]       = useState(true);
     let [modalOpened, setModalOpened]               = useState(false)
     let [currentPhotoName, setCurrentPhotoName]     = useState(null);
     const userPhotoRef                              = useRef(null)
     const imgInputRef                                 = useRef(null)
-    const containerClsName                          = "user-photo-main-container";
+    const getCurrentPhoto = ()=>currentPhotoName? currentPhotoName: photoFile? photoFile: null
     const handleChangePhotoClick = ()=>{
         imgInputRef.current.click()
     }
@@ -33,14 +31,6 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
             setModalOpened(!modalOpened)
         }
     }
-    const imgProps = (type) => {
-        return {
-            onClick: type === "small" ?  handleImgClick : undefined,
-            className: type === "small" ? (userPhotoLoaded || !photoFile? "user-photo user-photo__activated" : "user-photo") : `big-user-photo`,
-            src: currentPhotoName? currentPhotoName: photoFile? photoFile: null,
-            ref : type=="small"? userPhotoRef : null
-        };
-    };
     const deleteCurrentPhoto = () => {
         photoFileSetter(null);
         setModalOpened(false)
@@ -79,64 +69,44 @@ export function UserPhoto({photoFile,withInput,chatPhoto,photoFileSetter}) {
         }
     }, [currentPhotoName, photoFile])
     return (
-        <div className={    chatPhoto ? `${containerClsName} chat-photo` : containerClsName}>
+        <div className="user-photo-main-container">
             <div className="user-photo-container" >
                 { photoFile ? 
                     <>
-                        <img {...imgProps("small")}/>
-                        {(!userPhotoLoaded && photoFile) &&
+                        <img onClick={handleImgClick }className={(userPhotoLoaded || !photoFile? "user-photo user-photo__activated" : "user-photo")}src= {getCurrentPhoto()}ref={userPhotoRef }/>
+                        {(!userPhotoLoaded) &&
                             <div className="loading-animation-container">
                                 {
-                                    chatPhoto ? <Loader big loaderActivated={!userPhotoLoaded}/> : <Loader superbig loaderActivated={!userPhotoLoaded}/>
+                                    <Loader superbig loaderActivated={!userPhotoLoaded}/>
                                 }
                             </div>
                         }
                         <Modal opened={modalOpened}>
                             <ModalBackButton onClick={()=>setModalOpened(false)}/>
-                            <div className="big-user-photo-container">
-                                <img {...imgProps("big")}/>
-                                {
-                                    !chatPhoto && 
-                                    <div className="user-photo-buttons-container">
-                                        <Button buttonText="Cambiar" onClickFunction={handleChangePhotoClick}/>
-                                        <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto} />
-                                    </div>
-                                }
+                            <div className="modal-photo-container">
+                                <BigUserPhoto photo={getCurrentPhoto()}/>
+                                <div className="user-photo-buttons-container">
+                                    <Button buttonText="Cambiar" onClickFunction={handleChangePhotoClick}/>
+                                    <Button buttonText="Borrar" onClickFunction={deleteCurrentPhoto} />
+                                </div>
                             </div>
                         </Modal>
                     </>
                     :
-                    <span id="no-photo-icon" className="user-photo" onClick={!chatPhoto ? handleChangePhotoClick : undefined}>
-                        {
-                            chatPhoto ?
-                                <TiUserOutline />
-                                :
-                                <MdOutlineNoPhotography />
-                        }
+                    <span id="no-photo-icon" className="user-photo" onClick={handleChangePhotoClick}>
+                        <MdOutlineNoPhotography />
                     </span>
                 }
             </div>
-            {withInput && (
-                <>
-                    <div className="user-photo-input-container">
-                        <input ref={imgInputRef} className="user-photo-input" type="file" onChange={onPhotoChange}/>
-                    </div>
-                </>
-            )}
+            <div className="user-photo-input-container">
+                <input ref={imgInputRef} className="user-photo-input" type="file" onChange={onPhotoChange}/>
+            </div>
         </div>
     );
 }
 
-UserPhoto.propTypes = {
+UserPhotoInput.propTypes = {
     photoFile: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    withInput: PropTypes.bool,
     photoFileSetter: PropTypes.func,
-    chatPhoto: PropTypes.bool,
 };
 
-UserPhoto.defaultProps = {
-    photoFile: undefined,
-    withInput: undefined,
-    photoFileSetter: undefined,
-    chatPhoto: undefined,
-};

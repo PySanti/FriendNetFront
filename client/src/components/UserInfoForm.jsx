@@ -9,7 +9,7 @@ import {
 } from "../utils/constants.js";
 import { Form } from "./Form";
 import "../styles/UserInfoForm.css";
-import { UserPhoto } from "./UserPhoto";
+import { UserPhotoInput } from "./UserPhotoInput";
 import { useEffect, useState } from "react";
 import { UsernameField } from "./UsernameField";
 import { PasswordField } from "./PasswordField";
@@ -71,7 +71,7 @@ export function UserInfoForm({ userData, onFormSubmit, extraButtons}) {
                     )}
                 </>
             </Form>
-            <UserPhoto withInput photoFile={currentPhotoFile} photoFileSetter={setCurrentPhotoFile} />
+            <UserPhotoInput photoFile={currentPhotoFile} photoFileSetter={setCurrentPhotoFile} />
         </div>
     );
 }

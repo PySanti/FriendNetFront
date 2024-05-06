@@ -15,7 +15,7 @@
 .user-photo__activated{
     display: flex;
 }
-.user-photo , .big-user-photo{
+.user-photo{
     object-fit: cover;
     cursor: pointer;
 
@@ -58,30 +58,12 @@
     Big User Photo
 */
 
-.big-user-photo{
-    display: block;
-    width: 80%;
-    max-height: 60%;
-    max-width: 500px;
-    z-index: 999;
-}
-
-.big-user-photo-container{
-    display: flex;
-    flex-direction: column;
-    align-items : center;
-    justify-content: center;
-}
 
 
 
 
 
-@media screen and (max-width : 800px){
-    .big-user-photo{
-        max-width: 300px;
-    }
-}
+
 
 
 
@@ -130,11 +112,7 @@
 /*
     Chat photo
 */
-.chat-photo{
-    font-size: var(--base-input-font-size);
-    width: 10%;
-    height: 100%;
-}
+
 #no-photo-icon{
     display: flex !important;
 }
@@ -142,20 +120,6 @@
 #no-photo-icon > *{
     font-size: var(--base-input-font-size);
 }
-
-
-@media screen and (max-width : 1000px){
-    .chat-photo{
-        width: 20%;
-    }
-}
-
-
-
-
-
-
-
 
 
 
@@ -169,4 +133,12 @@
 .loading-animation-container > *{
     width: 70%;
     height: auto;
+}
+
+
+.modal-photo-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items : center;
 }

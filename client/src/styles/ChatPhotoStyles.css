@@ -1,0 +1,49 @@
+
+
+.chat-photo-container{
+    --size : 1.5em;
+    width: var(--size);
+    height: var(--size);
+    margin-right: .5em;
+    border-radius : 100%;
+    display: flex;
+    align-items : center;
+    justify-content: center;
+    padding-left: .4em;
+    cursor : pointer;
+}
+
+.chat-photo-container > *{
+    width: inherit;
+    height: inherit;
+    box-shadow: 0px 0px 0px 2px var(--base-letter-color);
+    border-radius : inherit;
+}
+
+
+.chat-photo{
+    width: 100%;
+    object-fit: cover;;
+}
+
+
+.chat-photo-nophoto{
+    display: flex;
+    justify-content: center;
+    align-items : center;
+}
+
+.chat-photo-nophoto > *{
+    font-size: var(--user-list-font-size);
+}
+
+.big-photo{
+    --size : 3em;
+}
+
+@media screen and (max-height : 700px){
+    .big-photo{
+        --size : 2em;
+    }
+
+}

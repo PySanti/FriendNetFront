@@ -3,7 +3,7 @@ import "../styles/UserButton.css"
 import {useClickedUser} from "../store"
 import {updateClickedUser} from "../utils/updateClickedUser"
 import {useTypingDB, useNotifications, useExecutingInSmallDevice} from "../store"
-import { TiUserOutline } from "react-icons/ti";
+import {ChatPhoto} from "../components/ChatPhoto"
 
 /**
  * Retorna un userButton, button a renderizar en la UsersList
@@ -18,16 +18,7 @@ export function UserButton({user}){
 
     return (
         <div   onClick={()=>{updateClickedUser(user)}} className={(clickedUser && clickedUser.id == user.id && !executingInSmallDevice) ? "user-button-container user-button__selected" : "user-button-container"}>
-            <div className="user-button__userphoto-container">
-                {user.photo_link ?
-                
-                    <img className="user-button__userphoto" src={user.photo_link}/>
-                :
-                    <span className="userphoto-nophoto">
-                        <TiUserOutline />
-                    </span>
-            }
-            </div>
+            <ChatPhoto photo={user.photo_link}/>
             <div className="user-button">
                 <div className="user-button__username">
                     {user.username}

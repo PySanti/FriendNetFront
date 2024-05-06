@@ -1,8 +1,8 @@
-import { UserPhoto } from "./UserPhoto";
 import "../styles/ClickedUserHeader.css"
 import {useClickedUser, useTypingDB, useExecutingInSmallDevice} from "../store"
 import {resetChats} from "../utils/resetChats"
 import { FaArrowLeftLong } from "react-icons/fa6";
+import {ChatPhoto} from "../components/ChatPhoto.jsx"
 /**
  * Cabecera del chat con datos del usuario
  */
@@ -18,7 +18,7 @@ export function ClickedUserHeader(){
                     <FaArrowLeftLong />
                 </span>
             }
-            <UserPhoto photoFile={clickedUser.photo_link} chatPhoto/>
+            <ChatPhoto photo={clickedUser.photo_link} modal big/>
             <div className="clicked-user__username-container">
                 <h3 className="clicked-user__username">
                     {clickedUser.username}<span className={clickedUser.is_online ? "clicked-user-online clicked-user-online__activated" : "clicked-user-online"}> - en linea</span>

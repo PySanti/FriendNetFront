@@ -2,6 +2,7 @@ import {PropTypes} from "prop-types"
 import "../styles/Notification.css"
 import {useState} from "react"
 import { IoClose } from "react-icons/io5";
+import {ChatPhoto} from "../components/ChatPhoto.jsx"
 
 
 /**
@@ -21,6 +22,7 @@ export function Notification({notification, onNotificationDelete, onNotification
     }
     return (
         <div className={notificationDeleted ? "individual-notification-container notification_deleted" : "individual-notification-container"  }>
+            <ChatPhoto photo={notification.sender_user.photo_link}/>
             <div className="individual-notification-content"onClick={onNotificationClick}>
                 <h4 className="notification-username">
                     {notification.sender_user.username}
