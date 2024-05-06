@@ -1,5 +1,6 @@
 .users-filter-input{
     font-size: var(--base-input-font-size);
+    padding: .5em 0;
 }
 .users-filter-input::placeholder{
     font-size: var(--base-input-font-size);
