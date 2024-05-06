@@ -25,10 +25,12 @@ export function MsgSendingInput(){
     let setGottaScrollChat                                  = useGottaScrollChat((state)=>state.setGottaScrollChat)
     let {register, handleSubmit, reset}                     = useForm()
     let [clickedUserWhenTyping, setClickedUserWhenTyping]   = useState(null)
-    let [timeoutDB, setTimeoutDB]                           = useState({})
+
     const navigate                                          = useNavigate()
     const lastMessagesHistorialValue                        = useRef(null)
     const userData                                          = getUserDataFromLocalStorage()
+    const timeoutDB                                         = useRef({})
+
     const sendMsg = async (data)=>{
         const temporalMsg = {
             "parent_id" : getUserDataFromLocalStorage().id,
@@ -56,7 +58,6 @@ export function MsgSendingInput(){
             }
         }
     }
-
     const onSubmit                      = handleSubmit(async (data)=>{
         console.log(data)
         const new_msg = data.msg.trim()
@@ -66,23 +67,25 @@ export function MsgSendingInput(){
         }
     })
     useEffect(()=>{
+        lastMessagesHistorialValue.current = messagesHistorial
+    }, [messagesHistorial])
+
+    useEffect(()=>{
+        reset()
+    }, [clickedUser])
+
+    useEffect(()=>{
         if (NOTIFICATIONS_WEBSOCKET.current && userData && clickedUserWhenTyping){
             NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUserWhenTyping.id, true))
             localStorage.setItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR, clickedUserWhenTyping.id)
         }
     }, [clickedUserWhenTyping])
-    useEffect(()=>{
-        reset()
-    }, [clickedUser])
-    useEffect(()=>{
-        lastMessagesHistorialValue.current = messagesHistorial
-    }, [messagesHistorial])
-    const handleMsgSendingInput = (e)=>{
+    const handleMsgSendingInputChange = (e)=>{
         setClickedUserWhenTyping(clickedUser)
-        if (timeoutDB[clickedUser.id]){
-            clearTimeout(timeoutDB[clickedUser.id])
+        if (timeoutDB.current[clickedUser.id]){
+            clearTimeout(timeoutDB.current[clickedUser.id])
         }
-        timeoutDB[clickedUser.id] = (setTimeout(() => {
+        timeoutDB.current[clickedUser.id] = (setTimeout(() => {
             setClickedUserWhenTyping(null)
             /**
              * Recordar que en este punto, llamamos a la funcion desde aca,
@@ -96,7 +99,7 @@ export function MsgSendingInput(){
     }
     return (
         <div className="message-sending-input-container">
-            <form onChange = {handleMsgSendingInput} className="message-sending-form " onSubmit={onSubmit}>
+            <form onChange = {handleMsgSendingInputChange} className="message-sending-form " onSubmit={onSubmit}>
                 <textarea 
                     placeholder="Mensaje" 
                     className="message-sending-input" 
