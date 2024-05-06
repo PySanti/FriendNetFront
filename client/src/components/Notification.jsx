@@ -13,7 +13,6 @@ import {ChatPhoto} from "../components/ChatPhoto.jsx"
 export function Notification({notification, onNotificationDelete, onNotificationClick}){
     const [notificationDeleted, setNotificationDeleted] = useState(false)
     const handleDeleteClick = (event)=>{
-        console.log(notification)
         event.stopPropagation()
         setNotificationDeleted(true)
         setTimeout(() => {

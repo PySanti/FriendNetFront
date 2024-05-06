@@ -59,7 +59,6 @@ export function MsgSendingInput(){
         }
     }
     const onSubmit                      = handleSubmit(async (data)=>{
-        console.log(data)
         const new_msg = data.msg.trim()
         if (new_msg.length > 0){
             reset({"msg" : " "})
