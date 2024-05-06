@@ -87,3 +87,9 @@
     }
 
 }
+
+@media screen and (max-width : 300px){
+    .individual-notification-content{
+        margin-left: .3em;
+    }
+}

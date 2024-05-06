@@ -61,3 +61,10 @@
     flex-direction: column;
     align-items : center;
 }
+
+
+@media screen and (max-height : 600px){
+    .notifications-list{
+        height: 7em;
+    }
+}
