@@ -4,6 +4,7 @@ import "../styles/ChatPhotoStyles.css"
 import {Modal} from "../components/Modal.jsx"
 import {ModalBackButton} from "../components/ModalBackButton.jsx"
 import {BigUserPhoto} from "../components/BigUserPhoto.jsx"
+import {PFailedImg} from "./PFailedImg.jsx"
 
 export function ChatPhoto({photo, modal, big}){
     let [modalOpened, setModalOpened] = useState(false)
@@ -11,8 +12,10 @@ export function ChatPhoto({photo, modal, big}){
         <>
             <div className={big ? "chat-photo-container big-photo" : "chat-photo-container"} onClick={(modal && photo) ? ()=>setModalOpened(true) : undefined}>
                 {photo ?
-                
-                    <img className="chat-photo" src={photo} onMouseDown={(e)=>e.preventDefault()}/>
+                    <PFailedImg attrs={{
+                        className:"chat-photo",
+                        src:photo,
+                    }}/>
                 :
                     <span className="chat-photo-nophoto">
                         <TiUserOutline />
