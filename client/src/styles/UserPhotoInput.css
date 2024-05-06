@@ -10,15 +10,12 @@
     font-size: var(--base-input-font-size);
     user-select: none;
     display: none;
+    object-fit: cover;
+    cursor: pointer;
 }
 
 .user-photo__activated{
     display: flex;
-}
-.user-photo{
-    object-fit: cover;
-    cursor: pointer;
-
 }
 
 .user-photo-main-container{
@@ -32,6 +29,7 @@
     height: 40vh;
     --base-user-photo-border-radius : 30px;
 }
+
 .user-photo-container{
     --size : 70%;
     display: flex;

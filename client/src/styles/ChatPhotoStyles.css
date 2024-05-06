@@ -18,6 +18,7 @@
     height: inherit;
     box-shadow: 0px 0px 0px 2px var(--base-letter-color);
     border-radius : inherit;
+    user-select: none;
 }
 
 
