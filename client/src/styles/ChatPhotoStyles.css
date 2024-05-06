@@ -22,7 +22,6 @@
 
 
 .chat-photo{
-    width: 100%;
     object-fit: cover;;
 }
 
@@ -42,6 +41,12 @@
 }
 
 @media screen and (max-height : 700px){
+    .big-photo{
+        --size : 2em;
+    }
+
+}
+@media screen and (max-width : 575px){
     .big-photo{
         --size : 2em;
     }

@@ -30,6 +30,7 @@
     font-size: var(--base-input-font-size);
     display: flex;
     flex-direction: column;
+    margin-left: 1em;
 }
 
 .individual-notification-delete-btn {
