@@ -9,8 +9,7 @@ import {PFailedImg} from "./PFailedImg.jsx"
 export function ChatPhoto({photo, modal, big, small}){
 
     let [modalOpened, setModalOpened] = useState(false)
-    let className = big ? "chat-photo-container big-photo" : "chat-photo-container"
-    className = small ? "chat-photo-container small-photo" : "chat-photo-container"
+    let className = big ? "chat-photo-container big-photo" : (small ? "chat-photo-container small-photo" : "chat-photo-container")
     return (
         <>
             <div className={className} onClick={(modal && photo) ? ()=>setModalOpened(true) : undefined}>
