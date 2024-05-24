@@ -62,7 +62,7 @@
     margin: 0;
 }
 .notification-username{
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .notification-content{
@@ -89,7 +89,7 @@
 }
 
 
-@media screen and (max-width : 300px){
+@media screen and (max-width : 500px){
     .notification-username{
         font-size: 15px;
     }
