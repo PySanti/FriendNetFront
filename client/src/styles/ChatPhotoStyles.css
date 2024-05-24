@@ -41,6 +41,7 @@
     --size : 3em;
 }
 
+
 @media screen and (max-width : 300px){
     .chat-photo-container{
         --size : 1em;
@@ -61,6 +62,13 @@
 }
 @media screen and (max-height : 500px){
     .big-photo{
+        --size : 1em;
+    }
+
+}
+
+@media screen and (max-width : 500px){
+    .small-photo{
         --size : 1em;
     }
 

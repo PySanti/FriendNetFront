@@ -21,7 +21,7 @@ export function Notification({notification, onNotificationDelete, onNotification
     }
     return (
         <div className={notificationDeleted ? "individual-notification-container notification_deleted" : "individual-notification-container"  }>
-            <ChatPhoto photo={notification.sender_user.photo_link}/>
+            <ChatPhoto photo={notification.sender_user.photo_link} small/>
             <div className="individual-notification-content"onClick={onNotificationClick}>
                 <h4 className="notification-username">
                     {notification.sender_user.username}
