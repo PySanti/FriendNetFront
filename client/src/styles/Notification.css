@@ -10,7 +10,7 @@
     border-radius : 5px;
     width: 100%;
     height: auto;
-    max-height: 4em;
+    max-height: 3em;
     padding: .5em .8em;
     background-color : #999999;
     margin-bottom: .2em;
@@ -84,6 +84,17 @@
     .notification-content{
         font-size: 14px;
 
+    }
+
+}
+
+
+@media screen and (max-width : 300px){
+    .notification-username{
+        font-size: 15px;
+    }
+    .notification-content{
+        font-size: 10px;
     }
 
 }
