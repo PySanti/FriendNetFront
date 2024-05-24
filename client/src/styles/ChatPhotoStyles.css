@@ -72,5 +72,7 @@
     .small-photo{
         --size : 1em;
     }
-
+    .small-photo > .chat-photo-nophoto > *{
+        font-size: 15px;
+    }
 }
