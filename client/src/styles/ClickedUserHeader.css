@@ -13,7 +13,7 @@
     margin: 1em;
 }
 .clicked-user__username{
-    font-size: var(--base-input-font-size);
+    font-size: 25px;
 }
 
 .clicked-user__typing{
@@ -56,3 +56,11 @@
     transition-duration: .3s;
 }
 
+@media screen and (max-width : 450px){
+    .clicked-user-header-container > .chat-photo-container{
+        margin: .6em;
+    }
+    .clicked-user__username{
+        font-size: 20px;
+    }
+}
