@@ -30,9 +30,9 @@ export function Notification({notification, onNotificationDelete, onNotification
                     {notification.msg}
                 </p>
             </div>
-            <button className="individual-notification-delete-btn" onClick={handleDeleteClick}>
+            <span className="individual-notification-delete-btn" onClick={handleDeleteClick}>
                 <IoClose/>
-            </button>
+            </span>
         </div>
     )
 }
