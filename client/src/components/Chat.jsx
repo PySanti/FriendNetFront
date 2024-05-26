@@ -76,6 +76,7 @@ export function Chat(){
     }
     useEffect(()=>{
         if (diferentUserHasBeenClicked(lastClickedUser, clickedUser) ){
+            setEnterChatLoaderActivated(true);
             (async function() {
                 noMoreMessages.current = false
                 mostRecentClickedUser.current = clickedUser
