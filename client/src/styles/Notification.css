@@ -17,6 +17,8 @@
     transition-property: max-height ,transform, padding, margin;
     transition-duration: .18s;
     user-select: none;
+    
+    -webkit-tap-highlight-color: transparent;
 }
 
 @media screen and (max-width : 575px){
