@@ -51,6 +51,7 @@ export function MessagesContainer({messagesHistorialPage,noMoreMessages}){
                     oldScrollRef.current = containerRef.current.scrollHeight
                     resetScroll.current = true
                     messagesHistorialPage.current += 1
+                    setMessagesScrollLoaderActivated(false)
                     updateMessagesHistorial(setMessagesHistorial, messagesHistorialPage.current, response.data.messages_hist, messagesHistorial)
                 }
             } else if (response.status == 400){
