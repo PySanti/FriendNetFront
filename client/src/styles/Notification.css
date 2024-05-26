@@ -7,13 +7,13 @@
     align-items: center;
     text-align: center;
     cursor: pointer;
-    border-radius :1em;
+    border-radius :10px;
     width: 100%;
     height: auto;
-    max-height: 4em;
+    max-height: 2em;
     padding: .5em .8em;
-    background-color : #c3c2c2;
-    margin-bottom: .4em;
+    background-color : #a3a0a0;
+    margin-bottom: .3em;
     transition-property: max-height ,transform, padding, margin;
     transition-duration: .18s;
     user-select: none;
