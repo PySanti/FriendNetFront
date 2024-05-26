@@ -17,7 +17,7 @@ export function Notification({notification, onNotificationDelete, onNotification
         setNotificationDeleted(true)
         setTimeout(() => {
             onNotificationDelete(notification)
-        }, 200);
+        }, 100);
     }
     return (
         <div className={notificationDeleted ? "individual-notification-container notification_deleted" : "individual-notification-container"  }>
