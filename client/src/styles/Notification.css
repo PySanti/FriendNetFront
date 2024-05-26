@@ -16,6 +16,7 @@
     margin-bottom: .4em;
     transition-property: max-height ,transform, padding, margin;
     transition-duration: .18s;
+    user-select: none;
 }
 
 @media screen and (max-width : 575px){
