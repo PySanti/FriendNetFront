@@ -110,7 +110,7 @@
 }
 
 
-@media screen and (max-width : 200px){
+@media screen and (max-width : 300px){
     .individual-notification-content{
         margin: 0;
 
@@ -118,13 +118,15 @@
     .individual-notification-container .chat-photo-container{
         display: none;
     }
+}
+
+@media screen and (max-width : 200px){
     .notification-username{
         font-size: 10px;
     }
     .notification-content{
         font-size: 8px;
     }
+
 }
-
-
 
