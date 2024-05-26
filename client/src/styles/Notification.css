@@ -7,10 +7,10 @@
     align-items: center;
     text-align: center;
     cursor: pointer;
-    border-radius : 5px;
+    border-radius :20px;
     width: 100%;
     height: auto;
-    max-height: 2em;
+    max-height: 4em;
     padding: .5em .8em;
     background-color : #999999;
     margin-bottom: .4em;
