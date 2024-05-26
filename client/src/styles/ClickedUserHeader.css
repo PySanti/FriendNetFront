@@ -13,6 +13,7 @@
     margin: 1em;
 }
 .clicked-user__username{
+    text-align: left;
     font-size: 25px;
 }
 
@@ -63,4 +64,37 @@
     .clicked-user__username{
         font-size: 20px;
     }
+}
+
+@media screen and (max-width : 200px){
+    .clicked-user-header-container > .chat-photo-container{
+        display: none;
+    }
+    .clicked-user__username-container{
+        margin-left: .3em;
+    }
+}
+
+@media screen and (max-width : 300px), (max-height : 400px){
+    .clicked-user__username{
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width : 150px){
+    .clicked-user__username{
+        font-size: 8px;
+    }
+}
+@media screen and (max-width : 400px), (max-height : 700px){
+    .clicked-user-header-container > .big-photo{
+        --size : 2em;
+    }
+
+}
+@media screen and (max-height : 500px),(max-width : 250px){
+    .clicked-user-header-container > .big-photo{
+        --size : 1em;
+    }
+
 }

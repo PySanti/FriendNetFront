@@ -99,8 +99,32 @@
 
 }
 
-@media screen and (max-width : 300px){
-    .individual-notification-content{
-        margin-left: .3em;
+
+@media screen and (max-width : 500px){
+    .individual-notification-container > .small-photo{
+        --size : 1em;
+    }
+    .individual-notification-container > .small-photo > .chat-photo-nophoto > *{
+        font-size: 15px;
     }
 }
+
+
+@media screen and (max-width : 200px){
+    .individual-notification-content{
+        margin: 0;
+
+    }
+    .individual-notification-container .chat-photo-container{
+        display: none;
+    }
+    .notification-username{
+        font-size: 10px;
+    }
+    .notification-content{
+        font-size: 8px;
+    }
+}
+
+
+

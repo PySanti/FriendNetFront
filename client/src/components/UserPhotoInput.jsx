@@ -76,9 +76,7 @@ export function UserPhotoInput({photoFile,photoFileSetter}) {
                         <img onClick={handleImgClick }className={(userPhotoLoaded || !photoFile? "user-photo user-photo__activated" : "user-photo")}src= {getCurrentPhoto()}ref={userPhotoRef }/>
                         {(!userPhotoLoaded) &&
                             <div className="loading-animation-container">
-                                {
-                                    <Loader superbig loaderActivated={!userPhotoLoaded}/>
-                                }
+                                <Loader superbig loaderActivated={!userPhotoLoaded}/>
                             </div>
                         }
                         <Modal opened={modalOpened}>

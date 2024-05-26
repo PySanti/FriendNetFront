@@ -48,31 +48,5 @@
     }
 
 }
-@media screen and (max-width : 400px){
-    .big-photo{
-        --size : 2em;
-    }
 
-}
 
-@media screen and (max-height : 700px){
-    .big-photo{
-        --size : 2em;
-    }
-
-}
-@media screen and (max-height : 500px){
-    .big-photo{
-        --size : 1em;
-    }
-
-}
-
-@media screen and (max-width : 500px){
-    .small-photo{
-        --size : 1em;
-    }
-    .small-photo > .chat-photo-nophoto > *{
-        font-size: 15px;
-    }
-}
