@@ -13,7 +13,7 @@
     max-height: 2em;
     padding: .5em .8em;
     background-color : #999999;
-    margin-bottom: .2em;
+    margin-bottom: .4em;
     transition-property: max-height ,transform, padding, margin;
     transition-duration: .18s;
 }
