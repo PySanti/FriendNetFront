@@ -50,7 +50,7 @@ export function Chat(){
                 updateMessagesHistorial(setMessagesHistorial, 1, response.data.messages_hist!== "no_messages_between" ? response.data.messages_hist : [], messagesHistorial)
                 newClickedUser.is_online = response.data.is_online
                 if (relatedNotification && response.data.notification_deleted){
-                    removeAndUpdateNotifications(relatedNotification, setNotifications)
+                    removeAndUpdateNotifications(relatedNotification, notifications,  setNotifications)
                 }
                 NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSGroupCreationMsg(newClickedUser.id))
                 setEnterChatLoaderActivated(false)

@@ -5,7 +5,7 @@ import "../styles/NotificationsContainer.css"
 import {  useState } from "react"
 import { v4 } from "uuid"
 import { Notification } from "./Notification"
-import {useEffect} from "react"
+import {useEffect, useRef} from "react"
 import {useNavigate} from "react-router-dom"
 import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {apiWrap} from "../utils/apiWrap"
@@ -20,6 +20,7 @@ import {updateClickedUser} from "../utils/updateClickedUser"
 export function NotificationsContainer(){
     let [notificationsActivated, setNotificationsActivated] = useState(false)
     let [notifications, setNotifications]                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
+    const mostRecentNotifications                           = useRef("")
     const navigate                                          = useNavigate()
     const handleNotificationsBellClick = ()=>{
         if (Object.keys(notifications).length > 0){
@@ -38,7 +39,7 @@ export function NotificationsContainer(){
         }, navigate, 'Eliminando notificación, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "notificationDelete")
         if (response){
             if (response.status == 200){
-                removeAndUpdateNotifications(notification, setNotifications)
+                removeAndUpdateNotifications(notification, mostRecentNotifications.current,  setNotifications)
             } else {
                 toast.error('La notificación esta siendo eliminada, espera')
             }
@@ -54,9 +55,10 @@ export function NotificationsContainer(){
             onNotificationClick={()=>onNotificationClickFunctionGen(notifications[notification_id])}/>
     }
     useEffect(()=>{
-        if (Object.keys(notifications).length == 0){
+        if (notifications)
+            mostRecentNotifications.current = notifications
+        if (Object.keys(notifications).length == 0)
             setNotificationsActivated(false)
-        }
     }, [notifications])
 
     return (
