@@ -63,6 +63,7 @@
     margin: 0;
 }
 .notification-username{
+    font-weight: 500;
     font-size: 25px;
 }
 
