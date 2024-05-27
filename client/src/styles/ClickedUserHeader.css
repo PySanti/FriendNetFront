@@ -15,6 +15,7 @@
 .clicked-user__username{
     text-align: left;
     font-size: 25px;
+    font-weight: 500;
 }
 
 .clicked-user__typing{
@@ -62,7 +63,7 @@
         margin: .6em;
     }
     .clicked-user__username{
-        font-size: 20px;
+        font-size: 18px;
     }
 }
 
@@ -86,13 +87,13 @@
         font-size: 8px;
     }
 }
-@media screen and (max-width : 400px), (max-height : 700px){
+@media screen and (max-width : 500px), (max-height : 700px){
     .clicked-user-header-container > .big-photo{
         --size : 2em;
     }
 
 }
-@media screen and (max-height : 500px),(max-width : 250px){
+@media screen and (max-width : 250px), (max-height : 500px){
     .clicked-user-header-container > .big-photo{
         --size : 1em;
     }
