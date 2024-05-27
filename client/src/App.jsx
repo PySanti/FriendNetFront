@@ -157,7 +157,7 @@ function App() {
                     typingDB[clickedUser.id] =  false
                     setTypingDB(typingDB)
                 }
-                setClickedUser(clickedUser)
+                setClickedUser({...clickedUser})
             }
         } else if (data.type == "ping"){
           NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({
