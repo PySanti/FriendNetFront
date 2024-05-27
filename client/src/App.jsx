@@ -151,13 +151,14 @@ function App() {
                 newMessageEffect()
             }
         } else if (data.type === "connection_inform"){
+            console.log("Recibiendo connection_inform")
             if (data.value.user_id == clickedUser.id){
                 clickedUser.is_online = data.value.connected
                 if (!data.value.connected){
                     typingDB[clickedUser.id] =  false
                     setTypingDB(typingDB)
                 }
-                setClickedUser({...clickedUser})
+                setClickedUser(clickedUser)
             }
         } else if (data.type == "ping"){
           NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({
