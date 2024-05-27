@@ -26,7 +26,8 @@ import {Loader} from "../components/Loader"
 export function UsersList(){
     let [usersListPage, setUsersListPage]                           = useUsersListPage((state)=>[state.usersListPage, state.setUsersListPage])
     let [noMoreUsers, setNoMoreUsers]                               = useNoMoreUsers((state)=>[state.noMoreUsers, state.setNoMoreUsers])
-    let [loaderActivated, setLoaderActivated]                       = useState(false)
+    let [smallLoaderActivated, setSmallLoaderActivated]             = useState(false)
+    let [bigLoaderActivated, setBigLoaderActivated]                 = useState(false)
     let [usersIdList, setUsersIdList]                               = useUsersIdList((state)=>[state.usersIdList, state.setUsersIdList])
     let [usersList, setUsersList]                                   = useUsersList((state)=>([state.usersList, state.setUsersList]))
     let executingInSmallDevice                                      = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
@@ -57,7 +58,6 @@ export function UsersList(){
         }
     }
     const loadUsersList = async (page, lastUserKeyword, apiCallingBlock)=>{
-        setLoaderActivated(true)
         const response = await apiWrap(async ()=>{
             return await getUsersListAPI(voidUserKeyword(lastUserKeyword) ? undefined : lastUserKeyword, getUserDataFromLocalStorage().id, page)
         }, navigate, undefined, undefined, apiCallingBlock ?  "getUsersList" : undefined)
@@ -77,7 +77,6 @@ export function UsersList(){
         if (response == undefined){
             return
         }
-        setLoaderActivated(false)
     }
     const formatingFunction = (user)=>{
         return <UserButton key={v4()}user={user}  />
@@ -85,26 +84,31 @@ export function UsersList(){
     const scrollDetector = async (event)=>{
         const bottomArrived = (event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - 3)
         if (bottomArrived && (!noMoreUsers)){
+            setSmallLoaderActivated(true)
             await loadUsersList(usersListPage, undefined, true)
+            setSmallLoaderActivated(false)
         }
     }
 
     useEffect(()=>{
         if (userIsAuthenticated()  && !firstUsersListCall){
             (async function() {
+                setBigLoaderActivated(true)
                 await loadUsersList(1, undefined, true)
                 setFirstUsersListCall(true)
+                setBigLoaderActivated(false)
             })()
         }
     }, [firstUsersListCall])
     useEffect(()=>{
         if (userKeyword !== undefined){ // si userKeyword esta inicializado ...
             (async function(){
+                setBigLoaderActivated(true);
                 setNoMoreUsers(false)
                 setUsersListPage(1)
-                setUsersList([])
                 mostRecentUserKeyword.current = userKeyword
                 await loadUsersList(1, userKeyword, false)
+                setBigLoaderActivated(false)
             })()
         }
     }, [userKeyword])
@@ -115,25 +119,25 @@ export function UsersList(){
         <>
             <div className={executingInSmallDevice? (!clickedUser? "users-list" : "users-list not-displayed") : "users-list"}>
                 <UserFilter/>
-                {usersList.length > 0 ? 
-                    <>
-                        <div className="users-list-container scrollbar-container"  onScroll={scrollDetector}>
-                            {usersList.map(formatingFunction)}
-                        </div>
-                        <div className={loaderActivated ? "loader-container loader-container__activated" : "loader-container"}>
-                            <h3 className="loading-text">Cargando  ...</h3>
-                        </div>
-                    </>
+                {
+                    bigLoaderActivated ?
+                        <Loader big loaderActivated={bigLoaderActivated}/>
                     :
                     <>
-                    {
-                        loaderActivated?
-                        <Loader big loaderActivated={loaderActivated}/>
-                        :
-                        <div className="no-users-msg">
-                            {firstUsersListCall && "No se han encontrado usuarios :(" }
-                        </div>
-                    }
+                        {usersList && usersList.length > 0 ? 
+                            <>
+                                <div className="users-list-container scrollbar-container"  onScroll={scrollDetector}>
+                                    {usersList.map(formatingFunction)}
+                                </div>
+                                <div className={smallLoaderActivated ? "loader-container loader-container__activated" : "loader-container"}>
+                                    <h3 className="loading-text">Cargando  ...</h3>
+                                </div>
+                            </>
+                            :
+                            <div className="no-users-msg">
+                                {firstUsersListCall && "No se han encontrado usuarios :(" }
+                            </div>
+                        }
                     </>
                 }
             </div>
