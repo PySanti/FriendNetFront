@@ -34,13 +34,12 @@ export function NotificationsContainer(){
         updateClickedUser(notification.sender_user)
     }
     const onNotificationDelete = async (notification)=>{
+        removeAndUpdateNotifications(notification, mostRecentNotifications.current,  setNotifications)
         const response = await apiWrap(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
         }, navigate, 'Eliminando notificación, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "notificationDelete")
         if (response){
-            if (response.status == 200){
-                removeAndUpdateNotifications(notification, mostRecentNotifications.current,  setNotifications)
-            } else {
+            if (response.status != 200){
                 toast.error('La notificación esta siendo eliminada, espera')
             }
         }
