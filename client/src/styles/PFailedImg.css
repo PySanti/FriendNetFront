@@ -1,9 +1,0 @@
-.failed-img-icon{
-    display: flex;
-    align-items : center;
-    justify-content: center;
-}
-
-.failed-img-icon > *{
-    font-size: var(--base-button-font-size);
-}
