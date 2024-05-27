@@ -63,7 +63,7 @@
         margin: .6em;
     }
     .clicked-user__username{
-        font-size: 20px;
+        font-size: 18px;
     }
 }
 
@@ -87,9 +87,9 @@
         font-size: 8px;
     }
 }
-@media screen and (max-width : 400px), (max-height : 700px){
+@media screen and (max-width : 500px), (max-height : 700px){
     .clicked-user-header-container > .big-photo{
-        --size : 2em;
+        --size : 2.3em;
     }
 
 }
