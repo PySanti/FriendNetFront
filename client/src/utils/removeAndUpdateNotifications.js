@@ -7,6 +7,6 @@ import { saveNotificationsInLocalStorage } from "./saveNotificationsInLocalStora
  */
 export function removeAndUpdateNotifications(target_notification, notifications, notificationsSetter){
     delete notifications[target_notification.sender_user.id]
-    notificationsSetter(notifications)
+    notificationsSetter({...notifications})
     saveNotificationsInLocalStorage(notifications)
 }

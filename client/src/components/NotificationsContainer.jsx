@@ -54,10 +54,12 @@ export function NotificationsContainer(){
             onNotificationClick={()=>onNotificationClickFunctionGen(notifications[notification_id])}/>
     }
     useEffect(()=>{
-        if (notifications)
+        if (notifications){
             mostRecentNotifications.current = notifications
-        if (Object.keys(notifications).length == 0)
+        }
+        if (Object.keys(notifications).length == 0){
             setNotificationsActivated(false)
+        }
     }, [notifications])
 
     return (
