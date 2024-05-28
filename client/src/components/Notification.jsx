@@ -10,15 +10,21 @@ import {ChatPhoto} from "../components/ChatPhoto.jsx"
  * @param {Function} onNotificationDelete funcion que se ejecutara cuando se elimine una notificacion
  * @param {Object} notification
  */
-export function Notification({notification, onNotificationDelete, onNotificationClick}){
+export function Notification({notification, onNotificationDelete, onNotificationClick, notificationsCanBeDeleted}){
     const [notificationDeleted, setNotificationDeleted] = useState(false)
+
     const handleDeleteClick = (event)=>{
         event.stopPropagation()
-        setNotificationDeleted(true)
-        setTimeout(() => {
-            onNotificationDelete(notification)
-        }, 100);
+        if (notificationsCanBeDeleted.current){
+            notificationsCanBeDeleted.current = false
+            setNotificationDeleted(true)
+            setTimeout(() => {
+                onNotificationDelete(notification)
+                notificationsCanBeDeleted.current = true
+            }, 100);
+        } 
     }
+
     return (
         <div className={notificationDeleted ? "individual-notification-container notification_deleted" : "individual-notification-container"  }>
             <ChatPhoto photo={notification.sender_user.photo_link} small/>
@@ -40,6 +46,7 @@ export function Notification({notification, onNotificationDelete, onNotification
 Notification.propTypes = {
     onNotificationDelete : PropTypes.func.isRequired,
     notification : PropTypes.object.isRequired,
-    onNotificationClick : PropTypes.func.isRequired
+    onNotificationClick : PropTypes.func.isRequired,
+    notificationsCanBeDeleted : PropTypes.object.isRequired
 }
 

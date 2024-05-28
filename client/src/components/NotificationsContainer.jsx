@@ -21,6 +21,7 @@ export function NotificationsContainer(){
     let [notificationsActivated, setNotificationsActivated] = useState(false)
     let [notifications, setNotifications]                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     const mostRecentNotifications                           = useRef("")
+    const notificationsCanBeDeleted                         = useRef(true)
     const navigate                                          = useNavigate()
     const handleNotificationsBellClick = ()=>{
         if (Object.keys(notifications).length > 0){
@@ -34,13 +35,14 @@ export function NotificationsContainer(){
         updateClickedUser(notification.sender_user)
     }
     const onNotificationDelete = async (notification)=>{
-        removeAndUpdateNotifications(notification, mostRecentNotifications.current,  setNotifications)
         const response = await apiWrap(async ()=>{
             return await notificationDeleteAPI(notification.id, getJWTFromLocalStorage().access )
         }, navigate, 'Eliminando notificación, espere', BASE_NON_TOASTED_API_CALLS_TIMER, "notificationDelete")
         if (response){
-            if (response.status != 200){
-                toast.error('La notificación esta siendo eliminada, espera')
+            if (response.status == 200){
+                removeAndUpdateNotifications(notification, mostRecentNotifications.current,  setNotifications)
+            }   else{
+                toast.error('Error inesperado al tratar de eliminar la notificación')
             }
         }
     }
@@ -48,6 +50,7 @@ export function NotificationsContainer(){
 
     const formatingFunction =(notification_id)=>{
         return <Notification 
+            notificationsCanBeDeleted={notificationsCanBeDeleted}
             key={v4()} 
             notification={notifications[notification_id]} 
             onNotificationDelete={onNotificationDelete} 
