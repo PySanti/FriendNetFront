@@ -20,7 +20,7 @@
 
 
 .not-session-msg{
-    background-color : rgb(77, 144, 77);
+    background-color : rgb(77, 144, 77, 0.95);
     align-self: flex-start;
     border-bottom-left-radius: 0px !important;
 }
