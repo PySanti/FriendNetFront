@@ -35,7 +35,7 @@ export function Profile() {
             if (response){
                 if (response.status == 200){
                     if (response.data.user_inactive){
-                        logoutUser(navigate, "Debes activar tu usuario nuevamente")
+                        logoutUser(navigate, "Vuelve a iniciar sesión para activar tu usuario nuevamente")
                     } else {
                         setProfileData(response.data.user_data_updated);
                         saveUserDataInLocalStorage(response.data.user_data_updated);
