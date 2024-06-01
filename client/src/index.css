@@ -7,8 +7,6 @@
 }
 
 body{
-  touch-action: pan-x pan-y;
-
   display: flex;
   --base-input-outline-witdh : 2px;
   --base-color                : #379712;
