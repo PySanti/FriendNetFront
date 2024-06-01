@@ -67,7 +67,7 @@ export function Login() {
                     <Header msg="Introduce tus credenciales para ingresar"/>
                     <LoginForm handleLogin={onLogin} extraButtons={[
                         <Button key={v4()} onClickFunction={()=>{navigate('/')}} back/>, 
-                        <Button key={v4()} onClickFunction={()=>navigate('/login/forgot_password/')} buttonText="Olvide mi contraseña"/>
+                        <Button key={v4()} onClickFunction={()=>navigate('/login/forgot_password/')} buttonText="Recuperar cuenta"/>
                     ]}/>
                 </div>
             </div>
