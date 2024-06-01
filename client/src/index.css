@@ -7,6 +7,7 @@
 }
 
 body{
+  touch-action: none;
 
   display: flex;
   --base-input-outline-witdh : 2px;
