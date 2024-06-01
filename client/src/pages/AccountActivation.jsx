@@ -24,6 +24,7 @@ import {checkSecurityCodeAPI} from "../api/checkSecurityCode.api"
 export function AccountActivation() {
     const props                                                             = useLocation().state;
     const navigate                                                          = useNavigate();
+    const userEmailPrev     =  props.userEmail.length > 25 ? `${props.userEmail.substring(0,10)}...${props.userEmail.substring(props.userEmail.length-10, props.userEmail.length)} ` : props.userEmail
     const { register, handleSubmit, formState : {errors}}                  = useForm();
     const handleActivationCodeSending = async ()=>{
         const response = await apiWrap(async ()=>{
@@ -84,7 +85,7 @@ export function AccountActivation() {
         return (
             <div className="centered-container">
                 <div className="account-activation-container">
-                    <Header msg={`Correo de activación enviado a ${props.userEmail.substring(0,10)}...${props.userEmail.substring(props.userEmail.length-10, props.userEmail.length)}`}/>
+                    <Header msg={`Correo de activación enviado a ${userEmailPrev}`}/>
                     <Form 
                         onSubmitFunction={onSubmit} 
                         buttonMsg="Activar" 
