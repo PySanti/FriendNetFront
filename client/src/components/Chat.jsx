@@ -17,7 +17,7 @@ import {updateMessagesHistorial} from "../utils/updateMessagesHistorial"
 import {removeAndUpdateNotifications} from "../utils/removeAndUpdateNotifications"
 import "../styles/Chat.css"
 import {logoutUser} from "../utils/logoutUser"
-import {useEnterChatLoaderActivated, useExecutingInSmallDevice, useGottaScrollChat, useLastClickedUser} from "../store"
+import {useUsersList, useEnterChatLoaderActivated, useExecutingInSmallDevice, useGottaScrollChat, useLastClickedUser} from "../store"
 import {apiWrap} from "../utils/apiWrap"
 
 
@@ -28,13 +28,14 @@ import {apiWrap} from "../utils/apiWrap"
 export function Chat(){
     let messagesHistorialPage                                               = useRef(1)
     let noMoreMessages                                                      = useRef(false)
-    let clickedUser                                                         = useClickedUser((state)=>(state.clickedUser))
     let executingInSmallDevice                                              = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     let [messagesHistorial, setMessagesHistorial]                           = useMessagesHistorial((state)=>([state.messagesHistorial, state.setMessagesHistorial]))
     let [notifications, setNotifications]                                   = useNotifications((state)=>([state.notifications, state.setNotifications]))
     let [enterChatLoaderActivated, setEnterChatLoaderActivated]             = useEnterChatLoaderActivated((state)=>([state.enterChatLoaderActivated, state.setEnterChatLoaderActivated]))
     let setGottaScrollChat                                                  = useGottaScrollChat((state)=>(state.setGottaScrollChat))
-    let lastClickedUser                                                     = useLastClickedUser((state)=>(state.lastClickedUser))
+    let [clickedUser, setClickedUser]                                       = useClickedUser((state)=>([state.clickedUser, state.setClickedUser]))
+    let [usersList, setUsersList]                                           = useUsersList((state)=>([state.usersList, state.setUsersList]))
+    let [lastClickedUser, setLastClickedUser]                               = useLastClickedUser((state)=>([state.lastClickedUser, state.setLastClickedUser]))
     let mostRecentClickedUser                                               = useRef(null)
     const navigate                                                          = useNavigate()
     const enterChatHandler = async (newClickedUser)=>{
@@ -64,6 +65,11 @@ export function Chat(){
                         "error_while_checking_is_online"    : 'Error comprobando si el usuario esta en linea',
                         "error_while_getting_messages"      : 'Error buscando mensajes',
                         "error_while_deleting_notification" : 'Error borrando notificación'
+                    }
+                    if (response.data.error == "user_not_found"){
+                        setClickedUser(null)
+                        setLastClickedUser(null)
+                        setUsersList(usersList.filter(user => user.id !== newClickedUser.id))
                     }
                     toast.error(errors[response.data.error]? errors[response.data.error] : "Error inesperado entrando al chat")
                 }

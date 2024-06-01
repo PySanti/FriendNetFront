@@ -9,7 +9,7 @@ import {PropTypes} from "prop-types"
 import "../styles/MessageSendingInput.css"
 import {NOTIFICATIONS_WEBSOCKET, BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../utils/constants"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
-import {useClickedUser, useMessagesHistorial, useGottaScrollChat} from "../store"
+import {useLastClickedUser, useClickedUser, useMessagesHistorial, useGottaScrollChat} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
 import { IoSend } from "react-icons/io5";
 import { sendMsgAPI } from "../api/sendMsg.api"
@@ -20,7 +20,9 @@ import {logoutUser} from "../utils/logoutUser"
  * @param  {Function} onMsgSending funcion que se ejecutara cuando se envie un mensaje
  */
 export function MsgSendingInput(){
-    let clickedUser                                         = useClickedUser((state)=>state.clickedUser)
+    let [clickedUser, setClickedUser]                       = useClickedUser((state)=>[state.clickedUser, state.setClickedUser])
+    let  setLastClickedUser                                 = useLastClickedUser((state)=>(state.setLastClickedUser))
+
     let [messagesHistorial, setMessagesHistorial]           = useMessagesHistorial((state)=>[state.messagesHistorial, state.setMessagesHistorial])
     let setGottaScrollChat                                  = useGottaScrollChat((state)=>state.setGottaScrollChat)
     let {register, handleSubmit, reset}                     = useForm()
@@ -52,6 +54,8 @@ export function MsgSendingInput(){
                 if (response.data.error == "same_user"){
                     logoutUser(navigate, "Sesión finalizada por error inesperado")
                 } else {
+                    setClickedUser(null)
+                    setLastClickedUser(null)
                     toast.error('Error inesperado enviando el mensaje')
                 }
             }
