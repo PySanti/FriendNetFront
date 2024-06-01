@@ -16,6 +16,7 @@ import {getJWTFromLocalStorage} from "../utils/getJWTFromLocalStorage"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 import {apiWrap} from "../utils/apiWrap"
+import {logoutUser} from "../utils/logoutUser"
 
 /**
  * Pagina creada para llevar perfil de usuario, tanto para
@@ -33,9 +34,13 @@ export function Profile() {
             }, navigate, 'Modificando perfil', undefined,"updateUserData")
             if (response){
                 if (response.status == 200){
-                    setProfileData(response.data.user_data_updated);
-                    saveUserDataInLocalStorage(response.data.user_data_updated);
-                    toast.success("Perfil modificado exitosamente")
+                    if (response.data.user_inactive){
+                        logoutUser(navigate, "Debes activar tu usuario nuevamente")
+                    } else {
+                        setProfileData(response.data.user_data_updated);
+                        saveUserDataInLocalStorage(response.data.user_data_updated);
+                        toast.success("Perfil modificado exitosamente")
+                    }
                 } else if (response.status == 400){
                     const log = {
                         "username_or_email_taken"   : "El usuario o el email ya están tomados",

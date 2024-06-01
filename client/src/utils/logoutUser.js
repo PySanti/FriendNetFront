@@ -5,7 +5,7 @@ import {toast} from "sonner"
  * Funcion creada para modularizar la funcionalidad de deslogueo
  * @param {Function} navigateFunc referencia a la funcion para redirijir al usuario al root
  */
-export function logoutUser(navigateFunc){
+export function logoutUser(navigateFunc, byeMsg){
     disconnectWebsocket()
     if (navigateFunc){
         navigateFunc('/')
@@ -13,5 +13,5 @@ export function logoutUser(navigateFunc){
         window.location.href = "/"
     }
     clearLocalStorage()
-    toast.success("Sesión finalizada")
+    toast.success(byeMsg ? byeMsg : "Sesión finalizada")
 }

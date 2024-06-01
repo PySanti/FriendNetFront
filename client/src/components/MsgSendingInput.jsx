@@ -50,8 +50,7 @@ export function MsgSendingInput(){
                 setMessagesHistorial(newMessagesHistorial)
             } else {
                 if (response.data.error == "same_user"){
-                    toast.error("Error inesperado enviando mensaje, cerrando sesión por seguridad")
-                    logoutUser(navigate)
+                    logoutUser(navigate, "Sesión finalizada por error inesperado")
                 } else {
                     toast.error('Error inesperado enviando el mensaje')
                 }

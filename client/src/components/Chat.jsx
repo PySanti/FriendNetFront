@@ -57,8 +57,7 @@ export function Chat(){
                 setGottaScrollChat(true)
             } else if (response.status == 400){
                 if (response.data.error == "same_user"){
-                    toast.error("Error inesperado entrando al chat, cerrando sesión por seguridad")
-                    logoutUser(navigate)
+                    logoutUser(navigate, "Sesión finalizada por error inesperado")
                 } else {
                     const errors = {
                         "user_not_found"                    : "Tuvimos problemas para encontrar a ese usuario",
