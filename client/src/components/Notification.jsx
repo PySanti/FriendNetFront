@@ -21,9 +21,9 @@ export function Notification({notification, onNotificationDelete, onNotification
             setTimeout(() => {
                 onNotificationDelete(notification)
                 notificationsCanBeDeleted.current = true
-            }, 100);
-        } 
-    }
+            }, 200);
+        }
+    } 
 
     return (
         <div className={notificationDeleted ? "individual-notification-container notification_deleted" : "individual-notification-container"  }>

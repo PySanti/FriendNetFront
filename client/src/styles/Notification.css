@@ -15,7 +15,7 @@
     background-color : #a3a0a0;
     margin-bottom: .3em;
     transition-property: max-height ,transform, padding, margin;
-    transition-duration: .09s;
+    transition-duration: .2s;
     user-select: none;
     
     -webkit-tap-highlight-color: transparent;
