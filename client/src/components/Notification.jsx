@@ -21,7 +21,7 @@ export function Notification({notification, onNotificationDelete, onNotification
             setTimeout(() => {
                 onNotificationDelete(notification)
                 notificationsCanBeDeleted.current = true
-            }, 200);
+            }, 300);
         }
     } 
 
