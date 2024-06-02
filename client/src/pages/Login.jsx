@@ -41,7 +41,7 @@ export function Login() {
                             saveUserDataInLocalStorage(userDetail)
                             navigate('/home/')
                         } else if (response.data.error == "user_is_online"){
-                            toast.error("Restableciendo conexión con el servidor, inténtelo de nuevo en unos minutos")
+                            toast.error("Usuario en linea o restableciendo conexión con el servidor")
                         }else {
                             toast.error("Error inesperado iniciando sesión")
                         } 
