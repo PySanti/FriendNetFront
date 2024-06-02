@@ -41,8 +41,10 @@ export function NotificationsContainer(){
         if (response){
             if (response.status == 200){
                 removeAndUpdateNotifications(notification, mostRecentNotifications.current,  setNotifications)
-            }   else{
-                toast.error('Error inesperado al tratar de eliminar la notificación')
+            }   else if (response.data.error == "error_while_deleting_notification"){
+                toast.error('No se pudo encontrar la notificación en el servidor ')
+            } else {
+                toast.error('Error inesperado al eliminar la notificación')
             }
         }
     }
