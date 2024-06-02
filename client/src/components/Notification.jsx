@@ -20,8 +20,10 @@ export function Notification({notification, onNotificationDelete, onNotification
             setNotificationDeleted(true)
             setTimeout(() => {
                 onNotificationDelete(notification)
-                notificationsCanBeDeleted.current = true
-            }, 300);
+                setTimeout(()=>{
+                    notificationsCanBeDeleted.current = true
+                }, 200)
+            }, 200);
         }
     } 
 
