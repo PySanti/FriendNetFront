@@ -185,7 +185,7 @@ function App() {
             }))
           } else {
             if (!unativityToastId.current){
-              unativityToastId.current = toast.error("Realiza alguna acción o se cerrara la sesión por inactividad")
+              unativityToastId.current = toast.error("Realiza alguna acción o se cerrara la sesión por inactividad", {duration : 30000})
             } else {
               logoutUser()
             }
