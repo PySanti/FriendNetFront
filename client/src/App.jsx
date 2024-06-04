@@ -96,6 +96,12 @@ function App() {
     document.addEventListener('mousemove', handleUserActivity);
     document.addEventListener('click', handleUserActivity);
     document.addEventListener('keydown', handleUserActivity)
+    document.addEventListener('touchstart', handleUserActivity);
+    document.addEventListener('touchmove', handleUserActivity);
+    document.addEventListener('touchend', handleUserActivity);
+    window.addEventListener('orientationchange', handleUserActivity);
+    window.addEventListener('scroll', handleUserActivity);
+
     if (DEBUG){
       // al montar la pagina, si esta en mantenimiento y hay datos en el localStorage, eliminamos la data
       // y si el websocket esta montado, tambien lo pelamos
@@ -123,6 +129,11 @@ function App() {
       document.removeEventListener('mousemove', handleUserActivity);
       document.removeEventListener('click', handleUserActivity);
       document.removeEventListener('keydown', handleUserActivity)
+      document.removeEventListener('touchstart', handleUserActivity);
+      document.removeEventListener('touchmove', handleUserActivity);
+      document.removeEventListener('touchend', handleUserActivity);
+      window.removeEventListener('orientationchange', handleUserActivity);
+      window.removeEventListener('scroll', handleUserActivity);
     }
   }, [websocketMounted])
 
