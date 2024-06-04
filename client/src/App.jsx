@@ -53,7 +53,16 @@ function App() {
   let userKeyword                                                       = states.useUserKeyword((state)=>(state.userKeyword))
   let [connectionFailed, setConnectionFailed]                           = states.useConnectionFailed((state)=>([state.connectionFailed, state.setConnectionFailed]))
   let alertRef                                                          = useRef(null)
+  let userActivityRef                                                   = useRef(true)
+  let unativityToastId                                                  = useRef(null)
   let newMessageRef                                                     = useRef(null)
+  const handleUserActivity  = () =>{
+    userActivityRef.current = true
+    if (unativityToastId.current){
+      toast.dismiss(unativityToastId.current)
+      unativityToastId.current = null
+    }
+  }
   const handleNotificationsReload = async ()=>{
     const response = await apiWrap(async ()=>{
       return await getUserNotificationsAPI(getJWTFromLocalStorage().access)
@@ -82,6 +91,11 @@ function App() {
     newMessageRef.current.play()
   }
   useEffect(()=>{
+    // inactivity
+
+    document.addEventListener('mousemove', handleUserActivity);
+    document.addEventListener('click', handleUserActivity);
+    document.addEventListener('keydown', handleUserActivity)
     if (DEBUG){
       // al montar la pagina, si esta en mantenimiento y hay datos en el localStorage, eliminamos la data
       // y si el websocket esta montado, tambien lo pelamos
@@ -106,6 +120,9 @@ function App() {
     })
     return ()=>{
       document.removeEventListener("visibilitychange", handleReconnection)
+      document.removeEventListener('mousemove', handleUserActivity);
+      document.removeEventListener('click', handleUserActivity);
+      document.removeEventListener('keydown', handleUserActivity)
     }
   }, [websocketMounted])
 
@@ -161,9 +178,18 @@ function App() {
                 setClickedUser(clickedUser)
             }
         } else if (data.type == "ping"){
-          NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({
-            "type" : "pong"
-          }))
+          if (userActivityRef.current){
+            userActivityRef.current = false
+            NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({
+              "type" : "pong"
+            }))
+          } else {
+            if (!unativityToastId.current){
+              unativityToastId.current = toast.error("Realiza alguna acción o se cerrara la sesión por inactividad")
+            } else {
+              logoutUser()
+            }
+          }
         }
       }
   }
