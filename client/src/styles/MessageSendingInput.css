@@ -32,7 +32,8 @@
 
 .sending-msg-button{
     display: flex;
-    align-items : center
+    align-items : center;
+    -webkit-tap-highlight-color: transparent;
 }
 .sending-msg-button > *{
     cursor : pointer;
