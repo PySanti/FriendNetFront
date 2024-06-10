@@ -6,7 +6,8 @@ export function Modal({children, opened}){
     const modalContainerCls = "modal-container"
     useEffect(()=>{
         setTimeout(()=>{
-            modalContainerRef.current.style.opacity = modalContainerRef.current.classList.contains(`${modalContainerCls}__activated`)? "1" : "0"
+            if (modalContainerRef)
+                modalContainerRef.current.style.opacity = modalContainerRef.current.classList.contains(`${modalContainerCls}__activated`)? "1" : "0"
         }, 0)
     }, [opened])
     return (

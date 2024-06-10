@@ -13,7 +13,7 @@ export function updateClickedUser(newClickedUser){
     let setLastClickedUser = states["useLastClickedUser"].getState().setLastClickedUser
 
     if (!NOTIFICATIONS_WEBSOCKET.current || NOTIFICATIONS_WEBSOCKET.current.readyState !== 1){
-        toast.error("Cargando")
+        toast.error("Cargando… si el problema persiste, cambia de conexión WIFI.")
     } else {
         setLastClickedUser(clickedUser)
         setClickedUser(newClickedUser);

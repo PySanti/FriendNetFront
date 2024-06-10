@@ -1,4 +1,4 @@
-export const BASE_FALLEN_SERVER_LOG = "Red caída"
+export const BASE_FALLEN_SERVER_LOG = "Red caída: si el problema persiste, cambia de conexión WIFI"
 export const BASE_USER_NOT_EXISTS_ERROR = "user_not_exists"
 export const BASE_FALLEN_SERVER_ERROR_MSG = "Network Error"
 export const JWT_LOCALSTORAGE_NAME = "jwt"
@@ -69,11 +69,11 @@ export const BASE_PASSWORD_CONSTRAINTS = {
 };
 export const DEBUG = false
 
-export const BACKEND_URL = "https://friendnet.online/";
-export const NOTIFICATIONS_WEBSOCKET_ENDPOINT   = "wss://friendnet.online:8001/ws/notifications/"
+// export const BACKEND_URL = "https://friendnet.online/";
+// export const NOTIFICATIONS_WEBSOCKET_ENDPOINT   = "wss://friendnet.online:8001/ws/notifications/"
 
-// export const NOTIFICATIONS_WEBSOCKET_ENDPOINT   = "ws://localhost:8000/ws/notifications/"
-// export const BACKEND_URL = "http://127.0.0.1:8000/";
+export const NOTIFICATIONS_WEBSOCKET_ENDPOINT   = "ws://localhost:8000/ws/notifications/"
+export const BACKEND_URL = "http://127.0.0.1:8000/";
 
 
 
