@@ -10,7 +10,7 @@ import { Button } from "../components/Button"
 import "../styles/Home.css"
 // import { destroy } from 'zustand';
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {useWebsocketMounted, useExecutingInSmallDevice} from "../store"
+import {useExecutingInSmallDevice} from "../store"
 import {resetChats} from "../utils/resetChats"
 
 /**
@@ -18,13 +18,9 @@ import {resetChats} from "../utils/resetChats"
  */
 export function Home() {
     const navigate                      = useNavigate()
-    let [websocketMounted, setWebsocketMounted] = useWebsocketMounted((state)=>([state.websocketMounted, state.setWebsocketMounted]))
     let executingInSmallDevice          = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
     useEffect(()=>{
         document.title = generateDocumentTitle("Home")
-        if (!websocketMounted){ // esto solo se debe ejecutar cuando venimos del login
-            setWebsocketMounted(null)
-        }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
             resetChats()

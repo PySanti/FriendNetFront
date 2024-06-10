@@ -92,7 +92,6 @@ function App() {
   }
   useEffect(()=>{
     // inactivity
-
     document.addEventListener('mousemove', handleUserActivity);
     document.addEventListener('click', handleUserActivity);
     document.addEventListener('keydown', handleUserActivity)
