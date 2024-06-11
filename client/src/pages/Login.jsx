@@ -14,13 +14,11 @@ import {generateLocationProps} from "../utils/generateLocationProps"
 import {apiWrap} from "../utils/apiWrap"
 import {useEffect} from "react"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
-import {useWebsocketMounted} from "../store"
 /**
  * Pagina creada para llevar logeo de usuarios
  */
 export function Login() {
     const   navigate          = useNavigate()
-    let setWebsocketMounted = useWebsocketMounted((state)=>(state.setWebsocketMounted))
 
     const onLogin = async (data)=>{
         // en este punto ya se sabe que el usuario no esta autenticado
@@ -40,9 +38,8 @@ export function Login() {
                     if (response){
                         if (response.status == 200){
                             toast.success("Sesión iniciada con éxito")
-                            navigate('/home/')
                             saveUserDataInLocalStorage(userDetail)
-                            setWebsocketMounted(null)
+                            navigate('/home/')
                         } else if (response.data.error == "user_is_online"){
                             toast.error("Usuario en linea o restableciendo conexión con el servidor")
                         }else {

@@ -12,6 +12,8 @@ import "../styles/Home.css"
 import {generateDocumentTitle} from "../utils/generateDocumentTitle"
 import {useExecutingInSmallDevice} from "../store"
 import {resetChats} from "../utils/resetChats"
+import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
+import {useWebsocketMounted} from "../store"
 
 /**
  * Pagina principal del sitio
@@ -19,8 +21,12 @@ import {resetChats} from "../utils/resetChats"
 export function Home() {
     const navigate                      = useNavigate()
     let executingInSmallDevice          = useExecutingInSmallDevice((state)=>(state.executingInSmallDevice))
+    let [websocketMounted, setWebsocketMounted] = useWebsocketMounted((state)=>([state.websocketMounted, state.setWebsocketMounted]))
     useEffect(()=>{
         document.title = generateDocumentTitle("Home")
+        if (!websocketMounted && getUserDataFromLocalStorage()){ // esto solo se debe ejecutar cuando venimos del login
+            setWebsocketMounted(null)
+        }
         return ()=>{
             // esto se ejecutara cuando el componente sea desmontado
             resetChats()
