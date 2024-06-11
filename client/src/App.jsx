@@ -187,8 +187,8 @@ function App() {
                 }
                 setClickedUser(clickedUser)
             }
-        } else if (data.type == "ping"){
-          if (userActivityRef.current && getUserDataFromLocalStorage()){
+        } else if (data.type == "ping" && getUserDataFromLocalStorage()){
+          if (userActivityRef.current ){
             userActivityRef.current = false
             NOTIFICATIONS_WEBSOCKET.current.send(JSON.stringify({
               "type" : "pong"
