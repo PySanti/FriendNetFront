@@ -40,9 +40,9 @@ export function Login() {
                     if (response){
                         if (response.status == 200){
                             toast.success("Sesión iniciada con éxito")
+                            navigate('/home/')
                             saveUserDataInLocalStorage(userDetail)
                             setWebsocketMounted(null)
-                            navigate('/home/')
                         } else if (response.data.error == "user_is_online"){
                             toast.error("Usuario en linea o restableciendo conexión con el servidor")
                         }else {
