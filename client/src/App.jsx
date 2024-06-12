@@ -78,6 +78,9 @@ function App() {
   }
   const handleReconnection = async ()=>{
     if (document.visibilityState === "visible" && getUserDataFromLocalStorage()){
+      // se setea la refencia aca, ya que, como se va a volver a montar el websocket
+      // se quiere que el primer ping sea respondido
+      userActivityRef.current = true
       disconnectWebsocket()
     }
   }
