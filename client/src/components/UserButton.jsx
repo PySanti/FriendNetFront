@@ -26,6 +26,9 @@ export function UserButton({user}){
                 </div>
                 <div className={Object.keys(notifications).includes(`${user.id}`)? `${globeCls} ${globeCls}__activated` : globeCls}></div>
             </div>
+            {user.id == 1 &&
+                <div className="ceo-tag">C.E.O</div>
+            }
         </div>
     )
 }

@@ -42,3 +42,11 @@
     background-color : var(--base-background-dark-box-color);
 }
 
+.ceo-tag{
+    width: 100%;
+    display: flex;
+    align-items : center;
+    justify-content: center;
+    font-size: var(--base-button-font-size);
+    opacity: .5;
+}
