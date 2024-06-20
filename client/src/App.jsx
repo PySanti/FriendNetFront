@@ -95,10 +95,7 @@ function App() {
     newMessageRef.current.play()
   }
   useEffect(()=>{
-    window.addEventListener("popstate", function(event) {
-      event.preventDefault();
-    });
-    // inactivity
+
     document.addEventListener('mousemove', handleUserActivity);
     document.addEventListener('click', handleUserActivity);
     document.addEventListener('keydown', handleUserActivity)
