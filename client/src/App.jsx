@@ -144,6 +144,7 @@ function App() {
 
   useEffect(()=>{
     window.onpopstate = (e)=>{
+      alert("saludos")
       // SO backbutton
       e.preventDefault()
       if (clickedUser){
