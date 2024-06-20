@@ -95,10 +95,9 @@ function App() {
     newMessageRef.current.play()
   }
   useEffect(()=>{
-    window.onpopstate = (e)=>{
-      e.preventDefault()
-      alert("saludos")
-    };
+    window.addEventListener("popstate", function(event) {
+      event.preventDefault();
+    });
     // inactivity
     document.addEventListener('mousemove', handleUserActivity);
     document.addEventListener('click', handleUserActivity);
