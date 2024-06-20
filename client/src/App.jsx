@@ -95,7 +95,9 @@ function App() {
     newMessageRef.current.play()
   }
   useEffect(()=>{
-
+    window.onpopstate = (e)=>{
+      alert("saludos")
+    };
     // inactivity
     document.addEventListener('mousemove', handleUserActivity);
     document.addEventListener('click', handleUserActivity);
@@ -143,14 +145,7 @@ function App() {
 
 
   useEffect(()=>{
-    window.onpopstate = (e)=>{
-      alert("saludos")
-      // SO backbutton
-      e.preventDefault()
-      if (clickedUser){
-        resetChats()
-      }
-    };
+
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
         const data = JSON.parse(event.data)
