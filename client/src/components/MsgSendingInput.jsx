@@ -32,6 +32,34 @@ export function MsgSendingInput(){
     const lastMessagesHistorialValue                        = useRef(null)
     const userData                                          = getUserDataFromLocalStorage()
     const timeoutDB                                         = useRef({})
+    const handleEnterInput = (e)=>{
+        const inputValue = e.target.value.trim()
+        if (inputValue.length == 0){
+            e.target.value = e.target.value.substring(0, e.target.value.length-1)
+        } else {
+            onSubmit({"msg" : e.target.value})
+        }
+    }
+    const handleMsgSendingInputChange = (e)=>{
+        if (e.target.value.match(/\n/)){
+            handleEnterInput(e)
+        }
+        setClickedUserWhenTyping(clickedUser)
+        if (timeoutDB.current[clickedUser.id]){
+            clearTimeout(timeoutDB.current[clickedUser.id])
+        }
+        timeoutDB.current[clickedUser.id] = (setTimeout(() => {
+            setClickedUserWhenTyping(null)
+            /**
+             * Recordar que en este punto, llamamos a la funcion desde aca,
+             * para evitar errores cuando se desmonte la pagina por entrar al profile por ejemplo
+            */
+            if (NOTIFICATIONS_WEBSOCKET.current){
+                NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUser.id, false))
+                localStorage.setItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR, false)
+            } 
+        }, 600))
+    }
 
     const sendMsg = async (data)=>{
         const temporalMsg = {
@@ -82,23 +110,6 @@ export function MsgSendingInput(){
             localStorage.setItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR, clickedUserWhenTyping.id)
         }
     }, [clickedUserWhenTyping])
-    const handleMsgSendingInputChange = (e)=>{
-        setClickedUserWhenTyping(clickedUser)
-        if (timeoutDB.current[clickedUser.id]){
-            clearTimeout(timeoutDB.current[clickedUser.id])
-        }
-        timeoutDB.current[clickedUser.id] = (setTimeout(() => {
-            setClickedUserWhenTyping(null)
-            /**
-             * Recordar que en este punto, llamamos a la funcion desde aca,
-             * para evitar errores cuando se desmonte la pagina por entrar al profile por ejemplo
-            */
-            if (NOTIFICATIONS_WEBSOCKET.current){
-                NOTIFICATIONS_WEBSOCKET.current.send(NotificationsWSTypingInformMsg(clickedUser.id, false))
-                localStorage.setItem(BASE_USER_TYPING_LOCAL_STORAGE_ATTR, false)
-            } 
-        }, 600))
-    }
     return (
         <div className="message-sending-input-container">
             <form onChange = {handleMsgSendingInputChange} className="message-sending-form " onSubmit={onSubmit}>
