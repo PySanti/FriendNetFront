@@ -1,5 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import {PageOutOffService} from "./pages/PageOutOffService"
+import {resetChats} from "../utils/resetChats"
 import {Toaster, toast} from "sonner"
 import {ConnectionFailedPage} from "./pages/ConnectionFailedPage"
 import {Home} from "./pages/Home.jsx"
@@ -94,6 +95,7 @@ function App() {
     newMessageRef.current.play()
   }
   useEffect(()=>{
+
     // inactivity
     document.addEventListener('mousemove', handleUserActivity);
     document.addEventListener('click', handleUserActivity);
@@ -141,6 +143,13 @@ function App() {
 
 
   useEffect(()=>{
+    window.onpopstate = (e)=>{
+      // SO backbutton
+      e.preventDefault()
+      if (clickedUser){
+        resetChats()
+      }
+    };
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
         const data = JSON.parse(event.data)
