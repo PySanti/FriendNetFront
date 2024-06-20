@@ -1,6 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import {PageOutOffService} from "./pages/PageOutOffService"
-import {resetChats} from "../utils/resetChats"
+import {resetChats} from "./utils/resetChats"
 import {Toaster, toast} from "sonner"
 import {ConnectionFailedPage} from "./pages/ConnectionFailedPage"
 import {Home} from "./pages/Home.jsx"
