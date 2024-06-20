@@ -96,6 +96,7 @@ function App() {
   }
   useEffect(()=>{
     window.onpopstate = (e)=>{
+      e.preventDefault()
       alert("saludos")
     };
     // inactivity
