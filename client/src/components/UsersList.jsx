@@ -36,12 +36,11 @@ export function UsersList(){
     let mostRecentUserKeyword                                       = useRef(null)
     let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
     const navigate = useNavigate()
-
     const voidUserKeyword = (lastUserKeyword)=>{
         return !lastUserKeyword || lastUserKeyword.length == 0
     }
-    const updateUsers = (new_users_list, lastUserKeyword)=>{
-        if (!voidUserKeyword(lastUserKeyword) || (voidUserKeyword(lastUserKeyword) && usersListPage==1)){
+    const updateUsers = (page, new_users_list)=>{
+        if (page==1){
             setUsersIdList(new_users_list.map(user=>{
                 return user.id
             }))
@@ -66,7 +65,7 @@ export function UsersList(){
         }
         if (response){
             if (response.status == 200){
-                updateUsers(response.data.users_list, lastUserKeyword)
+                updateUsers(page, response.data.users_list)
                 setUsersListPage(page+1)
             } else if (response.data.error=== "no_more_pages"){
                 setNoMoreUsers(true)
@@ -85,7 +84,7 @@ export function UsersList(){
         const bottomArrived = (event.target.scrollTop + event.target.clientHeight) >= (event.target.scrollHeight - 3)
         if (bottomArrived && (!noMoreUsers)){
             setSmallLoaderActivated(true)
-            await loadUsersList(usersListPage, undefined, true)
+            await loadUsersList(usersListPage, userKeyword, true)
             setSmallLoaderActivated(false)
         }
     }
@@ -112,6 +111,7 @@ export function UsersList(){
             })()
         }
     }, [userKeyword])
+
 
 
 

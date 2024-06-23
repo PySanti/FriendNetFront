@@ -9,7 +9,7 @@ import {PropTypes} from "prop-types"
 import "../styles/MessageSendingInput.css"
 import {NOTIFICATIONS_WEBSOCKET, BASE_USER_TYPING_LOCAL_STORAGE_ATTR} from "../utils/constants"
 import {getUserDataFromLocalStorage} from "../utils/getUserDataFromLocalStorage"
-import {useLastClickedUser, useClickedUser, useMessagesHistorial, useGottaScrollChat} from "../store"
+import {useLastClickedUser, useClickedUser, useMessagesHistorial, useGottaScrollChat, useUsersList} from "../store"
 import {NotificationsWSTypingInformMsg} from "../utils/NotificationsWSTypingInformMsg"
 import { IoSend } from "react-icons/io5";
 import { sendMsgAPI } from "../api/sendMsg.api"
@@ -21,6 +21,7 @@ import {logoutUser} from "../utils/logoutUser"
  */
 export function MsgSendingInput(){
     let [clickedUser, setClickedUser]                       = useClickedUser((state)=>[state.clickedUser, state.setClickedUser])
+    let [usersList, setUsersList]                       = useUsersList((state)=>[state.usersList, state.setUsersList])
     let  setLastClickedUser                                 = useLastClickedUser((state)=>(state.setLastClickedUser))
 
     let [messagesHistorial, setMessagesHistorial]           = useMessagesHistorial((state)=>[state.messagesHistorial, state.setMessagesHistorial])
@@ -78,6 +79,7 @@ export function MsgSendingInput(){
                 newMessagesHistorial = lastMessagesHistorialValue.current
                 newMessagesHistorial[newMessageIndex] = response.data.sended_msg
                 setMessagesHistorial(newMessagesHistorial)
+                setUsersList([clickedUser].concat(usersList.filter(user => user.id !== clickedUser.id)))
             } else {
                 if (response.data.error == "same_user"){
                     logoutUser(navigate, "Sesión finalizada por error inesperado")

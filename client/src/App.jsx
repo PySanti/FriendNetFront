@@ -142,7 +142,6 @@ function App() {
 
 
   useEffect(()=>{
-
     if (NotificationsWSCanBeUpdated()){
       NOTIFICATIONS_WEBSOCKET.current.onmessage = (event)=>{
         const data = JSON.parse(event.data)
