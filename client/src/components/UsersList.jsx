@@ -34,6 +34,7 @@ export function UsersList(){
     let userKeyword                                                 = useUserKeyword((state)=>(state.userKeyword))
     let clickedUser                                                 = useClickedUser((state)=>(state.clickedUser))
     let mostRecentUserKeyword                                       = useRef(null)
+    let settingUsersList                                            = useRef(false)
     let [firstUsersListCall, setFirstUsersListCall]                 = useFirstUsersListCall((state)=>[state.firstUsersListCall, state.setFirstUsersListCall])
     const navigate = useNavigate()
     const voidUserKeyword = (lastUserKeyword)=>{
@@ -53,7 +54,7 @@ export function UsersList(){
                 }
             });
             setUsersIdList(usersIdList)
-            setUsersList(usersList)
+            setUsersList([...usersList])
         }
     }
     const loadUsersList = async (page, lastUserKeyword, apiCallingBlock)=>{
@@ -65,12 +66,17 @@ export function UsersList(){
         }
         if (response){
             if (response.status == 200){
+                settingUsersList.current = true
                 updateUsers(page, response.data.users_list)
                 setUsersListPage(page+1)
-            } else if (response.data.error=== "no_more_pages"){
-                setNoMoreUsers(true)
             } else {
-                toast.error("Ha habido un error cargando la lista de usuarios")
+                setSmallLoaderActivated(false)
+                setBigLoaderActivated(false)
+                if (response.data.error=== "no_more_pages"){
+                    setNoMoreUsers(true)
+                } else {
+                    toast.error("Ha habido un error cargando la lista de usuarios")
+                }
             }
         }
         if (response == undefined){
@@ -85,17 +91,23 @@ export function UsersList(){
         if (bottomArrived && (!noMoreUsers)){
             setSmallLoaderActivated(true)
             await loadUsersList(usersListPage, userKeyword, true)
-            setSmallLoaderActivated(false)
         }
     }
 
+    // apagar loaders
+    useEffect(()=>{
+        if (settingUsersList.current){
+            settingUsersList.current = false
+            setBigLoaderActivated(false)
+            setSmallLoaderActivated(false)
+        }
+    }, [usersList])
     useEffect(()=>{
         if (userIsAuthenticated()  && !firstUsersListCall){
             (async function() {
                 setBigLoaderActivated(true)
                 await loadUsersList(1, undefined, true)
                 setFirstUsersListCall(true)
-                setBigLoaderActivated(false)
             })()
         }
     }, [firstUsersListCall])
@@ -107,7 +119,6 @@ export function UsersList(){
                 setUsersListPage(1)
                 mostRecentUserKeyword.current = userKeyword
                 await loadUsersList(1, userKeyword, false)
-                setBigLoaderActivated(false)
             })()
         }
     }, [userKeyword])
