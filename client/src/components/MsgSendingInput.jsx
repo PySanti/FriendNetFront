@@ -24,6 +24,7 @@ export function MsgSendingInput(){
     let [usersList, setUsersList]                       = useUsersList((state)=>[state.usersList, state.setUsersList])
     let  setLastClickedUser                                 = useLastClickedUser((state)=>(state.setLastClickedUser))
 
+
     let [messagesHistorial, setMessagesHistorial]           = useMessagesHistorial((state)=>[state.messagesHistorial, state.setMessagesHistorial])
     let setGottaScrollChat                                  = useGottaScrollChat((state)=>state.setGottaScrollChat)
     let {register, handleSubmit, reset}                     = useForm()
@@ -31,6 +32,7 @@ export function MsgSendingInput(){
 
     const navigate                                          = useNavigate()
     const lastMessagesHistorialValue                        = useRef(null)
+    const realLastClickedUser                               = useRef(null)
     const userData                                          = getUserDataFromLocalStorage()
     const timeoutDB                                         = useRef({})
     const handleEnterInput = (e)=>{
@@ -63,6 +65,7 @@ export function MsgSendingInput(){
     }
 
     const sendMsg = async (data)=>{
+        setUsersList([clickedUser].concat(usersList.filter(user => user.id !== clickedUser.id)))
         const temporalMsg = {
             "parent_id" : getUserDataFromLocalStorage().id,
             "content" : data.msg
@@ -76,10 +79,11 @@ export function MsgSendingInput(){
         }, navigate, undefined, undefined, undefined)
         if (response){
             if (response.status == 200){
-                newMessagesHistorial = lastMessagesHistorialValue.current
-                newMessagesHistorial[newMessageIndex] = response.data.sended_msg
-                setMessagesHistorial(newMessagesHistorial)
-                setUsersList([clickedUser].concat(usersList.filter(user => user.id !== clickedUser.id)))
+                if (realLastClickedUser.current.id == clickedUser.id){
+                    newMessagesHistorial = lastMessagesHistorialValue.current
+                    newMessagesHistorial[newMessageIndex] = response.data.sended_msg
+                    setMessagesHistorial(newMessagesHistorial)
+                }
             } else {
                 if (response.data.error == "same_user"){
                     logoutUser(navigate, "Sesión finalizada por error inesperado")
@@ -103,6 +107,9 @@ export function MsgSendingInput(){
     }, [messagesHistorial])
 
     useEffect(()=>{
+        if(clickedUser){
+            realLastClickedUser.current = clickedUser
+        }
         reset()
     }, [clickedUser])
 
