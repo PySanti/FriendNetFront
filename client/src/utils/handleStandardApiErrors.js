@@ -13,6 +13,8 @@ export function handleStandardApiErrors(error){
             } else {
                 if (error.response.data.error === "banned_ip_fucK_u"){
                     toast.error(`IP suspendida permanentemente por consumo sospechoso`)
+                } else if (error.response.data.error === "suspicious_ip"){
+                    toast.error(`Error por IP sospechosa, inténtalo mas tarde`)
                 } else {
                     const suspended_date = (new Date(error.response.data.until)).toLocaleString()
                     toast.error(`IP suspendida hasta ${suspended_date} por consumo sospechoso`)
