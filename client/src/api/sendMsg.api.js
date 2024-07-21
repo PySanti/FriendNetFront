@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { BACKEND_URL } from '../utils/constants'
-import { config } from './baseConfig.api'
+import { getBasicConfig } from './baseConfig.api'
 /**
  * Envia un mensaje desde sender_user hasta receiver_user
  * @param {String} accessToken 
@@ -12,8 +12,7 @@ export async function sendMsgAPI(receiverId, msg, accessToken){
         "receiver_id" : receiverId,
         "msg" : msg
     }
-    config.headers = {
-        "Authorization" : `Bearer ${accessToken}`
-    }
+    let config = await getBasicConfig()
+    config.headers["Authorization"] = `Bearer ${accessToken}`
     return await axios.post(BACKEND_URL + `api/send_msg/`,data, config)
 }

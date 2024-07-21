@@ -1,5 +1,5 @@
 import { BACKEND_URL } from '../utils/constants'
-import { config } from './baseConfig.api'
+import { getBasicConfig } from './baseConfig.api'
 import axios from "axios"
 
 /**
@@ -12,5 +12,5 @@ export async function checkExistingUserAPI(username, email){
         'username': username,
         'email' : email
     }
-    return await axios.post(BACKEND_URL + `api/create/check_existing_user/`,data, config)
+    return await axios.post(BACKEND_URL + `api/create/check_existing_user/`,data, await getBasicConfig())
 }

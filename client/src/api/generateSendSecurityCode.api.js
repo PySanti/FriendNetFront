@@ -1,4 +1,4 @@
-import { config } from './baseConfig.api'
+import { getBasicConfig } from './baseConfig.api'
 import axios from 'axios'
 import { BACKEND_URL } from '../utils/constants'
 
@@ -8,7 +8,7 @@ export async function generateSendSecurityCodeAPI(userEmail, message){
         'user_email' : userEmail,
         'message' : message
     }
-    return await axios.post(BACKEND_URL + `api/security_code_sending/`,data, config)
+    return await axios.post(BACKEND_URL + `api/security_code_sending/`,data, await getBasicConfig())
 }
 
 

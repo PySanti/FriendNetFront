@@ -1,4 +1,4 @@
-import { config } from './baseConfig.api'
+import { getBasicConfig } from './baseConfig.api'
 import axios from 'axios'
 import { BACKEND_URL } from '../utils/constants'
 
@@ -8,10 +8,9 @@ import { BACKEND_URL } from '../utils/constants'
  * @param {String} accessToken 
  */
 export async function notificationDeleteAPI(notificationId, accessToken){
-    config.headers = {
-        'Content-Type': 'multipart/form-data',
-        'Authorization' : `Bearer ${accessToken}`
-    }
+    let config = await getBasicConfig()
+    config.headers['Content-Type'] = 'multipart/form-data'
+    config.headers['Authorization'] = `Bearer ${accessToken}`
     const data = {
         "notification_id" : notificationId
     }

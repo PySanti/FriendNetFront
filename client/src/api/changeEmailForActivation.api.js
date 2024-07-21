@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BACKEND_URL } from '../utils/constants'
-import { config } from "./baseConfig.api";
+import { getBasicConfig } from "./baseConfig.api";
 
 
 /**
@@ -13,7 +13,7 @@ export async function changeEmailForActivationAPI(userId, userEmail){
         'user_id' : userId,
         'new_email' : userEmail,
     }
-    return await axios.post(BACKEND_URL + 'api/change_email_for_activation/', data, config)
+    return await axios.post(BACKEND_URL + 'api/change_email_for_activation/', data, await getBasicConfig())
 }
 
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BACKEND_URL } from '../utils/constants'
-import { config } from "./baseConfig.api";
+import { getBasicConfig } from "./baseConfig.api";
 
 /**
  * Llama a la api para logear usuario al server
@@ -12,5 +12,5 @@ export async function loginUserAPI(username, password){
         'username' : username,
         'password' : password
     }
-    return await axios.post(BACKEND_URL+'api/token/',data, config)
+    return await axios.post(BACKEND_URL+'api/token/',data, await getBasicConfig())
 }

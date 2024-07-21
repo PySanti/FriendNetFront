@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BACKEND_URL } from '../utils/constants'
-import { config } from "./baseConfig.api";
+import { getBasicConfig } from "./baseConfig.api";
 
 /**
  * Llama a la api para obtener datos de usuario con username
@@ -12,5 +12,5 @@ export async function getUserDetailAPI(username, password){
         'username' : username,
         'password' : password,
     }
-    return await axios.post(BACKEND_URL + 'api/get_user_detail/', data, config)
+    return await axios.post(BACKEND_URL + 'api/get_user_detail/', data, await getBasicConfig())
 }

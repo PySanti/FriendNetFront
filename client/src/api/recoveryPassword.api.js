@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BACKEND_URL } from '../utils/constants'
-import { config } from "./baseConfig.api";
+import { getBasicConfig } from "./baseConfig.api";
 
 
 export async function recoveryPasswordAPI(email, newPassword, security_code){
@@ -9,5 +9,5 @@ export async function recoveryPasswordAPI(email, newPassword, security_code){
         'new_password' : newPassword,
         'security_code' : security_code
     }
-    return await axios.post(BACKEND_URL + 'api/recovery_password/', data, config)
+    return await axios.post(BACKEND_URL + 'api/recovery_password/', data, await getBasicConfig())
 }
