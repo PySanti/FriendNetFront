@@ -69,8 +69,8 @@ export const BASE_PASSWORD_CONSTRAINTS = {
 };
 export const DEBUG = false
 
-export const BACKEND_URL = "https://www.friendnet.quest/";
-export const NOTIFICATIONS_WEBSOCKET_ENDPOINT   = "wss://www.friendnet.quest:8001/ws/notifications/"
+export const BACKEND_URL = "https://64.23.156.104/";
+export const NOTIFICATIONS_WEBSOCKET_ENDPOINT   = "wss://64.23.156.104:8001/ws/notifications/"
 
 // export const NOTIFICATIONS_WEBSOCKET_ENDPOINT   = "ws://localhost:8000/ws/notifications/"
 // export const BACKEND_URL = "http://127.0.0.1:8000/";
